@@ -1,19 +1,4 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Usnapus</title>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<%= yield %>
-
-</body>
-</html>
-
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -37,24 +22,6 @@
   </head>
 
   <body>
-
-    <div class="topbar">
-      <div class="fill">
-        <div class="container">
-          <a class="brand" href="#">uSnap.Us</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-
-      <%= yield %>
-
-      <footer>
-        <p>&copy; Company 2011</p>
-      </footer>
-
-    </div> <!-- /container -->
-
+    <%= yield %>
   </body>
 </html>
