@@ -5,3 +5,78 @@
     </div>
   </div>
 </div>
+
+<div class="top_panel">
+  <div class="container">
+    <h1 class="tagline">
+      See your event through their eyes
+    </h1>
+    <p>
+      Let your guests capture your wedding, party, or conference &amp; see it unfold live.
+    </p>
+    <p class="cta">
+      <a href="#signup">BE THE FIRST TO TRY IT</a>
+    </p>
+    
+    <div class="row">
+      <div class="span-one-third">
+        <div class="image">
+          <%= image_tag "" %>
+        </div>
+        <div class="number">
+          1
+        </div>
+        <h2>Create an event</h2>
+        <p>
+          Sign up to add your event, invite guests to get the App.
+        </p>
+      </div>
+      <div class="span-one-third">
+        <div class="image">
+          <%= image_tag "" %>
+        </div>
+        <div class="number">
+          2
+        </div>
+        <h2>Guests snap pics</h2>
+        <p>
+          Their photos are instantly shared with you.
+        </p>
+      </div>
+      <div class="span-one-third">
+        <div class="image">
+          <%= image_tag "" %>
+        </div>
+        <div class="number">
+          3
+        </div>
+        <h2>See it unfold live</h2>
+        <p>
+          Watch photos appear in real time, revisit them whenever you like.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom_panel container">
+  <h1>uSnap.us</h1>
+  <p>
+    Drop us your details, you'll be first in line when we launch in March 2012.
+  </p>
+
+  <%= form_for Signup.new do |f| %>
+    <%= f.text_field :email %>
+    <%= f.submit "GET IN ON IT!" %>
+  <% end %>
+  
+</div>
+
+<div class="footer container">
+  <p>
+    <span class="brand">uSnap.us</span>
+    <span class="upcase">&#183; Launches March 2012 &#183; <%= link_to "Follow Us", "http://twitter.com/usnapus", :title => "Follow and talk to uSnap.us on Twitter!" %> on twitter</span>
+  </p>
+
+
+  
