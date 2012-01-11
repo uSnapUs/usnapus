@@ -66,11 +66,11 @@
 
 <div class="bottom_panel container" id="the_black">
   <h1 class="brand"><%= image_tag "logo-signup.png", :title=>"uSnap.us" %></h1>
-  <p>
+  <p class="dropus">
     Drop us your details, you'll be first in line when we launch in March 2012.
   </p>
 
-  <%= form_for Signup.new do |f| %>
+  <%= form_for Signup.new, :remote => true do |f| %>
     <%= f.text_field :email, :placeholder => "Email" %>
     <hr />
     <%= image_submit_tag "btn-signup.png", :class => "signup" %>
