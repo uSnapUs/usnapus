@@ -1,27 +1,32 @@
 <div class="topbar">
   <div class="fill">
     <div class="container">
-      <a class="brand" href="#">uSnap.Us</a>
+      <h1 class="brand">
+        <%= link_to (image_tag "logo-header.png", :title => "uSnap.us"), root_path %>
+      </h1>
     </div>
   </div>
 </div>
 
 <div class="top_panel">
   <div class="container">
-    <h1 class="tagline">
-      See your event through their eyes
-    </h1>
-    <p>
-      Let your guests capture your wedding, party, or conference &amp; see it unfold live.
-    </p>
-    <p class="cta">
-      <a href="#signup">BE THE FIRST TO TRY IT</a>
-    </p>
+    
+    <div class="spiel">
+      <h1 class="tagline">
+        See your event through their eyes
+      </h1>
+      <p>
+        Let your guests capture your wedding, party, or conference &amp; see it unfold live.
+      </p>
+      <p class="cta">
+        <a href="#the_black" class="upcase">Be the first to try it <%= image_tag "btn-arrow.png" %></a>
+      </p>
+    </div>
     
     <div class="row">
       <div class="span-one-third">
         <div class="image">
-          <%= image_tag "" %>
+          <%= image_tag "explain-icon.jpg" %>
         </div>
         <div class="number">
           1
@@ -33,7 +38,7 @@
       </div>
       <div class="span-one-third">
         <div class="image">
-          <%= image_tag "" %>
+          <%= image_tag "explain-phone.jpg" %>
         </div>
         <div class="number">
           2
@@ -45,7 +50,7 @@
       </div>
       <div class="span-one-third">
         <div class="image">
-          <%= image_tag "" %>
+          <%= image_tag "explain-grid.jpg" %>
         </div>
         <div class="number">
           3
@@ -59,24 +64,29 @@
   </div>
 </div>
 
-<div class="bottom_panel container">
-  <h1>uSnap.us</h1>
+<div class="bottom_panel container" id="the_black">
+  <h1 class="brand"><%= image_tag "logo-signup.png", :title=>"uSnap.us" %></h1>
   <p>
     Drop us your details, you'll be first in line when we launch in March 2012.
   </p>
 
   <%= form_for Signup.new do |f| %>
-    <%= f.text_field :email %>
-    <%= f.submit "GET IN ON IT!" %>
+    <%= f.text_field :email, :placeholder => "Email" %>
+    <hr />
+    <%= image_submit_tag "btn-signup.png", :class => "signup" %>
   <% end %>
+  
+  <div class="footer">
+    <hr />
+    <p>
+      <span class="brand">uSnap.us</span>
+      <span class="upcase">&#183; Launches March 2012 &#183; <%= link_to "Follow Us", "http://twitter.com/usnapus", :title => "Follow and talk to uSnap.us on Twitter!" %> on twitter</span>
+    </p>
+  </div>
   
 </div>
 
-<div class="footer container">
-  <p>
-    <span class="brand">uSnap.us</span>
-    <span class="upcase">&#183; Launches March 2012 &#183; <%= link_to "Follow Us", "http://twitter.com/usnapus", :title => "Follow and talk to uSnap.us on Twitter!" %> on twitter</span>
-  </p>
+
 
 
   

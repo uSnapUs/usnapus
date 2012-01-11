@@ -2,9 +2,33 @@
  * This is a manifest file that'll automatically include all the stylesheets available in this directory
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
- *= require_self
+
  *= require bootstrap/bootstrap
+ *= require modify_bootstrap
+ *= require_self
  *= require signups
  *= require home
- *= require modify_bootstrap
 */
+
+body{
+  font-family: "freight-sans-pro", arial, sans-serif;
+  font-size: 16px;
+  
+  h1{
+    font-weight: 600;
+  }
+  
+  p{
+    font-weight: 200;
+  }
+  
+}
+
+.brand{
+  font-family: "bello-pro", arial, sans-serif;
+}
+
+.upcase{
+  font-size: smaller;
+  text-transform: uppercase;
+}

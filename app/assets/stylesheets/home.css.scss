@@ -10,14 +10,82 @@ body{
 .topbar{
   .fill{
     background-color: #5EE0AA;
-    background-image: none;
+    background: url(image-path('headerstrip.png')) repeat-x;
+    h1{
+      margin-bottom: 0;
+      padding: 5px 0 0 0;
+    }
   }
 }
 
 .top_panel{
   background-color: #fcfdff;
+  color: #7798B4;
+  h1, h2{
+    color: #36536C;
+  }
+  
+  .image{
+    position: relative;
+    min-height: 233px;
+    line-height: 233px;
+    padding: 50px 0 20px 0;
+      img{
+        vertical-align: middle;
+      }
+  }
+  
+  .number{
+       -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+            border-radius: 30px;
+    border:solid 1px #7798B4; 
+    width:30px;
+    height:30px;
+    line-height: 29px;
+    margin-left: 134px;
+  }
 }
 
-.bottom_panel{
+.top_panel, .bottom_panel, .footer{
+  padding: 75px 0 75px 0;
+}
+
+
+.bottom_panel, .footer, .bottom_panel h1{
   color: #fff;
+  hr{
+    margin: 2px auto;
+    height: 1px;
+    border-bottom: 1px solid #2B3133;
+  }
+  
+}
+
+
+
+.bottom_panel{
+  hr{
+    width: 270px;
+  }
+  .footer hr{
+    width: 100%;
+  }
+  
+  input {
+    font-weight: 400;
+    font-family: "freight-sans-pro", arial, sans-serif;
+    background: transparent;
+    border: none;
+    text-align: center;
+    width: 270px;
+    &:focus{
+     outline: none;
+     border: none; 
+    }
+  }
+  input.signup{
+    width: 152px;
+    height: 40px;
+  }
 }
