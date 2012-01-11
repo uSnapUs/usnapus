@@ -6,7 +6,7 @@ class CampaignMonitor
   def self.sync(email_object)
     CreateSend.api_key API_KEY
     
-    CreateSend::Subscriber.add LIST_ID, email_object.email, 'Subscriber', false
+    CreateSend::Subscriber.add LIST_ID, email_object.email, 'Subscriber', nil, false
   rescue CreateSend::BadRequest => br
     Rails.logger.error "Bad request error: #{br}"
     Rails.logger.error "Error Code:    #{br.data.Code}"

@@ -8,7 +8,6 @@ $(document).ready(function() {
   });
   
   $("#new_signup").on("ajax:beforeSend", function(){
-    $(".dropus").hide().html("Thanks, we love you! We'll be in touch soon :)<br />Have a fantastic day.").fadeIn()
-    return false;
+    $(".dropus").hide().html("Thanks, we love you! We'll be in touch soon :)<br />Have a fantastic day.").fadeIn();
   })
 })
