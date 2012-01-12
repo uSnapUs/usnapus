@@ -13,13 +13,13 @@
     
     <div class="spiel">
       <h1 class="tagline">
-        See your event through their eyes
+        See your wedding through their eyes
       </h1>
       <p>
         Let your guests capture your wedding, party, or conference &amp; see it unfold live.
       </p>
       <p class="cta">
-        <a href="#the_black" class="upcase">Be the first to try it <%= image_tag "btn-arrow.png" %></a>
+        <a href="#the_black" class="upcase"><span>Be the first to try it</span> <%= image_tag "btn-arrow.png" %></a>
       </p>
     </div>
     
@@ -31,9 +31,9 @@
         <div class="number">
           1
         </div>
-        <h2>Create an event</h2>
-        <p>
-          Sign up to add your event, invite guests to get the App.
+        <h2 class="step_text">Create an event</h2>
+        <p class="step_text_desc">
+          Sign up to add your event,<br/> invite guests to get the App.
         </p>
       </div>
       <div class="span-one-third">
@@ -43,9 +43,9 @@
         <div class="number">
           2
         </div>
-        <h2>Guests snap pics</h2>
-        <p>
-          Their photos are instantly shared with you.
+        <h2 class="step_text">Guests snap pics</h2>
+        <p class="step_text_desc">
+          Their photos are instantly<br/> shared with you.
         </p>
       </div>
       <div class="span-one-third">
@@ -55,9 +55,9 @@
         <div class="number">
           3
         </div>
-        <h2>See it unfold live</h2>
-        <p>
-          Watch photos appear in real time, revisit them whenever you like.
+        <h2 class="step_text">See it unfold live</h2>
+        <p class="step_text_desc">
+          Watch photos appear in real time,<br/> revisit them whenever you like.
         </p>
       </div>
     </div>
@@ -71,7 +71,7 @@
   </p>
 
   <%= form_for Signup.new, :remote => true do |f| %>
-    <%= f.text_field :email, :placeholder => "Email" %>
+    <%= f.text_field :email, :placeholder => "Your email address" %>
     <hr />
     <%= image_submit_tag "btn-signup.png", :class => "signup" %>
   <% end %>
