@@ -6,4 +6,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require placeholder.jquery
 //= require_tree .
+
