@@ -1,5 +1,7 @@
 class Signup < ActiveRecord::Base
   
+  validates :email, presence: {allow_blank: false}
+  
   after_create :sync
   
   def sync
