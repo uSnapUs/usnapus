@@ -10,10 +10,11 @@ body{
 .topbar{
   
   .fill{
-    height:76px;
+    height:78px;
     background-color: #5EE0AA;
     background: url(image-path('headerstrip.png')) repeat-x;
     filter:none;
+    box-shadow:none;
     h1{
       margin-bottom: 0;
       padding: 10px 0 0 0;
@@ -25,12 +26,14 @@ body{
   .container{
   .spiel{
     .cta{
+     margin-top:20px;
       a{
+      color:#7c97b7;
       verical-align:middle;
       span{
        font-weight:bold;
-       font-size:20px;
-       color:#7c97b7;
+       font-size:18px;
+       
        text-decoration:none;
        border-bottom:1px solid #d1dfee; 
       }
@@ -40,6 +43,10 @@ body{
       }
       a:hover{
         text-decoration:none;
+        color:#97B3D0;
+        span{
+          border-bottom:1px solid #E1EBF6; 
+        }
       }
     }
     .tagline{
@@ -51,6 +58,7 @@ body{
   background-color: #fcfdff;
   color: #7798B4;
   h1, h2{
+        font-weight:600;
     color: #36536C;
   }
   
@@ -68,7 +76,8 @@ body{
        -moz-border-radius: 38px;
     -webkit-border-radius: 38px;
             border-radius: 38px;
-    border:solid 1px #7798B4; 
+    border:solid 1px #d1dfee;
+     text-transform: uppercase; 
     width:38px;
     height:38px;
     line-height: 36px;
@@ -130,7 +139,9 @@ body{
     border: none;
     text-align: center;
     width: 270px;
+    box-shadow:none;
     &:focus{
+     box-shadow:none;
      outline: none;
      border: none; 
     }
@@ -141,13 +152,20 @@ body{
     margin-top:20px;
   }
   .footer p{
+
     margin-top:30px;
     .brand{
       font-size:30px;
     }
+    span.upcase{
+          vertical-align:top;
+          display:inline-block;
+          margin-top:2px;
+    }
     font-size:12px;
     font-weight:200;
     a{
+      vertical-align:top;
       color:#FFF;
       font-weight:800;
       text-decoration:none;
