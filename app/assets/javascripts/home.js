@@ -6,12 +6,7 @@ $(document).ready(function() {
     $('html, body, .content').animate({scrollTop: $("#the_black").position().top}, "slow");
     return false;
   });
-  $('.new_signup').submit(function(){
-  	if($('input#signup_email').val().length<1)
-  	{
-  		return false;
-  	}
-  });
+  
   $("#new_signup").on("ajax:beforeSend", function(){
     
     if($("#signup_email").val().trim() == ""){
