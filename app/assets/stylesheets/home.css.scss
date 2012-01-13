@@ -28,12 +28,12 @@ body{
     .cta{
      margin-top:20px;
       a{
-      font-size:18px;
+      font-size:16px;
       color:#7c97b7;
       verical-align:middle;
       span{
        font-weight:500;
-       font-size:18px;
+       font-size:16px;
        text-decoration:none;
        border-bottom:1px solid #d1dfee; 
       }
@@ -133,7 +133,7 @@ body{
   }
 
   input {
-    font-weight: 400;
+    font-weight: 200;
     font-family: "freight-sans-pro", arial, sans-serif;
     background: transparent;
     border: none;
@@ -160,7 +160,9 @@ body{
     height: 40px;
     margin-top:20px;
   }
-  .footer p{
+  .footer {
+  padding-top:100px;
+  p{
 
     margin-top:30px;
     .brand{
@@ -181,6 +183,7 @@ body{
       text-decoration:none;
       border-bottom: 1px solid #333;
     }
+  }
   }
 
 }
