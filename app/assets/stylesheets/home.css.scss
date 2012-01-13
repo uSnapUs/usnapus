@@ -32,7 +32,7 @@ body{
       color:#7c97b7;
       verical-align:middle;
       span{
-       font-weight:bold;
+       font-weight:500;
        font-size:18px;
        text-decoration:none;
        border-bottom:1px solid #d1dfee; 
@@ -58,8 +58,8 @@ body{
   background-color: #fcfdff;
   color: #7798B4;
   h1, h2{
-        font-weight:600;
-    color: #36536C;
+      font-weight:600;
+      color: #36536C;
   }
   
   .image{
@@ -131,7 +131,7 @@ body{
   .footer hr{
     width: 100%;
   }
-  
+
   input {
     font-weight: 400;
     font-family: "freight-sans-pro", arial, sans-serif;
@@ -144,6 +144,10 @@ body{
      box-shadow:none;
      outline: none;
      border: none; 
+    }
+    &::-webkit-input-placeholder{
+    
+    text-align: center;
     }
   }
   input.signup{
