@@ -1,4 +1,6 @@
 Usnapus::Application.routes.draw do
+  resources :events
+
   resources :signups
   
   root :to => "home#index"
