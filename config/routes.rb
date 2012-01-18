@@ -1,7 +1,7 @@
 Usnapus::Application.routes.draw do
   resources :events
 
-  resources :signups
+  resources :signups, :only => [:create]
   
   root :to => "home#index"
 
