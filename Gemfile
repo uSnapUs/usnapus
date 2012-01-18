@@ -26,6 +26,10 @@ gem 'formtastic'
 gem 'formtastic-bootstrap'
 gem 'createsend'
 
+gem 'carrierwave'
+gem 'rmagick'
+gem 'fog'
+
 gem "thin"
 gem "heroku"
 

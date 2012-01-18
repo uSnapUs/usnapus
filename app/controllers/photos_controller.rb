@@ -6,7 +6,7 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       if @photo.save
-        format.json { render json: @photo, status: :created, location: @photo }
+        format.json { render json: @photo, status: :created}
       else
         format.json { render json: @photo.errors, status: :unprocessable_entity }
       end
