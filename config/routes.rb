@@ -1,5 +1,7 @@
 Usnapus::Application.routes.draw do
   
+  resources :photos, :only => [:create]
+
   resources :events, :only => [:index]
 
   resources :signups, :only => [:create]

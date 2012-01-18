@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120118043532) do
+ActiveRecord::Schema.define(:version => 20120118060854) do
 
   create_table "events", :force => true do |t|
     t.float    "latitude"
@@ -19,6 +19,15 @@ ActiveRecord::Schema.define(:version => 20120118043532) do
     t.string   "name"
     t.datetime "starts"
     t.datetime "ends"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "photos", :force => true do |t|
+    t.string   "photo"
+    t.integer  "event_id"
+    t.string   "device_guid"
+    t.string   "device_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
