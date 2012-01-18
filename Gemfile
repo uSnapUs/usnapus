@@ -22,7 +22,8 @@ group :assets do
 end
 
 gem 'jquery-rails'
-
+gem 'formtastic'
+gem 'formtastic-bootstrap'
 gem 'createsend'
 
 gem "thin"
