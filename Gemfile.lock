@@ -31,6 +31,7 @@ GEM
       multi_json (~> 1.0)
     addressable (2.2.6)
     ansi (1.4.1)
+    anybase (0.0.14)
     arel (2.2.1)
     builder (3.0.0)
     carrierwave (0.5.7)
@@ -167,6 +168,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  anybase
   carrierwave
   coffee-rails (~> 3.1.1)
   createsend

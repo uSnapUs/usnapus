@@ -2,6 +2,11 @@ class Event < ActiveRecord::Base
   
   has_many :photos
   
+  
+  validates :code, :format => {:with => /\A[A-HJKMNP-Z2-9]{7}\Z/, :on => :create}, :uniqueness => true
+  
+  before_validation :generate_code, :on => :create
+  
   scope :near, lambda{ |*args|
     origin = *args.first[:origin]
     if (origin).is_a?(Array)
@@ -27,5 +32,15 @@ class Event < ActiveRecord::Base
   def self.deg2rad(degree)
     degree*Math::PI/180
   end
+  
+  private
+    def generate_code
+      #For usability, there are no I, 1, L, O, or 0
+      base = Anybase.new("ABCDEFGHJKMNPQRSTUVWXYZ23456789")
+      self.code = "#{base.random(7).upcase}"
+      
+      #Ensure uniqueness
+      generate_code unless Event.find_by_code(self.code).nil?
+    end
   
 end

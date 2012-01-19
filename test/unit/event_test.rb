@@ -14,4 +14,8 @@ class EventTest < ActiveSupport::TestCase
     assert event.photos.include? photo
   end
   
+  test "new event has code" do
+    assert_match /\A[A-HJKMNP-Z2-9]{7}\Z/, Factory(:event).code
+  end
+  
 end

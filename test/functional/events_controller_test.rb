@@ -37,4 +37,22 @@ class EventsControllerTest < ActionController::TestCase\
     assert_equal 0, json.length
   end
   
+  test "can get event by code" do
+    event = Factory :event
+    
+    xhr :get, :index, code: event.code
+    assert_response :success
+    json = JSON.parse(@response.body)
+    
+    assert_equal event.id, json["id"]
+  end
+  
+  test "invalid code returns empty json" do
+    xhr :get, :index, code: "zoobop"
+    assert_response :success
+    json = JSON.parse(@response.body)
+    
+    assert_equal 0, json.length
+  end
+    
 end

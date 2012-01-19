@@ -30,6 +30,8 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'fog'
 
+gem 'anybase'
+
 gem "thin"
 gem "heroku"
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120118060854) do
+ActiveRecord::Schema.define(:version => 20120119095246) do
 
   create_table "events", :force => true do |t|
     t.float    "latitude"
@@ -21,7 +21,10 @@ ActiveRecord::Schema.define(:version => 20120118060854) do
     t.datetime "ends"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "code"
   end
+
+  add_index "events", ["code"], :name => "index_events_on_code", :unique => true
 
   create_table "photos", :force => true do |t|
     t.string   "photo"
