@@ -1,5 +1,7 @@
 class Event < ActiveRecord::Base
   
+  has_many :photos
+  
   scope :near, lambda{ |*args|
     origin = *args.first[:origin]
     if (origin).is_a?(Array)

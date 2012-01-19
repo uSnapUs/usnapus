@@ -1,7 +1,17 @@
 require 'test_helper'
 
 class EventTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  
+  test "factory is valid" do
+    assert Factory.build(:event).valid?
+  end
+  
+  test "event can have photos" do
+    event = Factory :event
+    photo = Factory :photo, event: event 
+    
+    assert_equal 1, event.photos.size
+    assert event.photos.include? photo
+  end
+  
 end
