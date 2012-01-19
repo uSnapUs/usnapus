@@ -13,4 +13,16 @@ class PhotosController < ApplicationController
     end
   end
   
+  def destroy
+    @photo = Photo.find(params[:id])
+    
+    respond_to do |format|
+      if @photo.destroy
+        format.json { head :ok }
+      else
+        format.json { render json: @photo.errors, status: :unprocessable_entity }
+      end
+    end
+  end 
+  
 end

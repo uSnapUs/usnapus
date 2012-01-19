@@ -1,6 +1,6 @@
 Usnapus::Application.routes.draw do
   
-  resources :photos, :only => [:create]
+  resources :photos, :only => [:create, :destroy]
 
   resources :events, :only => [:index]
 
