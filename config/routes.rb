@@ -1,5 +1,7 @@
 Usnapus::Application.routes.draw do
   
+  resources :devices
+
   resources :photos, :only => [:create, :destroy]
 
   resources :events, :only => [:index]
