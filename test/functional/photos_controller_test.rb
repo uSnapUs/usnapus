@@ -14,14 +14,27 @@ class PhotosControllerTest < ActionController::TestCase
     assert_equal Photo.last.id, json["id"]
   end
   
+  
+  
   test "should not create photo without event id" do
-     assert_no_difference 'Photo.count' do
-       xhr :post, :create, photo: @photo.attributes.merge(event_id: nil)
-     end
-     assert_response :unprocessable_entity
-     json = JSON.parse(@response.body)
-     assert_equal ["can't be blank"], json["event_id"]
-   end
+    assert_no_difference 'Photo.count' do
+      xhr :post, :create, photo: @photo.attributes.merge(event_id: nil)
+    end
+    assert_response :unprocessable_entity
+    json = JSON.parse(@response.body)
+    assert_equal ["can't be blank"], json["event_id"]
+  end
+  
+  test "should not create photo without real event" do
+    assert_no_difference 'Photo.count' do
+      xhr :post, :create, photo: @photo.attributes.merge(event_id: 100)
+    end
+    assert_response :unprocessable_entity
+    json = JSON.parse(@response.body)
+    assert_equal ["must point to an existing event"], json["event_id"]
+  end
+  
+  
   
   test "should not create photo without device id" do
     assert_no_difference 'Photo.count' do
@@ -31,6 +44,17 @@ class PhotosControllerTest < ActionController::TestCase
     json = JSON.parse(@response.body)
     assert_equal ["can't be blank"], json["device_id"]
   end
+  
+  test "should not create photo without real device" do
+    assert_no_difference 'Photo.count' do
+      xhr :post, :create, photo: @photo.attributes.merge(device_id: 100)
+    end
+    assert_response :unprocessable_entity
+    json = JSON.parse(@response.body)
+    assert_equal ["must point to an existing device"], json["device_id"]
+  end
+  
+  
   
   test "should be able to delete photo" do
     assert_difference 'Photo.count', -1 do
