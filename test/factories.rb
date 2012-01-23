@@ -3,6 +3,7 @@ end
 
 Factory.define :photo do |p|
   p.association :event
+  p.association :device
 end
 
 Factory.define :device do |d|
