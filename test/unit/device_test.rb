@@ -11,6 +11,11 @@ class DeviceTest < ActiveSupport::TestCase
     assert Factory.build(:device, :guid => "   ").invalid?
   end
   
+  test "factory needs name" do
+    assert Factory.build(:device, :name => nil).invalid?
+    assert Factory.build(:device, :name => "   ").invalid?
+  end
+  
   test "device can have photos" do
     device = Factory :device
     photo = Factory :photo, device: device 

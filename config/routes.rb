@@ -1,14 +1,14 @@
 Usnapus::Application.routes.draw do
   
-  resources :devices
+  resources :devices, only: [:create, :update]
 
-  resources :photos, :only => [:create, :destroy]
+  resources :photos, only: [:create, :destroy]
 
-  resources :events, :only => [:index]
+  resources :events, only: [:index]
 
-  resources :signups, :only => [:create]
+  resources :signups, only: [:create]
   
-  root :to => "home#index"
+  root to: "home#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -8,4 +8,5 @@ end
 
 Factory.define :device do |d|
   d.guid "ABC123"
+  d.name "Nick's iPhone"
 end
