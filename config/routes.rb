@@ -3,7 +3,7 @@ Usnapus::Application.routes.draw do
   resources :devices, only: [:create, :update]
 
   resources :events, only: [:index] do
-    resources :photos, only: [:create, :destroy]
+    resources :photos, only: [:index, :create, :destroy]
   end
 
   resources :signups, only: [:create]

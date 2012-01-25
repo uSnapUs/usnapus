@@ -62,4 +62,12 @@ class PhotosControllerTest < ActionController::TestCase
     assert_response :success
   end
   
+  
+  
+  test "can view slideshow with event id" do
+    get :index, event_id: @event.to_param
+     
+    assert_response :success
+  end
+  
 end

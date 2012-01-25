@@ -2,6 +2,15 @@ class PhotosController < ApplicationController
   
   before_filter :get_event
 
+  def index
+    @photos = @event.photos
+    
+    respond_to do |format|
+      format.html
+      format.json { render json: @photos}
+    end
+  end
+
   # POST /photos.json
   def create
     params[:photo][:event_id] = nil #They can't specify it as an attribute, they have to use the URL
