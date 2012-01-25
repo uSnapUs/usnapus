@@ -59,4 +59,11 @@ class DevicesControllerTest < ActionController::TestCase
     assert_equal ["can't be changed"], json["guid"]
   end
   
+  test "should update device email" do
+    xhr :put, :update, id: @device.to_param, device: @device.attributes.merge(email: "awesome@example.com")
+    assert_response :success
+    
+    assert_equal "awesome@example.com", @device.reload.email
+  end
+  
 end

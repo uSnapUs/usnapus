@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120123054441) do
+ActiveRecord::Schema.define(:version => 20120125054704) do
 
   create_table "devices", :force => true do |t|
     t.string   "guid"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "email"
   end
 
   create_table "events", :force => true do |t|
