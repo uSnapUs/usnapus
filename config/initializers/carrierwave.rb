@@ -1,7 +1,7 @@
-if Rails.env.test? or Rails.env.cucumber?
+if Rails.env.test?
   CarrierWave.configure do |config|
     config.storage = :file
-    config.enable_processing = false
+    config.enable_processing = true
   end
 elsif Rails.env.production?
   CarrierWave.configure do |config|

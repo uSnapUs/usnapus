@@ -5,6 +5,10 @@ class PhotosControllerTest < ActionController::TestCase
     @photo = Factory(:photo)
     @event = @photo.event
   end
+  
+  teardown do
+    FileUtils.rm_rf "#{Rails.root}/public/photos/"
+  end
 
   test "should create photo" do
     assert_difference 'Photo.count' do
@@ -15,6 +19,17 @@ class PhotosControllerTest < ActionController::TestCase
     assert_equal Photo.last.id, json["id"]
   end
   
+  test "should create photo with test file" do
+    assert_difference 'Photo.count' do
+      xhr :post, :create, event_id: @event.to_param, photo: @photo.attributes.merge(photo: fixture_file_upload('files/house.jpg','image/jpg'))
+    end
+    assert_response :success
+    
+    photo = Photo.last
+    
+    assert File.exists?("#{Rails.root}/public/photos/#{photo.id}/house.jpg"), "Original version should be stored"
+    assert File.exists?("#{Rails.root}/public/photos/#{photo.id}/polaroid_house.jpg"), "Polaroid version should be created"
+  end
   
   test "should not create photo without real event" do
     assert_no_difference 'Photo.count' do
@@ -61,7 +76,6 @@ class PhotosControllerTest < ActionController::TestCase
     end
     assert_response :success
   end
-  
   
   
   test "can view slideshow with event id" do
