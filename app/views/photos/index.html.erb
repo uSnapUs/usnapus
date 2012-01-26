@@ -1,5 +1,14 @@
 <h1>Photos</h1>
 
-<% @photos.all.each do |photo| %>
-  <%= image_tag photo.photo_url("polaroid")  %>
-<% end %>
+<div class="container-fluid gallery">
+  <% photo = @photos.first %>
+  <div class="row">
+    <% 30.times do |i| %>
+      <div class="span4">
+        <a>
+          <%= image_tag photo.photo_url("polaroid")  %>
+        </a>
+      </div>
+    <% end %>
+  </div>
+</div>

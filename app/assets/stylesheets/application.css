@@ -9,6 +9,7 @@
  *= require_self
  *= require signups
  *= require home
+ *= require photos
 */
 
 body{
