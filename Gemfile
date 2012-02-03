@@ -34,6 +34,7 @@ gem 'anybase'
 
 gem "thin"
 gem "heroku"
+gem "pusher"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

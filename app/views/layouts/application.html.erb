@@ -34,6 +34,9 @@
   </head>
 
   <body>
+    
+    <section id="alert-area"></section>
+    
     <%= yield %>
     
     
@@ -50,6 +53,13 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
 
+    </script>
+    
+    <script type="text/html" id="alert_template">
+      <div class="alert alert-{{alert_type}}">
+        <a class="close">×</a>
+        <strong>{{alert_heading}}</strong>{{alert_message}}
+      </div>
     </script>
     
   </body>

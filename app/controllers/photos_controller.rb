@@ -19,6 +19,7 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       if @photo.save
+        Pusher["event-#{@event.id}-photocast"].trigger!('new_photo', @event.photos.sample)
         format.json { render json: @photo, status: :created}
       else
         format.json { render json: @photo.errors, status: :unprocessable_entity }
@@ -36,7 +37,7 @@ class PhotosController < ApplicationController
         format.json { render json: @photo.errors, status: :unprocessable_entity }
       end
     end
-  end 
+  end
   
   private
     def get_event

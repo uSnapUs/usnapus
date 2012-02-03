@@ -3,6 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .gallery{
+  .photo{
+    display: none;
+    
     img{
       width: 190px;
       height: 190px;
@@ -10,4 +13,22 @@
       padding: 10px;
       margin: 10px;
     }
+  }
+}
+
+.fade{
+  width: 100%;
+  height: 75px;
+  background-color: red;
+  position: fixed;
+  bottom: 0;
+  z-index:100;
+  opacity: 1;
+  background: -moz-linear-gradient(top,  rgba(23,28,30,0) 0%, rgba(23,28,30,0) 1%, rgba(23,28,30,1) 98%, rgba(23,28,30,1) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(23,28,30,0)), color-stop(1%,rgba(23,28,30,0)), color-stop(98%,rgba(23,28,30,1)), color-stop(100%,rgba(23,28,30,1)));
+  background: -webkit-linear-gradient(top,  rgba(23,28,30,0) 0%,rgba(23,28,30,0) 1%,rgba(23,28,30,1) 98%,rgba(23,28,30,1) 100%);
+  background: -o-linear-gradient(top,  rgba(23,28,30,0) 0%,rgba(23,28,30,0) 1%,rgba(23,28,30,1) 98%,rgba(23,28,30,1) 100%);
+  background: -ms-linear-gradient(top,  rgba(23,28,30,0) 0%,rgba(23,28,30,0) 1%,rgba(23,28,30,1) 98%,rgba(23,28,30,1) 100%);
+  background: linear-gradient(top,  rgba(23,28,30,0) 0%,rgba(23,28,30,0) 1%,rgba(23,28,30,1) 98%,rgba(23,28,30,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00171c1e', endColorstr='#171c1e',GradientType=0 );
 }
