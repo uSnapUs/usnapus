@@ -37,7 +37,10 @@
 
   <body>
     
-    <section id="alert-area"></section>
+    <section class="container">
+      <div class="row" id="alert-area">
+      </div>
+    </section>
     
     <%= yield %>
     
@@ -58,7 +61,8 @@
     </script>
     
     <script type="text/html" id="alert_template">
-      <div class="alert alert-{{alert_type}}">
+      <div class="span2">&nbsp;</div>
+      <div class="span8 alert alert-{{alert_type}}">
         <a class="close">×</a>
         <strong>{{alert_heading}}</strong>  {{{alert_message}}}
       </div>
