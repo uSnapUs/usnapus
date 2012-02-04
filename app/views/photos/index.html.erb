@@ -1,7 +1,7 @@
 <h1>Photos</h1>
 
 <div class="container-fluid gallery">
-  <div class="row" id="photo_gallery">
+  <div class="row-fluid" id="photo_gallery">
   </div>
 </div>
 
@@ -14,16 +14,11 @@
     
     pusher.connection.bind("unavailable", function(){
       showAlert("error", "Oops!", "It looks like we can't grab any new photos right now. We'll try again soon.");
-      
-      
-      pusher.connection.bind("connecting_in", function(delay){
-        showAlert("information", "Reconnecting", "uSnap.us will try to reconnect in "+delay+" seconds.")
-      });
     });
     
     
     pusher.connection.bind("failed", function(){
-      showAlert("error", "Oops!", "It looks like your browser doesn't support uSnap.us fetching photos on the fly. You can see new photos by refreshing your browser.");
+      showAlert("error", "Oops!", "It looks like your browser doesn't support uSnap.us fetching photos on the fly.<br />You can see new photos by refreshing your browser.");
     });
     
     
@@ -34,10 +29,10 @@
 </script>
 
 <script type="text/html" id="gallery_photo_template">
-  <div class="span4 photo" id="photo_{{id}}">
+  <div class="photo" id="photo_{{id}}">
   {{#photo}}
     <a href="{{base_src}}" title="Photo taken by {{alt}}. Click to view original.">
-      <img src="{{smaller_src}}" alt="Photo taken by {{alt}}" />
+      <img src="{{smaller_src}}" class="span3" alt="Photo taken by {{alt}}" />
     </a>
   {{/photo}}
   </div>
