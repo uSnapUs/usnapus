@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class PhotosControllerTest < ActionController::TestCase
+  
   setup do
     @photo = Factory(:photo)
     @event = @photo.event
@@ -30,6 +31,14 @@ class PhotosControllerTest < ActionController::TestCase
     assert File.exists?("#{Rails.root}/public/photos/#{photo.id}/house.jpg"), "Original version should be stored"
     assert File.exists?("#{Rails.root}/public/photos/#{photo.id}/polaroid_house.jpg"), "Polaroid version should be created"
   end
+  
+  
+  test "creating a photo should fire a Pusher event" do
+    Pusher["event-#{@event.id}-photocast"].expects(:trigger!).once
+    xhr :post, :create, event_id: @event.to_param, photo: @photo.attributes
+  end
+  
+  
   
   test "should not create photo without real event" do
     assert_no_difference 'Photo.count' do
@@ -67,7 +76,6 @@ class PhotosControllerTest < ActionController::TestCase
     json = JSON.parse(@response.body)
     assert_equal ["must point to an existing device"], json["device_id"]
   end
-  
   
   
   test "should be able to delete photo" do

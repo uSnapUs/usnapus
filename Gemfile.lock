@@ -30,7 +30,6 @@ GEM
     activesupport (3.1.2)
       multi_json (~> 1.0)
     addressable (2.2.6)
-    ansi (1.4.1)
     anybase (0.0.14)
     arel (2.2.1)
     builder (3.0.0)
@@ -95,7 +94,10 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    metaclass (0.0.1)
     mime-types (1.17.2)
+    mocha (0.10.3)
+      metaclass (~> 0.0.1)
     multi_json (1.0.4)
     multi_xml (0.4.1)
     mysql2 (0.3.11)
@@ -163,8 +165,6 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    turn (0.8.2)
-      ansi (>= 1.2.2)
     tzinfo (0.3.31)
     uglifier (1.2.1)
       execjs (>= 0.3.0)
@@ -184,6 +184,7 @@ DEPENDENCIES
   formtastic-bootstrap
   heroku
   jquery-rails
+  mocha
   mysql2
   pg
   pusher
@@ -191,5 +192,4 @@ DEPENDENCIES
   rmagick
   sass-rails (~> 3.1.5.rc.2)
   thin
-  turn (= 0.8.2)
   uglifier (>= 1.0.3)
