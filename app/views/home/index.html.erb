@@ -1,8 +1,10 @@
 <div class="topbar">
   <div class="fill">
     <div class="container">
-      <h1 class="brand">
-        <%= link_to (image_tag "logo-header.png", :title => "uSnap.us"), root_path %>
+      <h1 class="brand row">
+        <div class="span12">
+          <%= link_to (image_tag "logo-header.png", :title => "uSnap.us"), root_path %>
+        </div>
       </h1>
     </div>
   </div>
@@ -12,7 +14,7 @@
   <div class="container">
     
     <section class="row">
-      <div class="spiel">
+      <div class="span12 spiel">
         <h1 class="tagline">
           See your wedding through their eyes
         </h1>
@@ -69,8 +71,8 @@
 
 <div class="bottom_panel container" id="the_black">
   <section class="row">
-    <h1 class="brand"><%= image_tag "logo-signup.png", :title=>"uSnap.us" %></h1>
-    <p class="dropus">
+    <h1 class="brand span12"><%= image_tag "logo-signup.png", :title=>"uSnap.us" %></h1>
+    <p class="dropus span12">
       Drop us your details, you'll be first in line when we launch in March 2012.
     </p>
 
@@ -83,7 +85,7 @@
 
   <section class="row footer">
     <hr />
-    <p>
+    <p class="span12">
       <span class="brand">uSnap.us</span>
       <span class="upcase">&nbsp;&#183;&nbsp; Launches March 2012 &nbsp;&#183;&nbsp; <%= link_to "Follow Us", "http://twitter.com/usnapus", :title => "Follow and talk to uSnap.us on Twitter!" %> on twitter</span>
     </p>
