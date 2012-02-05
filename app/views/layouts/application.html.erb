@@ -23,7 +23,8 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <%= stylesheet_link_tag    "application" %>
-    <%= javascript_include_tag "application" %>
+    <%= content_for(:head) %>
+    
     <%= csrf_meta_tags %>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,6 +45,17 @@
     
     <%= yield %>
     
+    
+    
+    <%= javascript_include_tag "application" %>
+    
+    <%= content_for(:extra_scripts) %>
+    
+    <script type="text/javascript">
+    	$(document).ready(function(){
+        <%= content_for(:jquery) %>
+      });
+    </script>
     
     <script type="text/javascript">
 

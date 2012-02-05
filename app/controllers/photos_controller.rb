@@ -10,6 +10,10 @@ class PhotosController < ApplicationController
       format.json { render json: @photos}
     end
   end
+  
+  def fullscreen
+    
+  end
 
   # POST /photos.json
   def create
