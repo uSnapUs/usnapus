@@ -1,7 +1,8 @@
 class DevicesController < ApplicationController
-
+protect_from_forgery :except => [:create,:update]
   # POST /devices.json
   def create
+    
     @device = Device.new(params[:device])
 
     respond_to do |format|
