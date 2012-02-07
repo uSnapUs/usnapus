@@ -8,7 +8,7 @@ class PhotosControllerTest < ActionController::TestCase
   end
   
   teardown do
-    FileUtils.rm_rf "#{Rails.root}/public/photos/"
+    FileUtils.rm_rf "#{Rails.root}/public/events/"
   end
 
   test "should create photo" do
@@ -27,9 +27,8 @@ class PhotosControllerTest < ActionController::TestCase
     assert_response :success
     
     photo = Photo.last
-    
-    assert File.exists?("#{Rails.root}/public/photos/#{photo.id}/house.jpg"), "Original version should be stored"
-    assert File.exists?("#{Rails.root}/public/photos/#{photo.id}/polaroid_house.jpg"), "Polaroid version should be created"
+    assert File.exists?("#{Rails.root}/public/events/#{@event.code}/photos/#{photo.id}/house.jpg"), "Original version should be stored"
+    assert File.exists?("#{Rails.root}/public/events/#{@event.code}/photos/#{photo.id}/polaroid_house.jpg"), "Polaroid version should be created"
   end
   
   
