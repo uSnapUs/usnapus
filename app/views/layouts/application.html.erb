@@ -36,12 +36,24 @@
     <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-retina.png" />
   </head>
 
-  <body>
+  <body class="<%= "home" if request.path.eql? "/" %>">
     
     <section class="container">
       <div class="row" id="alert-area">
       </div>
     </section>
+    
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <h1 class="brand row">
+            <div class="span12">
+              <%= link_to (image_tag "logo-header.png", :title => "uSnap.us"), root_path %>
+            </div>
+          </h1>
+        </div>
+      </div>
+    </div>
     
     <%= yield %>
     
@@ -54,6 +66,14 @@
     <script type="text/javascript">
     	$(document).ready(function(){
         <%= content_for(:jquery) %>
+        
+        <% if flash[:notice] %>
+          showAlert("info", "", "<%= flash[:notice] %>")
+        <% end %>
+        <% if flash[:alert] %>
+          showAlert("error", "Oops!", "<%= flash[:alert] %>")
+        <% end %>
+        
       });
     </script>
     
@@ -78,14 +98,6 @@
         <a class="close">×</a>
         <strong>{{alert_heading}}</strong>  {{{alert_message}}}
       </div>
-    </script>
-    <script type="text/script">
-      <% if notice %>
-        showAlert("info", "Oops!", <%= notice %>)
-      <% end %>
-      <% if alert %>
-        showAlert("error", "Oops!", <%= alert %>)
-      <% end %>
     </script>
     
     <script type="text/javascript" src="http://use.typekit.com/avj2ysl.js"></script>     
