@@ -4,6 +4,8 @@ class Signup < ActiveRecord::Base
   
   after_create :sync
   
+  attr_accessible :event_date, :email
+  
   def sync
     unless Rails.env.test? 
       CampaignMonitor.sync(self)

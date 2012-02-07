@@ -2,10 +2,11 @@ class Event < ActiveRecord::Base
   
   has_many :photos
   
-  
   validates :code, :format => {:with => /\A[A-HJKMNP-Z2-9]{7}\Z/, :on => :create}, :uniqueness => true
   
   before_validation :generate_code, :on => :create
+  
+  attr_accessible :latitude, :longitude, :starts, :ends
   
   scope :near, lambda{ |*args|
     origin = *args.first[:origin]

@@ -1,5 +1,7 @@
 Usnapus::Application.routes.draw do
   
+  devise_for :users
+
   resources :devices, only: [:create, :update]
 
   resources :events, only: [:index] do

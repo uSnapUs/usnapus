@@ -5,6 +5,8 @@ class Device < ActiveRecord::Base
   validates :guid, presence: {allow_blank: false}
   validates :name, presence: {allow_blank: false}
   validate :forbid_changing_guid, on: :update
+  
+  attr_accessible :guid, :name, :email
 
   private
   
