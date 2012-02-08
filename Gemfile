@@ -35,7 +35,7 @@ gem 'anybase'
 gem "thin"
 gem "heroku"
 gem "pusher"
-
+gem 'postmark-rails'
 gem "devise"
 
 # To use ActiveModel has_secure_password
