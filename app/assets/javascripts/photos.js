@@ -12,7 +12,7 @@ $(document).ready(function() {
     
   }
   
-  function photoHTML(data){
+  window.appendPhoto = function(data){
     
     var photo = {
       id : data["id"],
@@ -23,11 +23,9 @@ $(document).ready(function() {
       }
     }
     
-    return Mustache.to_html($("#gallery_photo_template").html(), photo);
-  }
-  
-  window.appendPhoto = function(data){
-    $("#photo_gallery").append(photoHTML(data))
+    var html = Mustache.to_html($("#gallery_photo_template").html(), photo);
+    
+    $("#photo_gallery").prepend(html)
     $(".photo:hidden").fadeIn();
   }
   
