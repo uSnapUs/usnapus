@@ -55,7 +55,7 @@
   var photos = []
   
   //Load all the photos asynchronously on page load
-  $.getJSON("/events/2/photos", function(data){
+  $.getJSON(<%= "/events/#{@event.id}/photos"%>, function(data){
     
     $.each(data, function(i, photo_data) {
       
