@@ -6,13 +6,12 @@ class Photo < ActiveRecord::Base
   belongs_to :device
   
   validates :event_id, presence: true
-  validates :device_id, presence: true
   validate :event_and_device_must_exist
   
   attr_accessible :photo, :device_id
   
   def as_json(options = {})
-    super(options).merge(:device_name => "#{device.name}")
+    super(options).merge(:device_name => "#{device.name if device}")
   end
   
   private

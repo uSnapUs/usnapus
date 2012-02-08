@@ -5,7 +5,7 @@ Usnapus::Application.routes.draw do
   resources :devices, only: [:create, :update]
 
   resources :events, only: [:index] do
-    resources :photos, only: [:index, :create, :destroy] do
+    resources :photos, except: [:update, :edit] do
       collection do
         get :fullscreen
       end

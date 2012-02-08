@@ -11,21 +11,31 @@ class PhotosController < ApplicationController
     end
   end
   
+  def new
+    @photo = @event.photos.new
+  end
+  
   def fullscreen
     
   end
 
   # POST /photos.json
   def create
-    params[:photo][:event_id] = nil #They can't specify it as an attribute, they have to use the URL
-    
     @photo = @event.photos.new(params[:photo])
 
     respond_to do |format|
       if @photo.save
         Pusher["event-#{@event.id}-photocast"].trigger!('new_photo', @photo)
+        format.html {
+          flash[:notice] = "Photo uploaded!"
+          redirect_to event_photos_path(@event)
+        }
         format.json { render json: @photo, status: :created}
       else
+        format.html{
+          p @photo.errors
+          render "new"
+        }
         format.json { render json: @photo.errors, status: :unprocessable_entity }
       end
     end

@@ -1,0 +1,9 @@
+<section class="container">
+  <div class="row">
+    
+    <%= form_for [@event, @photo], :html=>{:multipart=>true} do |f| %>
+      <%= f.file_field :photo %>
+      <%= f.submit "Upload", :class => "btn btn-blue" %>
+    <% end %>
+  </div>
+</div>
