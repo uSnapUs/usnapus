@@ -1,3 +1,4 @@
+<% @title = "Photos from #{@event.name}"%>
 <% @topbar_class = "thin" %>
 
 <section class="container event_details">
@@ -18,11 +19,19 @@
 </section>
 
 
-
-<div class="container gallery">
-  <div id="photo_gallery">
+<section class="container gallery">
+  <div class="row">
+    <div id="photo_gallery">
+    </div>
   </div>
-</div>
+</section>
+
+<section class="container">
+  <div class="row gallery_footer">
+    <p class="pull-left">Contribute your own photos. <strong><%= link_to "Get the free app.", "#" %></strong></p>
+    <p class="pull-right"><span class="upcase">With love from</span> <span class="brand">uSnap.us</span></p>
+  </div>
+</section>
 
 <script src="http://js.pusher.com/1.11/pusher.min.js" type="text/javascript"></script>
 

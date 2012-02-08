@@ -58,4 +58,22 @@
   left: 20px;
   z-index: 1000;
   opacity: 0.75;
+  &:hover{
+    opacity: 1;
+  }
+}
+
+.gallery_footer{
+  background-color: #fff;
+  border-top: 1px solid $light_blue;
+  margin-top: 40px;
+  padding: 20px 0;
+  p{
+    color: $light_blue;
+    margin: 0;
+    
+    .brand{
+      font-size: 18px;
+    }
+  }
 }

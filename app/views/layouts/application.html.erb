@@ -2,7 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>uSnap.us - See your wedding through their eyes. Wedding and event photos, taken by your guests and put online for you to see</title>
+    <title>
+      <% if @title %>
+        <%= "#{@title} | uSnap.us - See your wedding through their eyes."%>
+      <% else %>
+      uSnap.us - See your wedding through their eyes. Wedding and event photos, taken by your guests and put online for you to see
+      <% end %>
+    </title>
+    
     <meta name="description" content="See your wedding through their eyes. Your guests' photos are delivered online instantly, at your fingertips whenever you want. Watch a live steam as your event unfolds. Perfect for wedding photos.">
     <meta name="author" content="">
     <meta name="keywords" content="wedding, photograph, photos, events, wedding ideas, disposable cameras, unique wedding">
