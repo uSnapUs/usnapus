@@ -20,5 +20,8 @@ window.showAlert = function(alert_type, alert_heading, alert_message){
   
   $("#alert-area").append(html);
   $(".alert:hidden").fadeIn();
+  $("#alert-area").on("click", ".close", function(){
+    $(this).parents(".alert:first").fadeOut()
+  })
 }
 
