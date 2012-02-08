@@ -51,3 +51,11 @@
     float: left;
   }
 }
+
+.branding_overlay{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  opacity: 0.75;
+}
