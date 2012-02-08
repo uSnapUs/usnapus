@@ -7,7 +7,7 @@ Devise.setup do |config|
   config.mailer_sender = "team@usnap.us"
 
   # Configure the class responsible to send e-mails.
-  # config.mailer = "Devise::Mailer"
+  config.mailer = "Notifier" #Use our own Postmarked mailer
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and

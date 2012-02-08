@@ -39,12 +39,16 @@ module Usnapus
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]
+    config.filter_parameters += [:password, :new_password]
 
     # Enable the asset pipeline
     config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    
+    # Use postmark
+    config.action_mailer.delivery_method   = :postmark
+    config.action_mailer.postmark_settings = { :api_key => "e6b43acf-81d9-4495-8394-0507a817d458" }
   end
 end
