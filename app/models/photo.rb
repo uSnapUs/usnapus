@@ -12,7 +12,7 @@ class Photo < ActiveRecord::Base
   attr_accessible :photo, :device_id
   
   def as_json(options = {})
-    super(options).merge(:device_name => "#{device.name} (#{device.email})")
+    super(options).merge(:device_name => "#{device.name}")
   end
   
   private
