@@ -1,6 +1,8 @@
 // Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "configuration";
+
 
 body.home{
   background-color: #171c1e;
@@ -8,21 +10,6 @@ body.home{
   
   p, input{
     font-size: 18px;
-  }
-}
-
-.topbar{
-  
-  .fill{
-    height:78px;
-    background-color: #5EE0AA;
-    background: url(image-path('headerstrip.png')) repeat-x;
-    filter:none;
-    box-shadow:none;
-    h1{
-      margin-bottom: 0;
-      padding: 12px 0 0 0;
-    }
   }
 }
 
@@ -60,10 +47,10 @@ body.home{
   }
   }
   background-color: #fcfdff;
-  color: #7798B4;
+  color: $light_blue;
   h1, h2{
       font-weight:600;
-      color: #36536C;
+      color: $dark_blue;
   }
   
   .image{
