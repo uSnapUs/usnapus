@@ -11,9 +11,8 @@ class PhotoTest < ActiveSupport::TestCase
     assert Factory.build(:photo, event_id: 100).invalid?
   end
   
-  test "photo needs to belong to a device" do
-    assert Factory.build(:photo, device: nil).invalid?
-    assert Factory.build(:photo, device_id: 100).invalid?
+  test "photo doesn't need to belong to a device" do
+    assert Factory.build(:photo, device_id: nil).valid?
   end
   
 end
