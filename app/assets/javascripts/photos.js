@@ -1,8 +1,9 @@
 $(document).ready(function() {
-  if($("#photo_gallery")){
+  
+  if($("#photo_gallery").length > 0){
     
     //Load all the photos asynchronously on page load
-    $.getJSON(window.location, function(data){
+    $.getJSON(window.location+".json", function(data){
       
       $.each(data, function(i, photo_data) {
         appendPhoto(photo_data)

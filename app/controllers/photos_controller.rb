@@ -3,11 +3,15 @@ class PhotosController < ApplicationController
   before_filter :get_event
 
   def index
+    
     @photos = @event.photos
     
     respond_to do |format|
       format.html
-      format.json { render json: @photos}
+      format.json { 
+        headers["Cache-Control"] = 'no-cache, no-store'
+        render json: @photos
+      }
     end
   end
   
