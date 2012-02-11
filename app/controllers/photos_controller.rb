@@ -4,7 +4,11 @@ class PhotosController < ApplicationController
 
   def index
     
-    @photos = @event.photos
+    @photos = @event.photos.order("created_at DESC")
+    
+    if limit = params[:limit]
+      @photos = @photos.limit(limit.to_i)
+    end
     
     respond_to do |format|
       format.html

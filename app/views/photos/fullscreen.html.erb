@@ -61,7 +61,7 @@
   var photos = []
   
   //Load all the photos asynchronously on page load
-  $.getJSON("<%= "/events/#{@event.id}/photos"%>", function(data){
+  $.getJSON("<%= "/events/#{@event.id}/photos#{"?limit=1" if params[:live]}"%>", function(data){
     
     $.each(data, function(i, photo_data) {
       
@@ -72,16 +72,51 @@
       });
     });
     
-    
     $.supersized({
 			slide_interval:   3000,
 			transition:   3,
 			transition_speed		:	700,						
 			slide_links				:	'blank',
-			slides 					: photos
+			slides 					: photos,
+			horizontal_center: 1,
+			vertical_center: 1<% if params[:live] %>,autoplay:0<% end %>
 		});
     
-  });
+    <% if params[:live] %>
+      console.log("Live");
+      
+  		//Go to new photos when they come in
+      var pusher = new Pusher('2e4efb9ca1181106d096');
+      var channel = pusher.subscribe('<%= "event-#{@event.id}-photocast" %>');
+      channel.bind('new_photo', function(data) {
+        pushPhotoToSlideshow(data);
+      });
 
+    <% end %>
+    
+  });
 		
 <% end %>
+
+<% if params[:live] %>
+  <script src="http://js.pusher.com/1.11/pusher.min.js" type="text/javascript"></script>
+<% end %>  
+
+
+<script type="text/html" id="supersized_slide_template">
+  <li class="slide-{{slide_id}}">
+  {{#photo}}
+    <a target="{{href}}">
+      <img src="{{base_src}}">
+    </a>
+  {{/photo}}
+  </li>
+</script>
+
+<script type="text/html" id="supersized_bullet_template">
+<li class="slide-link-{{slide_id}}"><a></a></li>
+</script>
+
+<script type="text/html" id="supersized_thumb_template">
+<li class="thumb{{slide_id}}">{{#photo}}<img src="{{smaller_src}}">{{/photo}}</li>
+</script>

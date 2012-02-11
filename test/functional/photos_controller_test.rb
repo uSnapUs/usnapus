@@ -62,10 +62,29 @@ class PhotosControllerTest < ActionController::TestCase
   end
   
   
-  test "can view slideshow with event id" do
+  test "can view photos with event id" do
     get :index, event_id: @event.to_param
-     
     assert_response :success
+    assert assigns(:photos)
+  end
+  
+  test "photos are returned most recent first" do
+    
+    @photo.created_at = 3.seconds.ago
+    @photo.save!
+    
+    photo2 = Factory(:photo, event: @photo.event)
+    xhr :get, :index, event_id: @event.to_param, format: "json"
+    json = JSON.parse(@response.body)
+    assert_equal photo2.id, json[0]["id"]
+    assert_equal @photo.id, json[1]["id"]
+  end
+  
+  test "can limit photos" do
+    photo2 = Factory(:photo, event: @photo.event)
+    xhr :get, :index, event_id: @event.to_param, limit: 1, format: "json"
+    json = JSON.parse(@response.body)
+    assert_equal 1, json.length
   end
   
   
