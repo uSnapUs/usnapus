@@ -16,7 +16,7 @@ class PhotosController < ApplicationController
   end
   
   def fullscreen
-    
+    render :layout => false
   end
 
   # POST /photos.json

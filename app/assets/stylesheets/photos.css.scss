@@ -56,7 +56,7 @@
   position: absolute;
   top: 20px;
   left: 20px;
-  z-index: 1000;
+  z-index: 2001;
   opacity: 0.75;
   &:hover{
     opacity: 1;
@@ -77,3 +77,9 @@
     }
   }
 }
+
+.slideshow { list-style: none; padding: 0; margin: 0; }
+.slideshow:after { clear: both; content: "."; display: block; height: 0; visibility: hidden; }
+.slideshow li { float: left; width: 33.33333333%; }
+.slideshow li a { display: block; margin: 5px; border: 1px solid #3c3c3c; }
+.slideshow li img { display: block; width: 100%; height: auto; }
