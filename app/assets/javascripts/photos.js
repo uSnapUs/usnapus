@@ -25,9 +25,7 @@ $(document).ready(function() {
     //If we're in live photo mode, update the photo
     if($("#fullscreen_photo:not(.dont_update)").length > 0){
       var img = $("#fullscreen_photo img");
-      img.fadeOut();
-      img.prop("src", photo["photo"]["base_src"]);
-      showImageFullscreen(img);
+      prepareFullscreenImage(photo["photo"]["base_src"]);
     }
   }
   
@@ -56,9 +54,16 @@ $(document).ready(function() {
   })
   
   function prepareFullscreenImage(image_src){
-    $("body").append('<div id="fullscreen_photo"><img src="'+image_src+'" /></div>');
+    if($('#fullscreen_photo').length > 0){
+      //There's already a photo on display
+    }else{
+      $("body").append('<div id="fullscreen_photo"></div>'); 
+    }
     
-    var img = $("#fullscreen_photo img");
+    var fullscreen_photo_div = $("#fullscreen_photo");
+    fullscreen_photo_div.append('<img src="'+image_src+'" class="new" />')
+    
+    var img = $("#fullscreen_photo img.new");
     var image_load_fired = false;
     img.load(function(){
       if(!image_load_fired){
@@ -91,7 +96,12 @@ $(document).ready(function() {
   
   function showImageFullscreen(img){
     resizeAndPositionImage(img);
-    img.fadeIn();
+    $("#fullscreen_photo img:not(.new)").fadeOut(500, function(){
+      $(this).remove();
+    })
+    $("#fullscreen_photo img.new").fadeIn(500, function(){
+      $(this).removeClass("new")
+    })
   }
   
   function closeFullscreen(){
