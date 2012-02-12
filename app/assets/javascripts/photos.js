@@ -4,21 +4,31 @@ $(document).ready(function() {
     
     //Load all the photos asynchronously on page load
     $.getJSON(window.location+".json", function(data){
-      
-      $.each(data, function(i, photo_data) {
-        appendPhoto(photo_data)
+      //Since the photos come in created_at ASC order,
+      // we want to *append* them. So flip the array.
+      $.each(data.reverse(), function(i, photo_data) {
+        prependPhoto(photo_data)
       });
       
     });
     
   }
   
-  window.appendPhoto = function(data){
+  //Always stick the newest photo at the front
+  window.prependPhoto = function(data){
+    var photo = photoToUsableJSON(data);
+    var html = Mustache.to_html($("#gallery_photo_template").html(), photo);
     
-    var html = Mustache.to_html($("#gallery_photo_template").html(), photoToUsableJSON(data));
-    
-    $("#photo_gallery").append(html)
+    $("#photo_gallery").prepend(html);
     $(".photo:hidden").fadeIn();
+    
+    //If we're in live photo mode, update the photo
+    if($("#fullscreen_photo:not(.dont_update)").length > 0){
+      var img = $("#fullscreen_photo img");
+      img.fadeOut();
+      img.prop("src", photo["photo"]["base_src"]);
+      showImageFullscreen(img);
+    }
   }
   
   function photoToUsableJSON(data){
@@ -32,69 +42,75 @@ $(document).ready(function() {
     }
   }
   
-  window.pushPhotoToSlideshow = function(data){
+  //The live photo cast
+  $("#show_latest_photos").on("click", function(){
+    prepareFullscreenImage($(".photo a:first").prop("href"));
+  })
+  
+  //Show a photo fullscreen
+  $("#photo_gallery").on("click", ".photo a", function(){
+    prepareFullscreenImage($(this).prop("href"));
+    //This isn't the live photo cast, though
+    $("#fullscreen_photo").addClass("dont_update").css({"background-color": "rgba(0,0,0,0.75)"})
+    return false;
+  })
+  
+  function prepareFullscreenImage(image_src){
+    $("body").append('<div id="fullscreen_photo"><img src="'+image_src+'" /></div>');
     
-    
-    var photo = photoToUsableJSON(data);
-    
-    var pushed_photo = false;
-    
-    //Load the image in a hidden div
-    $("body").append('<img src="'+photo["photo"]["base_src"]+'" id="preload_'+photo["id"]+'" style="display:none;"/>');
-    $("#preload_"+photo["id"]).load(function(){
-      
-      //For various reasons, this might not fire.
-      // So we have a backup timeout
-      
-      if(!pushed_photo){
-        addPhotoToSlideshow(photo);
-        pushed_photo = true;
-        $("#preload_"+photo["id"]).remove();
+    var img = $("#fullscreen_photo img");
+    var image_load_fired = false;
+    img.load(function(){
+      if(!image_load_fired){
+        showImageFullscreen(img);
+        image_load_fired = true;
       }
-      
     });
+    //For various reasons, .load mightn't fire. Have a timeout
+    setTimeout(
+      function(){
+        if(!image_load_fired){
+          showImageFullscreen(img);
+          image_load_fired = true;
+        }
+      }, 3000)
     
-    //Backup incase load doesn't fire
-    window.setTimeout(function() {  
-      if(!pushed_photo){
-        addPhotoToSlideshow(photo);
-        pushed_photo = true;
-        $("#preload_"+photo["id"]).remove();
-      }
-    }, 10000);//Give it a chance to load
+    //Resize the photo if the window changes
+    $(window).resize(function(){
+      resizeAndPositionImage(img);
+		});
+		
+		//Close fullscreen if you click it or press escape
+		$("#fullscreen_photo").on("click", function(){closeFullscreen()});
+		$(document).keyup(function(e) {
+      if (e.keyCode == 27) { closeFullscreen(); }   // esc
+    });
+		
+    return false;
   }
   
-  //This actually puts in in the slideshow, but is used internally
-  function addPhotoToSlideshow(photo){
-    
-    //Increase the displayed # of slides (which start at 1)
-    var counter = $("#slidecounter .totalslides");
-    var current_count = parseInt(counter.html());
-    counter.html(current_count+1);
-    
-    photo["slide_id"] = current_count; //slide counts start at 0
-    
-    //Push it into the JS array of slides
-    api.options.slides.push({
-      image: photo["photo"]["base_src"],
-      thumb: photo["photo"]["smaller_src"],
-      title: photo["alt"]});
-      
-    //Add the HTML to display
-    $("ul#supersized").append(Mustache.to_html($("#supersized_slide_template").html(), photo));
-    $("#thumb-list").append(Mustache.to_html($("#supersized_thumb_template").html(), photo));
-    $("#thumb-list").css({width: $("#thumb-list").width()+$("#thumb-list li:first").width()});
-    $("#slide-list").append(Mustache.to_html($("#supersized_bullet_template").html(), photo));
-    
-    //Tell supersized to proportion the images properly
-    //Telling it to resize too soon doesn't work...
-    window.setTimeout(function() {  
-      resizeSupersized();
-    }, 500);
-    
-    //Go to the latest slide
-    console.log(current_count+1);
-    api.goTo(current_count+1);
+  function showImageFullscreen(img){
+    resizeAndPositionImage(img);
+    img.fadeIn();
+  }
+  
+  function closeFullscreen(){
+    $("#fullscreen_photo").fadeOut(300, function(){$(this).remove();});
+  }
+  
+  function resizeAndPositionImage(img){
+    var browserwidth = $(window).width();
+    var browserheight = $(window).height();
+    //Resize
+    img.css(
+      {
+        "max-width": browserwidth, 
+        "max-height": browserheight
+      }).css(
+      {
+        "left": (browserwidth - img.width())/2,
+        "top": (browserheight - img.height())/2
+      });
   }
   
 });

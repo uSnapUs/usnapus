@@ -10,8 +10,8 @@
         <%= link_to fullscreen_event_photos_path(@event) do %>
           &#9658; Slideshow
         <% end %>
-        <%= link_to fullscreen_event_photos_path(@event, live: true) do %>
-          &#9658; Latest Photos
+        <%= link_to "#", :id=>"show_latest_photos" do %>
+          &#9658; Live Photos
         <% end %>
       </div>
     </div>
@@ -40,7 +40,7 @@
   
   var channel = pusher.subscribe('<%= "event-#{@event.id}-photocast" %>');
   channel.bind('new_photo', function(data) {
-    appendPhoto(data);
+    prependPhoto(data);
   });
 </script>
 
