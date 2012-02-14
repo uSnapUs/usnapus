@@ -61,7 +61,7 @@
   var photos = []
   var photo_url = "<%= "/events/#{@event.id}/photos"%>";
   
-  var isSmallScreen = ($(window).width() < 1024);
+  var isSmallScreen = ($(window).width() <= 1024);
   
   //Load all the photos asynchronously on page load
   $.getJSON(photo_url, function(data){
