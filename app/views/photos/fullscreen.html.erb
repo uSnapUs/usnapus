@@ -10,30 +10,54 @@
 	
 	<%= javascript_include_tag "klass.min", "jquery", "code.photoswipe.jquery-3.0.4" %>
 	
-	
 	<script type="text/javascript">
 
-		$(document).ready(function(){
+    (function(window, $, PhotoSwipe){
 			
-				var options = {
-					preventHide: true,
-					getImageSource: function(obj){
-						return obj.url;
-					},
-					getImageCaption: function(obj){
-						return obj.caption;
-					}
-				}
-				$("#gallery").photoSwipe( 
-					[
-						{ url: 'https://usnapus-dev.s3.amazonaws.com/events//photos/11/fb2.jpg', caption: 'Image 001'},
-						{ url: 'https://usnapus-dev.s3.amazonaws.com/events//photos/10/fb1.jpg', caption: 'Image 002'}
-					], 
-					options 
-				);
+			$(document).ready(function(){
 				
+				var photos = [
+    		  { 
+    		    url: 'https://usnapus-dev.s3.amazonaws.com/events/BAHMEY9/photos/17/fb2.jpeg', 
+    		    caption: 'Image 001'
+    		  },
+    		  { 
+    		    url: 'https://usnapus-dev.s3.amazonaws.com/events/BAHMEY9/photos/18/fb1.jpg', 
+    		    caption: 'Image 002'
+    		  },
+    		  {
+  				  url: "http://usnapus-dev.s3.amazonaws.com/events/BAHMEY9/photos/19/fb3.jpeg",
+  				  caption: 'New Image'
+  				}
+    		]
+				
+				// var photoSwipeInstance = Code.PhotoSwipe.instances[0];
+				//         image={url: 'http://usnapus.s3.amazonaws.com/events/WEBSTOCK/photos/46/photo.jpg', caption: 'Image 046'}
+				//         src = photoSwipeInstance.settings.getImageSource(image);
+				//         caption = photoSwipeInstance.settings.getImageCaption(image);
+				//         metaData = photoSwipeInstance.settings.getImageMetaData(image);
+				//         photoSwipeInstance.cache.images.push(new Code.PhotoSwipe.Image.ImageClass(image, src, caption, metaData));
+				
+			  var options = {
+    	    preventHide: true,
+          getImageSource: function(obj){
+            return obj.url;
+          },
+          getImageCaption: function(obj){
+            return obj.caption;
+          },
+          autoStartSlideshow: true,
+          loop: true,
+          slideshowDelay: 5000,
+        }
+        
+				instance = PhotoSwipe.attach(photos, options);
+				instance.show(0);
+			
 			});
-		
+			
+			
+		}(window, window.jQuery, window.Code.PhotoSwipe));
 	</script>
 	
 </head>
