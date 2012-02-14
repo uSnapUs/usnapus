@@ -61,16 +61,19 @@
   var photos = []
   var photo_url = "<%= "/events/#{@event.id}/photos"%>";
   
+  var isSmallScreen = ($(window).width() < 1024);
+  
   //Load all the photos asynchronously on page load
   $.getJSON(photo_url, function(data){
     
     $.each(data, function(i, photo_data) {
       
       photos.push({
-        image: photo_data["photo"]["url"],
-        thumb: photo_data["photo"]["polaroid"]["url"],
+        image: (isSmallScreen ? photo_data["photo"]["xga"]["url"] : photo_data["photo"]["url"]),
+        thumb: photo_data["photo"]["thumbnail"]["url"],
         title: "Photo by "+photo_data["device_name"]
       });
+      
     });
     
     $.supersized({

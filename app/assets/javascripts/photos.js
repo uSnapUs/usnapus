@@ -34,7 +34,8 @@ $(document).ready(function() {
       id : data["id"],
       photo : {
         base_src: data["photo"]["url"],
-        smaller_src: data["photo"]["polaroid"]["url"],
+        xga_src: data["photo"]["xga"]["url"],
+        thumbnail_src: data["photo"]["thumbnail"]["url"],
         alt: data["device_name"]
       }
     }
