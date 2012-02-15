@@ -65,7 +65,7 @@ $(document).ready(function() {
       return "xga";
     }
     else{
-      return "original"
+      return "xga"; //Hack for webstock
     }
   }
   
