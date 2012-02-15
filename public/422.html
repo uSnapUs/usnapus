@@ -1,26 +1,66 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>The change you wanted was rejected (422)</title>
-  <style type="text/css">
-    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
-    div.dialog {
-      width: 25em;
-      padding: 0 4em;
-      margin: 4em auto 0 auto;
-      border: 1px solid #ccc;
-      border-right-color: #999;
-      border-bottom-color: #999;
-    }
-    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
-  </style>
-</head>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+        Oh no! We can't do that... | uSnap.us
+    </title>
+    
+    <style type="text/css">
+      body{
+        padding: 0;
+        margin: 0;
+        text-align: center;
+        color: #7798B4;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 16px;
+        font-weight: 200;
+      }
+      h1{
+        color: #B94A48;
+        font-family: "freight-sans-pro", arial, sans-serif;
+        font-size: 36px;
+        font-weight: 600;
+      }
+      .topbar{
+        height:78px;
+        background-color: #5EE0AA;
+        background: url('/assets/headerstrip.png') repeat-x;
+        filter:none;
+        box-shadow:none;
+      }
+      .topbar img{
+        padding: 12px 0 0 0;
+      }
+      .smaller{
+        font-size: 12px;
+        color: #bbb;
+      }
+    </style>
+    
+  </head>
 
-<body>
-  <!-- This file lives in public/422.html -->
-  <div class="dialog">
-    <h1>The change you wanted was rejected.</h1>
-    <p>Maybe you tried to change something you didn't have access to.</p>
-  </div>
-</body>
+  <body>
+    
+    <div class="topbar">
+      <a href="/"><img alt="uSnap.us" src="/assets/logo-header.png" title="uSnap.us" /></a>
+    </div>
+    
+    <section class="container event_details">
+      <div class="row">
+        <div class="span12">
+          <h1>Oh no! We can't do that... </h1>
+          <p>The change you wanted to make was rejected. Maybe you tried to change something you didn't have access to.</p>
+          <p>If you need some help, get in touch with <a href="mailto:team@usnap.us">team@usnap.us</a>.</p>
+          <p class="smaller">422 Unprocessable Entity</p>
+        </div>
+      </div>
+    </section>
+    
+    <script type="text/javascript" src="http://use.typekit.com/avj2ysl.js"></script>     
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+  </body>
+  
 </html>
+
