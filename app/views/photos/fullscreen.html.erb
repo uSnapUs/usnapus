@@ -1,14 +1,39 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>PhotoSwipe</title>
-	<meta name="author" content="Ste Brennan - Code Computerlove - http://www.codecomputerlove.com/" />
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      <%= "Photos from #{@event.name} | uSnap.us - See your wedding through their eyes."%>
+    </title>
+    
+    <meta name="description" content="See your wedding through their eyes. Your guests' photos are delivered online instantly, at your fingertips whenever you want. Watch a live steam as your event unfolds. Perfect for wedding photos.">
+    <meta name="author" content="">
+    <meta name="keywords" content="wedding, photograph, photos, events, wedding ideas, disposable cameras, unique wedding">
+
+
+    <meta property="og:title" content="uSnap.us" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://usnap.us" />
+    <meta property="og:image" content="http://usnap.us<%= path_to_image('explain-grid.jpg') %>" />
+    <meta property="og:site_name" content="uSnap.Us" />
+    <meta property="fb:admins" content="689651850" />
+    <meta property="og:description"
+              content="See your wedding through their eyes. Your guests' photos are delivered online instantly, at your fingertips whenever you want. Watch a live steam as your event unfolds. Perfect for wedding photos."/>
+              
+              
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	
 	<%= stylesheet_link_tag "photoswipe" %>
 	
 	<%= javascript_include_tag "klass.min", "jquery", "code.photoswipe.jquery-3.0.4", "photos", "photocast" %>
+	
+	
+ <!-- Le fav and touch icons -->
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-retina.png" />
 	
 </head>
 <body>
