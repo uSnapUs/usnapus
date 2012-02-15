@@ -2,15 +2,17 @@ $(document).ready(function() {
   
   if($("#photo_gallery").length > 0){
     
-    //Load all the photos asynchronously on page load
-    $.getJSON(window.location+".json", function(data){
-      //Since the photos come in created_at ASC order,
-      // we want to *append* them. So flip the array.
-      $.each(data.reverse(), function(i, photo_data) {
-        prependPhoto(photo_data)
-      });
+    for(i=0;i<10;i++){
+      //Load all the photos asynchronously on page load
+      $.getJSON(window.location+".json", function(data){
+        //Since the photos come in created_at ASC order,
+        // we want to *append* them. So flip the array.
+        $.each(data.reverse(), function(i, photo_data) {
+          prependPhoto(photo_data)
+        });
       
-    });
+      });
+    }
     
   }
   
@@ -43,18 +45,26 @@ $(document).ready(function() {
   
   //The live photo cast
   $("#show_latest_photos").on("click", function(){
-    prepareFullscreenImage($(".photo a:first").prop("href"));
+    prepareFullscreenImage($(".photo a:first img"));
   })
   
   //Show a photo fullscreen
   $("#photo_gallery").on("click", ".photo a", function(){
-    prepareFullscreenImage($(this).prop("href"));
+    prepareFullscreenImage($(this).find("img"));
     //This isn't the live photo cast, though
     $("#fullscreen_photo").addClass("dont_update").css({"background-color": "rgba(0,0,0,0.75)"})
     return false;
   })
   
-  function prepareFullscreenImage(image_src){
+  function prepareFullscreenImage(image_el){
+    
+    var image_src = null;
+    if($(window).width() <= 1024){
+      image_src = image_el.attr("data-xga-src");
+    }else{
+      image_src = image_el.attr("data-original-src");
+    }
+    
     if($('#fullscreen_photo').length > 0){
       //There's already a photo on display
     }else{
@@ -63,6 +73,7 @@ $(document).ready(function() {
     
     var fullscreen_photo_div = $("#fullscreen_photo");
     fullscreen_photo_div.append('<img src="'+image_src+'" class="new" />')
+    fullscreen_photo_div.css({height: $("body").height()})
     
     var img = $("#fullscreen_photo img.new");
     var image_load_fired = false;
@@ -106,7 +117,7 @@ $(document).ready(function() {
   }
   
   function closeFullscreen(){
-    $("#fullscreen_photo").fadeOut(300, function(){$(this).remove();});
+    $("#fullscreen_photo").fadeOut(1000, function(){$(this).remove();});
   }
   
   function resizeAndPositionImage(img){
@@ -120,7 +131,7 @@ $(document).ready(function() {
       }).css(
       {
         "left": (browserwidth - img.width())/2,
-        "top": (browserheight - img.height())/2
+        "top": ((browserheight - img.height())/2)+$(window).scrollTop()
       });
   }
   

@@ -7,12 +7,12 @@
       <h1 class="brand event_name"><%= @event.name %></h1>
       <p><%= pretty_time @event %></p>
       <div class="buttons upcase bold">
-        <%= link_to fullscreen_event_photos_path(@event) do %>
-          &#9658; Slideshow
-        <% end %>
-        <%= link_to "#", :id=>"show_latest_photos" do %>
-          &#9658; Live Photos
-        <% end %>
+          <%= link_to fullscreen_event_photos_path(@event) do %>
+            &#9658; Slideshow
+          <% end %>
+          <%= link_to "#", :id=>"show_latest_photos" do %>
+            &#9658; Live Photos
+          <% end %>
       </div>
     </div>
   </div>
@@ -48,7 +48,7 @@
   <div class="photo" id="photo_{{id}}">
   {{#photo}}
     <a href="{{base_src}}" title="Photo taken by {{alt}}. Click to view original.">
-      <img src="{{thumbnail_src}}" alt="Photo taken by {{alt}}" />
+      <img src="{{thumbnail_src}}" data-xga-src="{{xga_src}}" data-original-src="{{base_src}}" alt="Photo taken by {{alt}}" />
     </a>
   {{/photo}}
   </div>
