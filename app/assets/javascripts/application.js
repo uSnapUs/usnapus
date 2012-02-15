@@ -9,7 +9,11 @@
 //= require bootstrap.min
 //= require placeholder.jquery
 //= require mustache
-//= require_tree .
+//= require devise
+//= require events
+//= require home
+//= require photos
+//= require signups
 
 window.showAlert = function(alert_type, alert_heading, alert_message){
   var html = Mustache.to_html($("#alert_template").html(), {
