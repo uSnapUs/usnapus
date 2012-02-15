@@ -12,18 +12,13 @@
       // we want to *append* them. So flip the array.
       $.each(data.reverse(), function(i, data) {
         photos.push({
-          base_src: data["photo"]["url"],
+          original_src: data["photo"]["url"],
           xga_src: data["photo"]["xga"]["url"],
           alt: data["device_name"]
         });
       });
       
-      var image_type = null;
-      if($(window).width() <= 1024){
-        image_type = "xga_src";
-      }else{
-        image_type = "base_src";
-      }
+      var image_type = imageTypeForScreen()+"_src";
       
       var options = {
         getImageSource: function(obj){
