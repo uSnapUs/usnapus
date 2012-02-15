@@ -2,17 +2,15 @@ $(document).ready(function() {
   
   if($("#photo_gallery").length > 0){
     
-    for(i=0;i<10;i++){
-      //Load all the photos asynchronously on page load
-      $.getJSON(window.location+".json", function(data){
-        //Since the photos come in created_at ASC order,
-        // we want to *append* them. So flip the array.
-        $.each(data.reverse(), function(i, photo_data) {
-          prependPhoto(photo_data)
-        });
-      
+    //Load all the photos asynchronously on page load
+    $.getJSON(window.location+".json", function(data){
+      //Since the photos come in created_at ASC order,
+      // we want to *append* them. So flip the array.
+      $.each(data.reverse(), function(i, photo_data) {
+        prependPhoto(photo_data)
       });
-    }
+    
+    });
     
   }
   
