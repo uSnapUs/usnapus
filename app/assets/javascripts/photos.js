@@ -71,7 +71,7 @@ $(document).ready(function() {
     
     var fullscreen_photo_div = $("#fullscreen_photo");
     fullscreen_photo_div.append('<img src="'+image_src+'" class="new" />')
-    fullscreen_photo_div.css({height: $("body").height()})
+    fullscreen_photo_div.css({height: Math.max($("html").height(), $(window).outerHeight())})
     
     var img = $("#fullscreen_photo img.new");
     var image_load_fired = false;
