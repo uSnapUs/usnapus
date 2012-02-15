@@ -13,7 +13,7 @@ class PhotosControllerTest < ActionController::TestCase
 
   test "should create photo" do
     assert_difference 'Photo.count' do
-      xhr :post, :create, event_id: @event.to_param, photo: @photo.attributes
+      xhr :post, :create, event_id: @event.to_param, photo: @photo.attributes, format: "json"
     end
     assert_response :success
     json = JSON.parse(@response.body)
@@ -22,34 +22,31 @@ class PhotosControllerTest < ActionController::TestCase
   
   test "should create photo with test file" do
     assert_difference 'Photo.count' do
-      xhr :post, :create, event_id: @event.to_param, photo: @photo.attributes.merge(photo: fixture_file_upload('files/house.jpg','image/jpg'))
+      xhr :post, :create, 
+        event_id: @event.to_param, 
+        photo: @photo.attributes.merge(photo: fixture_file_upload('files/house.jpg','image/jpg')),
+        format: "json"
     end
     assert_response :success
     
     photo = Photo.last
     assert File.exists?("#{Rails.root}/public/events/#{@event.code}/photos/#{photo.id}/house.jpg"), "Original version should be stored"
-    assert File.exists?("#{Rails.root}/public/events/#{@event.code}/photos/#{photo.id}/polaroid_house.jpg"), "Polaroid version should be created"
+    assert File.exists?("#{Rails.root}/public/events/#{@event.code}/photos/#{photo.id}/thumbnail_house.jpg"), "Thumbnail version should be created"
   end
   
   
   test "creating a photo should fire a Pusher event" do
     Pusher["event-#{@event.id}-photocast"].expects(:trigger!).once
-    xhr :post, :create, event_id: @event.to_param, photo: @photo.attributes
+    xhr :post, :create, event_id: @event.to_param, photo: @photo.attributes, format: "json"
   end
   
-  
-  
-  test "should not create photo without real event" do
-    assert_no_difference 'Photo.count' do
-      assert_raises ActiveRecord::RecordNotFound do
-        xhr :post, :create, event_id: 100, photo: @photo.attributes
-      end
-    end
-  end
   
   test "event photo attribute should not override event path param" do
     assert_difference 'Photo.count' do
-      xhr :post, :create, event_id: @event, photo: @photo.attributes.merge(event_id: Factory(:event).id )
+      xhr :post, :create, 
+        event_id: @event, 
+        photo: @photo.attributes.merge(event_id: Factory(:event).id ), 
+        format: "json"
     end
     assert_response :success
     
@@ -57,38 +54,45 @@ class PhotosControllerTest < ActionController::TestCase
   end
   
   
-  
-  test "should not create photo without device id" do
-    assert_no_difference 'Photo.count' do
-      xhr :post, :create, event_id: @event.to_param, photo: @photo.attributes.merge(device_id: nil)
-    end
-    assert_response :unprocessable_entity
-    json = JSON.parse(@response.body)
-    assert_equal ["can't be blank"], json["device_id"]
-  end
-  
-  test "should not create photo without real device" do
-    assert_no_difference 'Photo.count' do
-      xhr :post, :create, event_id: @event.to_param, photo: @photo.attributes.merge(device_id: 100)
-    end
-    assert_response :unprocessable_entity
-    json = JSON.parse(@response.body)
-    assert_equal ["must point to an existing device"], json["device_id"]
-  end
-  
-  
   test "should be able to delete photo" do
     assert_difference 'Photo.count', -1 do
-      xhr :delete, :destroy, event_id: @event.to_param, id: @photo.id
+      xhr :delete, :destroy, event_id: @event.to_param, id: @photo.id, format: "json"
     end
     assert_response :success
   end
   
   
-  test "can view slideshow with event id" do
+  test "can view photos with event id" do
     get :index, event_id: @event.to_param
-     
     assert_response :success
+    assert assigns(:photos)
+  end
+  
+  test "photos are returned most recent first" do
+    
+    @photo.created_at = 3.seconds.ago
+    @photo.save!
+    
+    photo2 = Factory(:photo, event: @photo.event)
+    xhr :get, :index, event_id: @event.to_param, format: "json"
+    json = JSON.parse(@response.body)
+    assert_equal photo2.id, json[0]["id"]
+    assert_equal @photo.id, json[1]["id"]
+  end
+  
+  test "can limit photos" do
+    photo2 = Factory(:photo, event: @photo.event)
+    xhr :get, :index, event_id: @event.to_param, limit: 1, format: "json"
+    json = JSON.parse(@response.body)
+    assert_equal 1, json.length
+  end
+  
+  
+  test "can't see event's photos if it isn't public" do
+    event = Factory :current_event, is_public: false
+    assert_raises ActiveRecord::RecordNotFound do
+      get :index, :event_id => event.id
+    end
   end
   
 end

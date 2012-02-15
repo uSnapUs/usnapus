@@ -16,4 +16,14 @@ class EventsController < ApplicationController
       format.json { render json: @events }
     end
   end
+  
+  def show
+    #Could get here as /events/1 or /CODE
+    if event = (Event.visible.find_by_id(params[:id]) || Event.visible.find_by_code(params[:code].try(:upcase)))
+      redirect_to event_photos_path event
+    else
+      not_found
+    end
+  end
+  
 end

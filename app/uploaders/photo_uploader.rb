@@ -34,8 +34,11 @@ class PhotoUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  version :polaroid do
-    process :resize_to_fill => [500, 500]
+  version :thumbnail do
+    process :resize_to_fill => [200, 200]
+  end
+  version :xga do
+    process :resize_to_fill => [1024, 768]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

@@ -31,6 +31,7 @@ class Event < ActiveRecord::Base
   }
   
   scope :current, where(" :now > starts AND :now < ends ", {now: Time.zone.now})
+  scope :visible, where(:is_public => true)
   
   def self.deg2rad(degree)
     degree*Math::PI/180

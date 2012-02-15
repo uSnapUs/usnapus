@@ -7,12 +7,12 @@
       <h1 class="brand event_name"><%= @event.name %></h1>
       <p><%= pretty_time @event %></p>
       <div class="buttons upcase bold">
-        <%= link_to fullscreen_event_photos_path(@event) do %>
-          &#9658; Slideshow
-        <% end %>
-        <%= link_to fullscreen_event_photos_path(@event) do %>
-          &#9658; Latest Photos
-        <% end %>
+          <%= link_to fullscreen_event_photos_path(@event) do %>
+            &#9658; Slideshow
+          <% end %>
+          <%= link_to "#", :id=>"show_latest_photos" do %>
+            &#9658; Live Photos
+          <% end %>
       </div>
     </div>
   </div>
@@ -36,29 +36,19 @@
 <script src="http://js.pusher.com/1.11/pusher.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-    var pusher = new Pusher('2e4efb9ca1181106d096');
-    
-    pusher.connection.bind("unavailable", function(){
-      showAlert("error", "Oops!", "It looks like we can't grab any new photos right now. We'll try again soon.");
-    });
-    
-    
-    pusher.connection.bind("failed", function(){
-      showAlert("error", "Oops!", "It looks like your browser doesn't support uSnap.us fetching photos on the fly.<br />You can see new photos by refreshing your browser.");
-    });
-    
-    
-    var channel = pusher.subscribe('<%= "event-#{@event.id}-photocast" %>');
-    channel.bind('new_photo', function(data) {
-      appendPhoto(data);
-    });
+  var pusher = new Pusher('2e4efb9ca1181106d096');
+  
+  var channel = pusher.subscribe('<%= "event-#{@event.id}-photocast" %>');
+  channel.bind('new_photo', function(data) {
+    prependPhoto(data);
+  });
 </script>
 
 <script type="text/html" id="gallery_photo_template">
   <div class="photo" id="photo_{{id}}">
   {{#photo}}
     <a href="{{base_src}}" title="Photo taken by {{alt}}. Click to view original.">
-      <img src="{{smaller_src}}" alt="Photo taken by {{alt}}" />
+      <img src="{{thumbnail_src}}" data-xga-src="{{xga_src}}" data-original-src="{{base_src}}" alt="Photo taken by {{alt}}" />
     </a>
   {{/photo}}
   </div>

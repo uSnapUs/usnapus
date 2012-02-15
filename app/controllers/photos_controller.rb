@@ -3,11 +3,19 @@ class PhotosController < ApplicationController
   before_filter :get_event
 
   def index
-    @photos = @event.photos
+    
+    @photos = @event.photos.order("created_at DESC")
+    
+    if limit = params[:limit]
+      @photos = @photos.limit(limit.to_i)
+    end
     
     respond_to do |format|
       format.html
-      format.json { render json: @photos}
+      format.json { 
+        headers["Cache-Control"] = 'no-cache, no-store'
+        render json: @photos
+      }
     end
   end
   
@@ -26,11 +34,11 @@ class PhotosController < ApplicationController
     respond_to do |format|
       if @photo.save
         Pusher["event-#{@event.id}-photocast"].trigger!('new_photo', @photo)
+        format.json { render json: @photo, status: :created}
         format.html {
           flash[:notice] = "Photo uploaded!"
           redirect_to event_photos_path(@event)
         }
-        format.json { render json: @photo, status: :created}
       else
         format.html{
           p @photo.errors
@@ -55,7 +63,7 @@ class PhotosController < ApplicationController
   
   private
     def get_event
-      @event = Event.find(params[:event_id])
+      @event = Event.visible.find(params[:event_id])
     end
   
 end
