@@ -25,7 +25,8 @@ $(document).ready(function() {
     //If we're in live photo mode, update the photo
     if($("#fullscreen_photo:not(.dont_update)").length > 0){
       var img = $("#fullscreen_photo img");
-      prepareFullscreenImage(photo["photo"]["base_src"]);
+      
+      prepareFullscreenImage(photo["photo"][imageTypeForScreen()+"_src"]);
     }
   }
   
@@ -34,6 +35,7 @@ $(document).ready(function() {
       id : data["id"],
       photo : {
         base_src: data["photo"]["url"],
+        original_src: data["photo"]["url"],
         xga_src: data["photo"]["xga"]["url"],
         thumbnail_src: data["photo"]["thumbnail"]["url"],
         alt: data["device_name"]
@@ -43,25 +45,31 @@ $(document).ready(function() {
   
   //The live photo cast
   $("#show_latest_photos").on("click", function(){
-    prepareFullscreenImage($(".photo a:first img"));
+    prepareFullscreenImage( $(".photo a:first img").attr("data-"+imageTypeForScreen()+"-src") );
   })
   
   //Show a photo fullscreen
   $("#photo_gallery").on("click", ".photo a", function(){
-    prepareFullscreenImage($(this).find("img"));
+    prepareFullscreenImage( $(this).find("img").attr("data-"+imageTypeForScreen()+"-src") );
     //This isn't the live photo cast, though
     $("#fullscreen_photo").addClass("dont_update").css({"background-color": "rgba(0,0,0,0.75)"})
     return false;
   })
   
-  function prepareFullscreenImage(image_el){
-    
-    var image_src = null;
+  function getImageSourceFromElement(image_el){
+    return image_el.attr("data-"+imageTypeForScreen()+"-src");
+  }
+  
+  window.imageTypeForScreen = function(){
     if($(window).width() <= 1024){
-      image_src = image_el.attr("data-xga-src");
-    }else{
-      image_src = image_el.attr("data-original-src");
+      return "xga";
     }
+    else{
+      return "original"
+    }
+  }
+  
+  function prepareFullscreenImage(image_src){
     
     if($('#fullscreen_photo').length > 0){
       //There's already a photo on display
@@ -129,7 +137,7 @@ $(document).ready(function() {
       }).css(
       {
         "left": (browserwidth - img.width())/2,
-        "top": ((browserheight - img.height())/2)+$(window).scrollTop()
+        "top": ((browserheight - img.height())/2)
       });
   }
   
