@@ -34,6 +34,8 @@ gem 'anybase'
 
 gem "thin"
 gem "heroku"
+gem 'newrelic_rpm'
+
 gem "pusher"
 gem 'postmark-rails'
 gem "devise"
