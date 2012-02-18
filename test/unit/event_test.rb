@@ -18,4 +18,15 @@ class EventTest < ActiveSupport::TestCase
     assert_match /\A[A-HJKMNP-Z2-9]{7}\Z/, Factory(:event).code
   end
   
+  test "new event has an s3 token" do
+    assert_equal 32, Factory(:event).s3_token.length
+  end
+  
+  test "event code is unique" do
+    new_code = Factory(:event).code
+    e = Factory(:event)
+    e.code = new_code
+    assert e.invalid?
+  end
+  
 end

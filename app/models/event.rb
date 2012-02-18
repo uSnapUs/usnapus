@@ -4,7 +4,12 @@ class Event < ActiveRecord::Base
   
   validates :code, :format => {:with => /\A[A-HJKMNP-Z2-9]{7}\Z/, :on => :create}, :uniqueness => true
   
-  before_validation :generate_code, :on => :create
+  before_validation :generate_codes, :on => :create
+  
+  validates :code, presence: {allow_blank: false}
+  validates :code, uniqueness: true
+  validates :s3_token, presence: {allow_blank: false}, uniqueness: true
+  
   
   attr_accessible :latitude, :longitude, :starts, :ends
   
@@ -38,13 +43,23 @@ class Event < ActiveRecord::Base
   end
   
   private
-    def generate_code
+    def generate_codes
+      generate_s3_token
+      generate_event_code
+    end
+    
+    def generate_s3_token
+      self.s3_token = SecureRandom.hex(16)
+      generate_s3_token unless Event.find_by_s3_token(self.s3_token).nil?
+    end
+      
+    def generate_event_code
       #For usability, there are no I, 1, L, O, or 0
       base = Anybase.new("ABCDEFGHJKMNPQRSTUVWXYZ23456789")
       self.code = "#{base.random(7).upcase}"
       
       #Ensure uniqueness
-      generate_code unless Event.find_by_code(self.code).nil?
+      generate_event_code unless Event.find_by_code(self.code).nil?
     end
   
 end
