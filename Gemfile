@@ -36,6 +36,8 @@ gem "thin"
 gem "heroku"
 gem 'newrelic_rpm'
 
+gem 'resque'
+
 gem "pusher"
 gem 'postmark-rails'
 gem "devise"
