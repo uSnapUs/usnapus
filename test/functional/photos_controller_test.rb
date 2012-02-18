@@ -30,8 +30,8 @@ class PhotosControllerTest < ActionController::TestCase
     assert_response :success
     
     photo = Photo.last
-    assert File.exists?("#{Rails.root}/public/events/#{@event.code}/photos/#{photo.id}/house.jpg"), "Original version should be stored"
-    assert File.exists?("#{Rails.root}/public/events/#{@event.code}/photos/#{photo.id}/thumbnail_house.jpg"), "Thumbnail version should be created"
+    assert File.exists?("#{Rails.root}/public/events/#{@event.s3_token}/photos/#{photo.id}/house.jpg"), "Original version should be stored"
+    assert File.exists?("#{Rails.root}/public/events/#{@event.s3_token}/photos/#{photo.id}/thumbnail_house.jpg"), "Thumbnail version should be created"
   end
   
   
