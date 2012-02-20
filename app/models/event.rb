@@ -1,5 +1,10 @@
 class Event < ActiveRecord::Base
   
+  geocoded_by :location
+  after_validation :geocode
+  reverse_geocoded_by :latitude, :longitude
+  after_validation :reverse_geocode
+  
   has_many :photos
   
   validates :code, :format => {:with => /\A[A-HJKMNP-Z2-9]{7}\Z/, :on => :create}, :uniqueness => true

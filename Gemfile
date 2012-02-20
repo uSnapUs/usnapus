@@ -41,6 +41,7 @@ gem 'resque'
 gem "pusher"
 gem 'postmark-rails'
 gem "devise"
+gem "geocoder"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
