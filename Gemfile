@@ -27,8 +27,6 @@ gem 'fog'
 gem 'anybase'
 
 gem "thin"
-gem "heroku"
-gem 'newrelic_rpm'
 
 gem 'resque'
 
