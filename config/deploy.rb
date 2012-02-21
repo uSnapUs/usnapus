@@ -12,9 +12,6 @@ set :rails_env, "production"
 set :branch,    "production"
 set :normalize_asset_timestamps, false
 
-set :scm_passphrase, "kesawzejidmaywyot"  # The deploy user's password
-default_run_options[:pty] = true
-
 role :web, domain
 role :app, domain
 role :db,  domain, :primary=>true
