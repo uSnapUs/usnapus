@@ -7,7 +7,7 @@ set :scm, "git"
 set :branch, "production"
 set :scm_verbose, true
 set :deploy_via, :remote_cache
-set :scm_passphrase, "password"  # The deploy user's password
+set :scm_passphrase, "kesawzejidmaywyot"  # The deploy user's password
 set :deploy_to, lambda {"/home/#{user}/application"}
 set :use_sudo, false
  
@@ -24,4 +24,14 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
+  task :precompile do
+    run "cd #{release_path} && RAILS_ENV=production bundle exec rake assets:precompile"
+  end
 end
+
+before "deploy:symlink" do
+  deploy.precompile
+end
+
+require 'bundler/capistrano'
+require './config/boot'
