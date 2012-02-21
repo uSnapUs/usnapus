@@ -36,7 +36,6 @@ production:
   encoding: utf8
   reconnect: false
   database: usnapus_production
-  pool: 5
+  pool: 1
   username: deploy
   password: M1Hb07PX5q1I8UP
-  socket: /tmp/mysql.sock
