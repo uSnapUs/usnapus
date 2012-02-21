@@ -28,7 +28,7 @@ gem 'fog'
 gem 'anybase'
 
 gem "thin"
-
+gem "newrelic_rpm"
 gem 'resque'
 
 gem "pusher"
