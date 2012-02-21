@@ -3,7 +3,7 @@ $(document).ready(function() {
   $(selector).keyup(function () {
     typewatch(function () {
       // executed only 500 ms after the last keyup event.
-      console.log("Ping!")
+      console.log("Ping!");
     }, 500);
   });
 

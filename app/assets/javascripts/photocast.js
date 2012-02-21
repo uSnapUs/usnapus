@@ -6,7 +6,7 @@
 		var event_url = $("#gallery").attr("data-event-url");
     $.getJSON(event_url, function(data){
       
-      var photos = []
+      var photos = [];
       
       //Since the photos come in created_at ASC order,
       // we want to *append* them. So flip the array.
