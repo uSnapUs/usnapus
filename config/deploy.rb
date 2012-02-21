@@ -1,5 +1,5 @@
 set :user, 'deploy'
-set :domain, 173.255.217.14
+set :domain, '173.255.217.14'
 set :application, "usnapus"
  
 set :repository, "git@github.com:uSnapUs/usnapus.git"  # Your clone URL
