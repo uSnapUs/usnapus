@@ -10,10 +10,10 @@
 //= require placeholder.jquery
 //= require mustache
 //= require devise
-//= require events
-//= require home
-//= require photos
-//= require signups
+// require events
+// require home
+// require photos
+// require signups
 
 $(document).ready(function() {
   window.showAlert = function(alert_type, alert_heading, alert_message){
