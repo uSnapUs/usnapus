@@ -37,10 +37,6 @@ end
 
 after "deploy:restart" do
 end
-
-before "deploy:symlink" do
-  deploy.precompile
-end
-
+load "deploy/assets"
 require 'bundler/capistrano'
 require './config/boot'
