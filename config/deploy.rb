@@ -39,7 +39,7 @@ after "deploy:restart" do
 end
 
 before "deploy:symlink" do
-  #deploy.precompile
+  deploy.precompile
 end
 
 require 'bundler/capistrano'
