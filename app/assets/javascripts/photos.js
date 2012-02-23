@@ -1,13 +1,13 @@
 $(document).ready(function() {
   
-  // window.imageTypeForScreen = function(){
-  //   if($(window).width() <= 1024){
-  //     return "xga";
-  //   }
-  //   else{
-  //     return "xga"; //Hack for webstock
-  //   }
-  // }
+  window.imageTypeForScreen = function(){
+      if($(window).width() <= 1024){
+        return "xga";
+      }
+      else{
+        return "xga"; //Hack for webstock
+      }
+    }
   
   function photoToUsableJSON(data){
     return {
