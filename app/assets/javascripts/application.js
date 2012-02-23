@@ -7,9 +7,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap.min
-//= require placeholder.jquery
-//= require mustache
-//= require devise
+// require placeholder.jquery
+// require mustache
+// require devise
 // require events
 // require home
 // require photos
