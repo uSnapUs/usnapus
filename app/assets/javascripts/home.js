@@ -9,7 +9,7 @@ $(document).ready(function() {
   
   $("#new_signup").on("ajax:beforeSend", function(){
     
-    if($("#signup_email").val().trim() == ""){
+    if($("#signup_email").val().trim() === ""){
       $(".dropus").hide().html("Whoops, you need to give us your email. Pretty please?").fadeIn();
       return false;
     }
@@ -22,5 +22,5 @@ $(document).ready(function() {
     $(".dropus").hide().html("Whoops, looks like that didn't work. Try again?").fadeIn();
     $(".new_signup").fadeIn();
     
-  })
-})
+  });
+});

@@ -1,34 +1,13 @@
 $(document).ready(function() {
   
-  if($("#photo_gallery").length > 0){
-    
-    //Load all the photos asynchronously on page load
-    $.getJSON(window.location+".json", function(data){
-      //Since the photos come in created_at ASC order,
-      // we want to *append* them. So flip the array.
-      $.each(data.reverse(), function(i, photo_data) {
-        prependPhoto(photo_data)
-      });
-    
-    });
-    
-  }
-  
-  //Always stick the newest photo at the front
-  window.prependPhoto = function(data){
-    var photo = photoToUsableJSON(data);
-    var html = Mustache.to_html($("#gallery_photo_template").html(), photo);
-    
-    $("#photo_gallery").prepend(html);
-    $(".photo:hidden").fadeIn();
-    
-    //If we're in live photo mode, update the photo
-    if($("#fullscreen_photo:not(.dont_update)").length > 0){
-      var img = $("#fullscreen_photo img");
-      
-      prepareFullscreenImage(photo["photo"][imageTypeForScreen()+"_src"]);
-    }
-  }
+  // window.imageTypeForScreen = function(){
+  //   if($(window).width() <= 1024){
+  //     return "xga";
+  //   }
+  //   else{
+  //     return "xga"; //Hack for webstock
+  //   }
+  // }
   
   function photoToUsableJSON(data){
     return {
@@ -40,33 +19,53 @@ $(document).ready(function() {
         thumbnail_src: data["photo"]["thumbnail"]["url"],
         alt: data["device_name"]
       }
+    };
+  }
+  
+  //Always stick the newest photo at the front
+  window.prependPhoto = function(data){
+    var photo = photoToUsableJSON(data), html = Mustache.to_html($("#gallery_photo_template").html(), photo);
+    
+    $("#photo_gallery").prepend(html);
+    $(".photo:hidden").fadeIn();
+    
+    //If we're in live photo mode, update the photo
+    if($("#fullscreen_photo:not(.dont_update)").length > 0){
+      var img = $("#fullscreen_photo img");
+      
+      prepareFullscreenImage(photo["photo"][imageTypeForScreen()+"_src"]);
     }
+  };
+  
+  if($("#photo_gallery").length > 0){
+    
+    //Load all the photos asynchronously on page load
+    $.getJSON(window.location+".json", function(data){
+      //Since the photos come in created_at ASC order,
+      // we want to *append* them. So flip the array.
+      $.each(data.reverse(), function(i, photo_data) {
+        prependPhoto(photo_data);
+      });
+    
+    });
+    
   }
   
   //The live photo cast
   $("#show_latest_photos").on("click", function(){
     prepareFullscreenImage( $(".photo a:first img").attr("data-"+imageTypeForScreen()+"-src") );
-  })
+  });
   
   //Show a photo fullscreen
   $("#photo_gallery").on("click", ".photo a", function(){
     prepareFullscreenImage( $(this).find("img").attr("data-"+imageTypeForScreen()+"-src") );
     //This isn't the live photo cast, though
-    $("#fullscreen_photo").addClass("dont_update").css({"background-color": "rgba(0,0,0,0.75)"})
+    $("#fullscreen_photo").addClass("dont_update").css({"background-color": "rgba(0,0,0,0.75)"});
     return false;
-  })
+  });
   
   function getImageSourceFromElement(image_el){
     return image_el.attr("data-"+imageTypeForScreen()+"-src");
-  }
-  
-  window.imageTypeForScreen = function(){
-    if($(window).width() <= 1024){
-      return "xga";
-    }
-    else{
-      return "xga"; //Hack for webstock
-    }
   }
   
   function prepareFullscreenImage(image_src){
@@ -78,11 +77,10 @@ $(document).ready(function() {
     }
     
     var fullscreen_photo_div = $("#fullscreen_photo");
-    fullscreen_photo_div.append('<img src="'+image_src+'" class="new" />')
-    fullscreen_photo_div.css({height: Math.max($("html").height(), $(window).outerHeight())})
+    fullscreen_photo_div.append('<img src="'+image_src+'" class="new" />');
+    fullscreen_photo_div.css({height: Math.max($("html").height(), $(window).outerHeight())});
     
-    var img = $("#fullscreen_photo img.new");
-    var image_load_fired = false;
+    var img = $("#fullscreen_photo img.new"), image_load_fired = false;
     img.load(function(){
       if(!image_load_fired){
         showImageFullscreen(img);
@@ -96,7 +94,7 @@ $(document).ready(function() {
           showImageFullscreen(img);
           image_load_fired = true;
         }
-      }, 3000)
+      }, 3000);
     
     //Resize the photo if the window changes
     $(window).resize(function(){
@@ -116,10 +114,10 @@ $(document).ready(function() {
     resizeAndPositionImage(img);
     $("#fullscreen_photo img:not(.new)").fadeOut(500, function(){
       $(this).remove();
-    })
+    });
     $("#fullscreen_photo img.new").fadeIn(500, function(){
-      $(this).removeClass("new")
-    })
+      $(this).removeClass("new");
+    });
   }
   
   function closeFullscreen(){
@@ -127,8 +125,7 @@ $(document).ready(function() {
   }
   
   function resizeAndPositionImage(img){
-    var browserwidth = $(window).width();
-    var browserheight = $(window).height();
+    var browserwidth = $(window).width(), browserheight = $(window).height();
     //Resize
     img.css(
       {
