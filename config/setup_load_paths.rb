@@ -12,4 +12,5 @@ if ENV['MY_RUBY_HOME'] && ENV['MY_RUBY_HOME'].include?('rvm')
 end
  
 ENV['BUNDLE_GEMFILE'] = File.expand_path('../Gemfile', File.dirname(__FILE__))
-# require 'bundler/setup'
+require "rubygems"
+require 'bundler/setup'
