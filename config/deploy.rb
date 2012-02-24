@@ -41,7 +41,7 @@ load "deploy/assets"
 
 $:.unshift(File.expand_path('./lib', ENV['rvm_path'])) # Add RVM's lib directory to the load path.
 require "rvm/capistrano"                  # Load RVM's capistrano plugin.
-set :rvm_ruby_string, 'ruby-1.9.3-p125'             # Or whatever env you want it to run in.
+set :rvm_ruby_string, 'ruby-1.9.3'             # Or whatever env you want it to run in.
 
 require 'bundler/capistrano'
 require './config/boot'
