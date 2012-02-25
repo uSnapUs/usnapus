@@ -14,6 +14,6 @@
 /log/*.log
 /tmp
 *.DS_Store
-.rvmrc
+
 # Ignore the dev photos
 /public/uploads
