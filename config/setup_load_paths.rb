@@ -12,4 +12,4 @@ if ENV['MY_RUBY_HOME'] && ENV['MY_RUBY_HOME'].include?('rvm')
 end
  
 ENV['BUNDLE_GEMFILE'] = File.expand_path('../Gemfile', File.dirname(__FILE__))
-require '/usr/local/rvm/gems/ruby-1.9.2-p290/gems/bundler-1.0.22/lib/bundler/setup'
+require '/usr/local/rvm/gems/ruby-1.9.2-p180/gems/bundler-1.0.22/lib/bundler/setup'
