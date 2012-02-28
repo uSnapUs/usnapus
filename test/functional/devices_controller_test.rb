@@ -7,7 +7,7 @@ class DevicesControllerTest < ActionController::TestCase
   
   test "should create device" do
     assert_difference('Device.count') do
-      xhr :post, :create, device: @device.attributes
+      xhr :post, :create, device: unprotected_attributes(@device)
     end
 
     assert_response :success
@@ -15,7 +15,7 @@ class DevicesControllerTest < ActionController::TestCase
   
   test "shouldn't create device without guid" do
     assert_no_difference "Device.count" do
-      xhr :post, :create, device: @device.attributes.merge(guid: nil)
+      xhr :post, :create, device: unprotected_attributes(@device).merge(guid: nil)
     end
     assert_response :unprocessable_entity
     
@@ -25,7 +25,7 @@ class DevicesControllerTest < ActionController::TestCase
   
   test "shouldn't create device with blank name" do
     assert_no_difference "Device.count" do
-      xhr :post, :create, device: @device.attributes.merge(name: "   ")
+      xhr :post, :create, device: unprotected_attributes(@device).merge(name: "   ")
     end
     assert_response :unprocessable_entity
     
@@ -34,7 +34,7 @@ class DevicesControllerTest < ActionController::TestCase
   end
   
   test "should update device name" do
-    xhr :put, :update, id: @device.to_param, device: @device.attributes.merge(name: "Xavier")
+    xhr :put, :update, id: @device.to_param, device: unprotected_attributes(@device).merge(name: "Xavier")
     assert_response :success
     
     assert_equal "Xavier", @device.reload.name
@@ -42,7 +42,7 @@ class DevicesControllerTest < ActionController::TestCase
   
   test "shouldn't update device to blank name" do
     
-    xhr :put, :update, id: @device.to_param, device: @device.attributes.merge(name: "   ")
+    xhr :put, :update, id: @device.to_param, device: unprotected_attributes(@device).merge(name: "   ")
     assert_response :unprocessable_entity
     
     json = JSON.parse(@response.body)
@@ -52,7 +52,7 @@ class DevicesControllerTest < ActionController::TestCase
   test "shouldn't update guid" do
     old_guid = @device.guid
     
-    xhr :put, :update, id: @device.to_param, device: @device.attributes.merge(guid: "asdae214")
+    xhr :put, :update, id: @device.to_param, device: unprotected_attributes(@device).merge(guid: "asdae214")
     assert_response :unprocessable_entity
     
     json = JSON.parse(@response.body)
@@ -60,7 +60,7 @@ class DevicesControllerTest < ActionController::TestCase
   end
   
   test "should update device email" do
-    xhr :put, :update, id: @device.to_param, device: @device.attributes.merge(email: "awesome@example.com")
+    xhr :put, :update, id: @device.to_param, device: unprotected_attributes(@device).merge(email: "awesome@example.com")
     assert_response :success
     
     assert_equal "awesome@example.com", @device.reload.email

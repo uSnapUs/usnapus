@@ -12,4 +12,12 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
   
+  def unprotected_attributes(obj)
+    attributes = {}
+    obj._accessible_attributes[:default].each do |attribute|
+      attributes[attribute] = obj.send(attribute) unless attribute.blank?
+    end
+    attributes
+  end
+  
 end

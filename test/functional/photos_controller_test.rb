@@ -13,7 +13,7 @@ class PhotosControllerTest < ActionController::TestCase
 
   test "should create photo" do
     assert_difference 'Photo.count' do
-      xhr :post, :create, event_id: @event.to_param, photo: @photo.attributes, format: "json"
+      xhr :post, :create, event_id: @event.to_param, photo: unprotected_attributes(@photo), format: "json"
     end
     assert_response :success
     json = JSON.parse(@response.body)
@@ -24,7 +24,7 @@ class PhotosControllerTest < ActionController::TestCase
     assert_difference 'Photo.count' do
       xhr :post, :create, 
         event_id: @event.to_param, 
-        photo: @photo.attributes.merge(photo: fixture_file_upload('files/house.jpg','image/jpg')),
+        photo: unprotected_attributes(@photo).merge(photo: fixture_file_upload('files/house.jpg','image/jpg')),
         format: "json"
     end
     assert_response :success
@@ -37,22 +37,8 @@ class PhotosControllerTest < ActionController::TestCase
   
   test "creating a photo should fire a Pusher event" do
     Pusher["event-#{@event.id}-photocast"].expects(:trigger!).once
-    xhr :post, :create, event_id: @event.to_param, photo: @photo.attributes, format: "json"
+    xhr :post, :create, event_id: @event.to_param, photo: unprotected_attributes(@photo), format: "json"
   end
-  
-  
-  test "event photo attribute should not override event path param" do
-    assert_difference 'Photo.count' do
-      xhr :post, :create, 
-        event_id: @event, 
-        photo: @photo.attributes.merge(event_id: Factory(:event).id ), 
-        format: "json"
-    end
-    assert_response :success
-    
-    assert_equal @event, Photo.last.event
-  end
-  
   
   test "should be able to delete photo" do
     assert_difference 'Photo.count', -1 do
