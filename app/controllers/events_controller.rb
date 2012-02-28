@@ -5,7 +5,7 @@ class EventsController < ApplicationController
     proxy = Event
     
     if params[:latitude] && params[:longitude]
-      proxy = proxy.current.near origin: [params[:latitude].to_f, params[:longitude].to_f], within: 0.62
+      proxy = proxy.current.near([params[:latitude].to_f, params[:longitude].to_f], 0.62)
     elsif params[:code]
       proxy = proxy.where(code: params[:code].upcase)
     end
