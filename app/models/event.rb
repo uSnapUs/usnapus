@@ -2,7 +2,7 @@ class Event < ActiveRecord::Base
   
   geocoded_by :location
   after_validation :geocode
-  reverse_geocoded_by :latitude, :longitude
+  reverse_geocoded_by :latitude, :longitude, address: :location
   after_validation :reverse_geocode
   
   has_many :photos
@@ -15,30 +15,7 @@ class Event < ActiveRecord::Base
   validates :code, uniqueness: true
   validates :s3_token, presence: {allow_blank: false}, uniqueness: true
   
-  
-  attr_accessible :latitude, :longitude, :starts, :ends
-  
-  scope :near, lambda{ |*args|
-    origin = *args.first[:origin]
-    if (origin).is_a?(Array)
-      origin_latitude, origin_longitude = origin
-    else
-      origin_latitude, origin_longitude = origin.latitude, origin.longitude
-    end
-    origin_latitude, origin_longitude = self.deg2rad(origin_latitude), self.deg2rad(origin_longitude)
-    within = *args.first[:within]
-    {
-      :conditions => %(
-        (ACOS(COS(#{origin_latitude})*COS(#{origin_longitude})*COS(RADIANS(events.latitude))*COS(RADIANS(events.longitude))+
-        COS(#{origin_latitude})*SIN(#{origin_longitude})*COS(RADIANS(events.latitude))*SIN(RADIANS(events.longitude))+
-        SIN(#{origin_latitude})*SIN(RADIANS(events.latitude)))*3963) <= #{within[0]}),
-      :select => %(events.*,
-        (ACOS(COS(#{origin_latitude})*COS(#{origin_longitude})*COS(RADIANS(events.latitude))*COS(RADIANS(events.longitude))+
-        COS(#{origin_latitude})*SIN(#{origin_longitude})*COS(RADIANS(events.latitude))*SIN(RADIANS(events.longitude))+
-        SIN(#{origin_latitude})*SIN(RADIANS(events.latitude)))*3963) AS distance
-      )
-    }
-  }
+  attr_accessible :location, :name, :latitude, :longitude, :starts, :ends
   
   scope :current, where(" :now > starts AND :now < ends ", {now: Time.zone.now})
   scope :visible, where(:is_public => true)

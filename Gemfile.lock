@@ -82,7 +82,7 @@ GEM
     formtastic-bootstrap (1.1.1)
       formtastic
       rails (~> 3.1)
-    geocoder (1.1.0)
+    geocoder (1.1.1)
     hashie (1.2.0)
     highline (1.6.11)
     hike (1.2.1)
@@ -210,7 +210,7 @@ DEPENDENCIES
   fog
   formtastic
   formtastic-bootstrap
-  geocoder
+  geocoder (>= 1.1.1)
   jquery-rails
   mocha
   mysql2 (= 0.3.10)
