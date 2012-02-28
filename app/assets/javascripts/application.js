@@ -7,6 +7,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap.min
+//= require bootstrap.typeahead.ajax_mod
 //= require placeholder.jquery
 //= require mustache
 //= require devise

@@ -1,42 +1,20 @@
 <section class="container">
   <div class="row span12">
     
-    <%= form_for Event.new, :html => {:class => "new_event form-horizontal"} do |f| %>
-      <%= field_set_tag do %>
-        <legend><h2>Your Event</h2></legend>
-        
-        <div class="control-group name">
-          <%= f.label :name, :class => "control-label" %>
-          <div class="controls">
-            <%= f.text_field :name, :class => "input-xlarge" %>
-            <span class="help-inline hidden">
-              You must give you event a name
-            </span>
-          </div>
-        </div>
-        
-        <div class="control-group location">
-          <%= f.label :location, :class => "control-label" %>
-          <div class="controls">
-            <%= f.text_field :location, :class => "input-xlarge" %>
-            <span class="help-inline hidden">
-              Where abouts is your event?
-            </span>
-          </div>
-          <div class="google_map">
-          </div>
-          
+    <%= form_for Event.new, html: {class: "new_event event span4"} do |f| %>
+      <div class="container">
+        <h2>Your Event</h2>
+        <div id="float_over_google_map">
+          <%= f.text_field :location, "placeholder" => "Where's your event?" %>
           <%= f.hidden_field :latitude %>
           <%= f.hidden_field :longitude %>
         </div>
-        
-        <div class="form-actions">
-          <%= f.submit "Let's Go!", :class => "btn btn-primary" %>
+        <div id="google_map">
         </div>
-        
-      <% end %>
+      </div>
     <% end %>
     
   </div>
 </section>
-    
+
+<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>

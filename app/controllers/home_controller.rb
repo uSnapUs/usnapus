@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   end
   
   def geocode_search
-    render json: Geocoder.search(params[:search]).try(:first).to_json
+    render json: Geocoder.search(params[:search]).to_json
   end
   
 end

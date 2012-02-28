@@ -1,3 +1,30 @@
-// Place all the styles related to the Events controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+form.event{
+  background-color: #aaa;
+  
+  .container{
+    margin: 20px;
+    
+    #google_map {
+      width: 330px;
+      height: 330px;
+      margin: 20px 0;
+    }
+    
+    #float_over_google_map{
+      margin: 20px 0;
+      position: relative;
+      left: 20px;
+      top: 20px;
+
+      input{
+        position: absolute;
+        z-index: 10;
+        width: 280px;
+      }
+    }
+  }
+}
+
+.typeahead .dropdown-menu{
+  max-width: none;
+}
