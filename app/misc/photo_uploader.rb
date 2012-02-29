@@ -4,11 +4,10 @@ class PhotoUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or ImageScience support:
   include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
-  # include CarrierWave::ImageScience
+  #For delaying the processing
+  include ::CarrierWave::Backgrounder::DelayStorage
 
   # Choose what kind of storage to use for this uploader:
-  #storage :file
   unless Rails.env.test?
     storage :fog
   else

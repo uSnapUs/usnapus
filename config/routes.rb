@@ -1,5 +1,7 @@
 Usnapus::Application.routes.draw do
   
+  mount Resque::Server.new, :at => "/resque"
+  
   devise_for :users
   
   root to: "home#index"
