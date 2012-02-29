@@ -15,4 +15,22 @@ class PhotoTest < ActiveSupport::TestCase
     assert Factory.build(:photo, device_id: nil).valid?
   end
   
+  test "photo is processing by default" do
+    assert Factory(:photo).photo_processing
+  end
+  
+  test "processed photos show in scope" do
+    ph = Factory(:photo)
+    assert_equal [], Photo.processed
+    ph.photo_processing = nil
+    ph.save
+    assert_equal [ph], Photo.processed
+  end
+  
+  test "after_processing fires Pusher event" do
+    photo = Factory(:photo)
+    Pusher["event-#{photo.event.id}-photocast"].expects(:trigger!).once
+    photo.after_processing
+  end
+  
 end

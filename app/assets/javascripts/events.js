@@ -36,7 +36,7 @@ $(document).ready(function() {
   });
   
   var geocoder, map, marker;
-
+  
   window.initializeMap = function(selector){
   //MAP
   if(!selector||!document.getElementById(selector))
@@ -62,5 +62,8 @@ $(document).ready(function() {
     $("form input:visible:first").focus();
   }
   
-  initializeMap("google_map");
+  if($('#event_location').length){
+    initializeMap("google_map");
+  }
+  
 });

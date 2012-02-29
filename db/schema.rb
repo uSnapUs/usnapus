@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120220084625) do
+ActiveRecord::Schema.define(:version => 20120229122109) do
 
   create_table "devices", :force => true do |t|
     t.string   "guid"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20120220084625) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "device_id"
+    t.boolean  "photo_processing", :default => true
   end
 
   create_table "signups", :force => true do |t|

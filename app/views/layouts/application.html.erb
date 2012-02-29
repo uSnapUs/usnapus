@@ -65,13 +65,10 @@
       
     <%= yield %>
     
-    <script type="text/javascript"
-      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBXp6KNWdIzQfvGYD3pcTfz_uJQK_qOoJk&sensor=false">
-    </script>
     
+    <%= content_for(:pre_scripts) %>
     <%= javascript_include_tag "application" %>
-    
-    <%= content_for(:extra_scripts) %>
+    <%= content_for(:post_scripts) %>
     
     <script type="text/javascript">
     	$(document).ready(function(){

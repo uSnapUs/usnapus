@@ -4,7 +4,7 @@ class PhotosController < ApplicationController
 
   def index
     
-    @photos = @event.photos.order("created_at DESC")
+    @photos = @event.photos.processed.order("created_at DESC")
     
     if limit = params[:limit]
       @photos = @photos.limit(limit.to_i)
@@ -33,10 +33,9 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       if @photo.save
-        Pusher["event-#{@event.id}-photocast"].trigger!('new_photo', @photo)
         format.json { render json: @photo, status: :created}
         format.html {
-          flash[:notice] = "Photo uploaded!"
+          flash[:notice] = "Yay! We're processing your photo and you'll see it soon..."
           redirect_to event_photos_path(@event)
         }
       else

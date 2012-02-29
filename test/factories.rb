@@ -11,6 +11,10 @@ Factory.define :photo do |p|
   p.association :device
 end
 
+Factory.define :processed_photo, parent: :photo do |pp|
+  pp.photo_processing nil
+end
+
 Factory.define :device do |d|
   d.guid "ABC123"
   d.name "Nick's iPhone"

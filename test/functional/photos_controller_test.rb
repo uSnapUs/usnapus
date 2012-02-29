@@ -3,24 +3,19 @@ require 'test_helper'
 class PhotosControllerTest < ActionController::TestCase
   
   setup do
-    @photo = Factory(:photo)
+    @photo = Factory(:processed_photo)
     @event = @photo.event
   end
   
   teardown do
-    FileUtils.rm_rf "#{Rails.root}/public/events/"
-  end
-
-  test "should create photo" do
-    assert_difference 'Photo.count' do
-      xhr :post, :create, event_id: @event.to_param, photo: unprotected_attributes(@photo), format: "json"
-    end
-    assert_response :success
-    json = JSON.parse(@response.body)
-    assert_equal Photo.last.id, json["id"]
+    FileUtils.rm_rf "#{Rails.root}/public/uploads/"
   end
   
-  test "should create photo with test file" do
+  test "should create photo and start a background job" do
+    PhotoUploader.enable_processing = true
+    
+    Resque.stubs(:enqueue)
+    Resque.expects(:enqueue).with(::CarrierWave::Workers::ProcessAsset, "Photo", Photo.last.id+1, :photo).once
     assert_difference 'Photo.count' do
       xhr :post, :create, 
         event_id: @event.to_param, 
@@ -29,15 +24,7 @@ class PhotosControllerTest < ActionController::TestCase
     end
     assert_response :success
     
-    photo = Photo.last
-    assert File.exists?("#{Rails.root}/public/events/#{@event.s3_token}/photos/#{photo.id}/house.jpg"), "Original version should be stored"
-    assert File.exists?("#{Rails.root}/public/events/#{@event.s3_token}/photos/#{photo.id}/thumbnail_house.jpg"), "Thumbnail version should be created"
-  end
-  
-  
-  test "creating a photo should fire a Pusher event" do
-    Pusher["event-#{@event.id}-photocast"].expects(:trigger!).once
-    xhr :post, :create, event_id: @event.to_param, photo: unprotected_attributes(@photo), format: "json"
+    PhotoUploader.enable_processing = false
   end
   
   test "should be able to delete photo" do
@@ -59,15 +46,23 @@ class PhotosControllerTest < ActionController::TestCase
     @photo.created_at = 3.seconds.ago
     @photo.save!
     
-    photo2 = Factory(:photo, event: @photo.event)
+    photo2 = Factory(:processed_photo, event: @photo.event)
     xhr :get, :index, event_id: @event.to_param, format: "json"
     json = JSON.parse(@response.body)
     assert_equal photo2.id, json[0]["id"]
     assert_equal @photo.id, json[1]["id"]
   end
   
+  test "photos which haven't finished processing aren't shown" do
+    photo = Factory(:photo, event: @photo.event)
+    xhr :get, :index, event_id: @event.to_param, format: "json"
+    json = JSON.parse(@response.body)
+    assert_equal 1, json.length #Contains @photo
+    assert_equal @photo.id, json[0]["id"]
+  end
+  
   test "can limit photos" do
-    photo2 = Factory(:photo, event: @photo.event)
+    photo2 = Factory(:processed_photo, event: @photo.event)
     xhr :get, :index, event_id: @event.to_param, limit: 1, format: "json"
     json = JSON.parse(@response.body)
     assert_equal 1, json.length

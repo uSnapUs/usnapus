@@ -17,3 +17,4 @@
 
 # Ignore the dev photos
 /public/uploads
+/public/events

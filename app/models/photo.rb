@@ -1,6 +1,7 @@
 class Photo < ActiveRecord::Base
 
   mount_uploader :photo, PhotoUploader
+  process_in_background :photo
   
   belongs_to :event
   belongs_to :device
@@ -10,8 +11,14 @@ class Photo < ActiveRecord::Base
   
   attr_accessible :photo, :device_id
   
+  scope :processed, where(:photo_processing => nil)
+  
   def as_json(options = {})
     super(options).merge(:device_name => "#{device.name if device}")
+  end
+  
+  def after_processing
+    Pusher["event-#{event.id}-photocast"].trigger!('new_photo', self)
   end
   
   private

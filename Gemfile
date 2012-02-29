@@ -22,6 +22,7 @@ gem 'formtastic-bootstrap'
 gem 'createsend'
 
 gem 'carrierwave'
+gem 'carrierwave_backgrounder', :git=>"https://github.com/nickmalcolm/carrierwave_backgrounder"
 gem 'rmagick'
 gem 'fog'
 
