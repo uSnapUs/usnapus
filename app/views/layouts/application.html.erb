@@ -66,10 +66,9 @@
     <%= yield %>
     
     
-    
+    <%= content_for(:pre_scripts) %>
     <%= javascript_include_tag "application" %>
-    
-    <%= content_for(:extra_scripts) %>
+    <%= content_for(:post_scripts) %>
     
     <script type="text/javascript">
     	$(document).ready(function(){

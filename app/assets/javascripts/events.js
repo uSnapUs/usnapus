@@ -36,7 +36,7 @@ $(document).ready(function() {
   });
   
   var geocoder, map, marker;
-
+  
   window.initializeMap = function(selector){
   //MAP
     var latlng = new google.maps.LatLng(37.793508,-122.419281); //SF
@@ -59,5 +59,8 @@ $(document).ready(function() {
     $("form input:visible:first").focus();
   }
   
-  initializeMap("google_map");
+  if($('#event_location').length){
+    initializeMap("google_map");
+  }
+  
 });
