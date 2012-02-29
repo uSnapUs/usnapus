@@ -6,7 +6,7 @@ module EventsHelper
       if event.starts + 1.day < event.ends
         "#{event.starts.strftime("%-d")} - #{event.ends.strftime("%-d %B")}"
       else
-        "#{event.starts.strftime("%l%P")} - #{event.ends.strftime("%l%P, #{event.ends.day.ordinalize} %B")}"
+        "#{event.starts.strftime("%l%P")} - #{event.ends.strftime("%l%P, #{(event.ends.day-1.second).ordinalize} %B")}"
       end
     end
   end  
