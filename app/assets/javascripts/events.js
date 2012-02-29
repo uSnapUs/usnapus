@@ -39,6 +39,9 @@ $(document).ready(function() {
 
   window.initializeMap = function(selector){
   //MAP
+  if(!selector)
+    return;
+  
     var latlng = new google.maps.LatLng(37.793508,-122.419281); //SF
     var options = {
       zoom: 10,
