@@ -18,7 +18,7 @@ class Photo < ActiveRecord::Base
   end
   
   def after_processing
-    Pusher["event-#{event.id}-photocast"].trigger!('new_photo', self)
+    Pusher["#{Rails.env}-event-#{event.id}-photocast"].trigger!('new_photo', self)
   end
   
   private
