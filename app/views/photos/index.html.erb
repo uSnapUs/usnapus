@@ -38,7 +38,7 @@
 <script type="text/javascript">
   var pusher = new Pusher('2e4efb9ca1181106d096');
   
-  var channel = pusher.subscribe('<%= "event-#{@event.id}-photocast" %>');
+  var channel = pusher.subscribe('<%= "#{Rails.env}-event-#{@event.id}-photocast" %>');
   channel.bind('new_photo', function(data) {
     prependPhoto(data);
   });

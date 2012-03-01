@@ -29,7 +29,7 @@ class PhotoTest < ActiveSupport::TestCase
   
   test "after_processing fires Pusher event" do
     photo = Factory(:photo)
-    Pusher["event-#{photo.event.id}-photocast"].expects(:trigger!).once
+    Pusher["test-event-#{photo.event.id}-photocast"].expects(:trigger!).with('new_photo', photo).once
     photo.after_processing
   end
   
