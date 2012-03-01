@@ -55,3 +55,14 @@ after "deploy:update_code", "rvm:trust_rvmrc"
 after "deploy:restart" do
 end
 load "deploy/assets"
+
+desc "Hot-reload God configuration for the Resque worker"
+deploy.task :reload_god_config do
+  sudo "god stop resque"
+  sudo "god load #{File.join deploy_to, 'current', 'config', 'resque.god'}"
+  sudo "god start resque"
+end
+
+
+# Reload the config file for the resque worker after deploy
+after :deploy, 'deploy:reload_god_config'
