@@ -2,15 +2,14 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    proxy = Event
+    
+    @events = []
     
     if params[:latitude] && params[:longitude]
-      proxy = proxy.near([params[:latitude].to_f, params[:longitude].to_f], 0.62)
+      @events = Event.near([params[:latitude].to_f, params[:longitude].to_f], 0.62)
     elsif params[:code]
-      proxy = proxy.where(code: params[:code].upcase)
+      @events = Event.where(code: params[:code].upcase)
     end
-    
-    @events = proxy.all
     
     respond_to do |format|
       format.json { render json: @events }

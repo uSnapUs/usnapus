@@ -20,6 +20,16 @@ class Event < ActiveRecord::Base
   scope :current, where(" :now > starts AND :now < ends ", {now: Time.zone.now})
   scope :visible, where(:is_public => true)
   
+  def as_json(options={})
+    #Don't include the password, ever.
+    if options[:except].nil?
+      options[:except] = [:s3_token]
+    else
+      options[:except] << :s3_token
+    end
+    super(options)
+  end
+  
   def self.deg2rad(degree)
     degree*Math::PI/180
   end
