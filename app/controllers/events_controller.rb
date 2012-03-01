@@ -21,7 +21,7 @@ class EventsController < ApplicationController
   
   def show
     #Could get here as /events/1 or /CODE
-    if event = (Event.visible.find_by_id(params[:id]) || Event.visible.find_by_code(params[:code].try(:upcase)))
+    if event = (Event.visible.find_by_id(params[:id]) || Event.find_by_code(params[:code].try(:upcase)))
       redirect_to event_photos_path event
     else
       not_found
