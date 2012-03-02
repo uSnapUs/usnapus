@@ -30,8 +30,9 @@ gem 'anybase'
 
 gem "thin"
 gem "newrelic_rpm"
-gem 'resque'
+gem "airbrake"
 
+gem 'resque'
 gem "pusher"
 gem 'postmark-rails'
 gem "devise"

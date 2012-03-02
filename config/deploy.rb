@@ -61,3 +61,6 @@ load "deploy/assets"
 # 
 # # Reload the config file for the resque worker after deploy
 # after :deploy, 'deploy:reload_god_config'
+
+require './config/boot'
+require 'airbrake/capistrano'

@@ -66,6 +66,7 @@
     <%= yield %>
     
     
+    <%= airbrake_javascript_notifier %>
     <%= content_for(:pre_scripts) %>
     <%= javascript_include_tag "application" %>
     <%= content_for(:post_scripts) %>
