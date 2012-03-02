@@ -57,10 +57,13 @@ $(document).ready(function() {
   });
   
   //Show a photo fullscreen
-  $("#photo_gallery").on("click", ".photo a", function(){
+  $("#photo_gallery").on("click", ".photo a:not(.hide_photo)", function(){
     prepareFullscreenImage( $(this).find("img").attr("data-"+imageTypeForScreen()+"-src") );
     //This isn't the live photo cast, though
     $("#fullscreen_photo").addClass("dont_update").css({"background-color": "rgba(0,0,0,0.75)"});
+    return false;
+  }).on("click", ".photo a.hide_photo", function(){
+    $(this).parent().fadeOut(500, function(){$(this).remove()});
     return false;
   });
   

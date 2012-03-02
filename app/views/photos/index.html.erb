@@ -45,8 +45,11 @@
 </script>
 
 <script type="text/html" id="gallery_photo_template">
-  <div class="photo" id="photo_{{id}}">
+  <div class="photo" id="photo_{{id}}" data-photo-id="{{id}}">
   {{#photo}}
+    <% if false %>
+      <a href="#" class="hide_photo" title="Hide this forever"><span class="close_button"></span></a>
+    <% end %>
     <a href="{{original_src}}" title="Photo taken by {{alt}}. Click to view original.">
       <img src="{{thumbnail_src}}" data-xga-src="{{xga_src}}" data-original-src="{{original_src}}" alt="Photo taken by {{alt}}" />
     </a>
