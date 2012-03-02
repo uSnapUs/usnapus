@@ -64,8 +64,8 @@ load "deploy/assets"
 #   # su - -c '/etc/init.d/apache reload'
 #
 def surun(command)
-  password = fetch(:root_password, Capistrano::CLI.password_prompt("root password: "))
-  run("su - -c '#{command}'") do |channel, stream, output|
+  password = fetch(:root_password, Capistrano::CLI.password_prompt("sudo password for #{user}: "))
+  run("sudo '#{command}'") do |channel, stream, output|
     channel.send_data("#{password}n") if output
   end
 end
