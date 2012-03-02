@@ -1,41 +1,37 @@
 $(document).ready(function() {
   
-  var ta = $('#event_location').typeahead({
-    source: function (typeahead, query) {
-      console.log("Source")
-      $.getJSON("/geocode_search.json", {"search": query}, function(data){
-        var locations = [];
-        
-        $.each(data, function(i, item){
-          var item = item["data"];
-          locations.push({
-            value:  item.formatted_address,
-            lat:    item.geometry.location.lat,
-            lng:    item.geometry.location.lng
-          })
-        });
-        
-        if(!locations.length){
-          locations = [
-            {
-              value: "No results...",
-              lat: 37.793508,
-              lng: -122.419281
-            }
-          ]
-        }
-        console.log(locations);
-        typeahead.process(locations);
+  $('#event_location').autocomplete({
+    source: function (request, response) {        
+      $.getJSON("/geocode_search.json", {"search": request.term}, function(data){            
+        response($.map(data, function (item) {
+          item = item["data"]
+          return {
+              label: item.formatted_address,
+              value: item.formatted_address,
+              lat: item.geometry.location.lat,
+              lng: item.geometry.location.lng
+          };
+        }));  
       });
     },
-    onselect: function(obj) {
-      var location = new google.maps.LatLng(obj.lat, obj.lng);
+    select: function(event, ui){
+      var location = new google.maps.LatLng(ui.item.lat, ui.item.lng);
       marker.setPosition(location);
       map.setCenter(location);
+      updateLatLng();
     }
   });
   
   var geocoder, map, marker;
+  
+  window.updateLatLng = function(){
+    console.log(marker);
+    if(marker !== undefined){
+      console.log(marker);
+      $("#event_latitude").val(marker.getPosition().lat());
+      $("#event_longitude").val(marker.getPosition().lng());
+    }
+  }
   
   window.initializeMap = function(selector){
   //MAP
@@ -57,8 +53,14 @@ $(document).ready(function() {
 
     marker = new google.maps.Marker({
       map: map,
-      draggable: true
+      draggable: true,
+      flat: true
     });
+    
+    google.maps.event.addListener(marker, "dragend", function() {
+      updateLatLng();
+    });
+    
     $("form input:visible:first").focus();
   }
   

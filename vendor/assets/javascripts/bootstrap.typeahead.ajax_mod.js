@@ -55,7 +55,6 @@
     }
 
   , show: function () {
-      console.log("show")
       var pos = $.extend({}, this.$element.offset(), {
         height: this.$element[0].offsetHeight
       })
@@ -83,21 +82,16 @@
         , value
       
       this.query = this.$element.val()
-      console.log(this.query);
       
       if (typeof this.source == "function"){
-        console.log("Source is a function");
         this.source(this, this.query)
       }
       else{
-        console.log("Source is not a function")
         this.process(this.source)
       }
     }
 
   , process: function (results) {
-      console.log("process")
-      console.log(results)
       var that = this
         , items
         , q
@@ -120,9 +114,8 @@
 
         items = this.sorter(items)
       }
-      console.log(items)
+      
       if (!items.length) {
-        console.log("Boo")
         return this.shown ? this.hide() : this
       }
 
@@ -159,9 +152,8 @@
     }
 
   , render: function (items) {
-      var that = this
-      console.log("render");
-      console.log(items);
+      var that = this;
+      
       items = $(items).map(function (i, item) {
         i = $(that.options.item).attr('data-value', JSON.stringify(item))
         if (!that.strings)
