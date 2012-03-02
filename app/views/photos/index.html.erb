@@ -42,6 +42,9 @@
   channel.bind('new_photo', function(data) {
     prependPhoto(data);
   });
+  channel.bind('update_photo', function(data) {
+    updatePhoto(data);
+  });
 </script>
 
 <script type="text/html" id="gallery_photo_template">

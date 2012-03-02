@@ -37,6 +37,21 @@ $(document).ready(function() {
     }
   };
   
+  //Cachebusting
+  window.updatePhoto = function(data){
+    var photo = photoToUsableJSON(data), html = Mustache.to_html($("#gallery_photo_template").html(), photo);
+    
+    $("#photo_gallery .photo[data-photo-id="+photo.id+"]").replaceWith(html);
+    $(".photo:hidden").fadeIn();
+    
+    //If we're in live photo mode, update the photo
+    if($("#fullscreen_photo:not(.dont_update)").length > 0){
+      var img = $("#fullscreen_photo img");
+      
+      prepareFullscreenImage(photo["photo"][imageTypeForScreen()+"_src"]);
+    }
+  }
+  
   window.appendPhoto = function(data){
     var photo = photoToUsableJSON(data), html = Mustache.to_html($("#gallery_photo_template").html(), photo);
     

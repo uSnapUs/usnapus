@@ -14,11 +14,28 @@ class Photo < ActiveRecord::Base
   scope :processed, where(:photo_processing => nil)
   
   def as_json(options = {})
-    super(options).merge(:device_name => "#{device.name if device}")
+    timestamp = "?#{updated_at.to_i}";
+    super(options.merge({except: [:photo]})).merge(
+      device_name: "#{device.name if device}",
+      photo: {
+        url: photo.url+timestamp,
+        thumbnail: {
+          url: photo.url(:thumbnail)+timestamp
+        },  
+        xga: {
+          url: photo.url(:xga)+timestamp
+        },
+      })
   end
   
   def after_processing
     Pusher["#{Rails.env}-event-#{event.id}-photocast"].trigger!('new_photo', self)
+  end
+  
+  #Eggregious hax to get the browser to reload a photo
+  def reload_image
+    touch
+    Pusher["#{Rails.env}-event-#{event.id}-photocast"].trigger!('update_photo', self)
   end
   
   private
