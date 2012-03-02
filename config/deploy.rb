@@ -58,11 +58,9 @@ load "deploy/assets"
 
 desc "Hot-reload God configuration for the Resque worker"
 deploy.task :reload_god_config do
-  password = fetch(:root_password, Capistrano::CLI.password_prompt("sudo password for #{user}: "))
-  
-  run "#{sudo} god stop resque && god load #{File.join deploy_to, 'current', 'config', 'resque.god'} && god start resque"do |channel, stream, output|
-    channel.send_data("#{password}n") if output
-  end
+  run "#{sudo} god stop resque"
+  run "#{sudo} god load #{File.join deploy_to, 'current', 'config', 'resque.god'}"
+  run "#{sudo} god start resque"
 end
 
 
