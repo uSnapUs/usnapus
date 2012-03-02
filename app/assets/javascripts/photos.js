@@ -134,7 +134,7 @@ $(document).ready(function() {
       }).css(
       {
         "left": (browserwidth - img.width())/2,
-        "top": ((browserheight - img.height())/2)
+        "top": ((browserheight - img.height())/2)+$(window).scrollTop()
       });
   }
   
