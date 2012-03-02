@@ -44,19 +44,20 @@ after "deploy:update_code", "rvm:trust_rvmrc"
 
 load "deploy/assets"
 
-def surun(command)
-  password = fetch(:root_password, Capistrano::CLI.password_prompt("root password: "))
-  run("su - -c '#{command}'") do |channel, stream, output|
-    channel.send_data("#{password}") if output
-  end
-end
-
-desc "Hot-reload God configuration for the Resque worker"
-deploy.task :reload_god_config do
-  surun "/etc/init.d/god-service stop resque"
-  surun "/etc/init.d/god-service start resque"
-end
-
-
-# Reload the config file for the resque worker after deploy
-after :deploy, 'deploy:reload_god_config'
+# def surun(command)
+#   password = fetch(:root_password, Capistrano::CLI.password_prompt("root password: "))
+#   run("su - -c '#{command}'") do |channel, stream, output|
+#     channel.send_data("#{password}") if output
+#   end
+# end
+# 
+# desc "Hot-reload God configuration for the Resque worker"
+# deploy.task :reload_god_config do
+#   surun "/etc/init.d/god-service stop resque"
+#   surun "/etc/init.d/god-service load #{File.join deploy_to, 'current', 'config', 'resque.god'}"
+#   surun "/etc/init.d/god-service start resque"
+# end
+# 
+# 
+# # Reload the config file for the resque worker after deploy
+# after :deploy, 'deploy:reload_god_config'
