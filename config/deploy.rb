@@ -58,7 +58,7 @@ load "deploy/assets"
 
 def surun(command)
   password = fetch(:root_password, Capistrano::CLI.password_prompt("root password: "))
-  run("su - -c '#{command}'") do |channel, stream, output|
+  run("su - -c #{command}") do |channel, stream, output|
     channel.send_data("#{password}n") if output
   end
 end
