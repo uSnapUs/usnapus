@@ -1,27 +1,5 @@
 $(document).ready(function() {
-  
-  $('#event_location').autocomplete({
-    source: function (request, response) {        
-      $.getJSON("/geocode_search.json", {"search": request.term}, function(data){            
-        response($.map(data, function (item) {
-          item = item["data"]
-          return {
-              label: item.formatted_address,
-              value: item.formatted_address,
-              lat: item.geometry.location.lat,
-              lng: item.geometry.location.lng
-          };
-        }));  
-      });
-    },
-    select: function(event, ui){
-      var location = new google.maps.LatLng(ui.item.lat, ui.item.lng);
-      marker.setPosition(location);
-      map.setCenter(location);
-      updateLatLng();
-    }
-  });
-  
+
   var geocoder, map, marker;
   
   window.updateLatLng = function(){
@@ -66,6 +44,29 @@ $(document).ready(function() {
   
   if($('#event_location').length){
     initializeMap("google_map");
+    
+    $('#event_location').autocomplete({
+      source: function (request, response) {        
+        $.getJSON("/geocode_search.json", {"search": request.term}, function(data){            
+          response($.map(data, function (item) {
+            item = item["data"]
+            return {
+                label: item.formatted_address,
+                value: item.formatted_address,
+                lat: item.geometry.location.lat,
+                lng: item.geometry.location.lng
+            };
+          }));  
+        });
+      },
+      select: function(event, ui){
+        var location = new google.maps.LatLng(ui.item.lat, ui.item.lng);
+        marker.setPosition(location);
+        map.setCenter(location);
+        updateLatLng();
+      }
+    });
+    
   }
   
 });
