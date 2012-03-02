@@ -37,18 +37,53 @@ $(document).ready(function() {
     }
   };
   
-  if($("#photo_gallery").length > 0){
+  window.appendPhoto = function(data){
+    var photo = photoToUsableJSON(data), html = Mustache.to_html($("#gallery_photo_template").html(), photo);
     
-    //Load all the photos asynchronously on page load
-    $.getJSON(window.location+".json", function(data){
-      //Since the photos come in created_at ASC order,
-      // we want to *append* them. So flip the array.
-      $.each(data.reverse(), function(i, photo_data) {
-        prependPhoto(photo_data);
+    $("#photo_gallery").append(html);
+    $(".photo:hidden").fadeIn();
+  }
+  
+  window.loadGalleryPhotos = function(params, f){
+    $.getJSON($("#photo_gallery").attr("data-json-url"), {limit: params.limit, before: params.before}, function(data){
+      
+      $.each(data, function(i, photo_data) {
+        appendPhoto(photo_data);
       });
-    
+      
+      if (typeof f == "function") f(data); //Callback
     });
-    
+  }
+  
+  function distToBottom(){
+    return $("html").height() - $(window).innerHeight() - $(window).scrollTop();
+  }
+  
+  //Load photos to the bottom of the screen
+  window.loadToBottom = function(){
+    if(distToBottom() <= 0){
+      
+      //Find the last photo, and load ones older than that
+      var last_photo = $(".photo:last").attr("data-photo-id");
+      
+      loadGalleryPhotos({limit: 4, before: last_photo}, function(data){
+        if(data.length){ //Only recurse if there's more to load
+          loadToBottom();
+        }
+      });
+    }
+  }
+  
+  //If the window scrolls to the bottom, load some more photos
+  $(window).scroll(function(){
+    loadToBottom();
+  });
+  
+  if($("#photo_gallery").length > 0){
+    //Load photos asynchronously on page load
+    loadGalleryPhotos({limit: 8}, function(data){
+      loadToBottom();
+    });
   }
   
   //The live photo cast

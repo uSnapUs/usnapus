@@ -5,7 +5,9 @@ class PhotosController < ApplicationController
   def index
     
     @photos = @event.photos.processed.order("created_at DESC")
-    
+    if before_id = params[:before]
+      @photos = @photos.where("id < ?", before_id)
+    end
     if limit = params[:limit]
       @photos = @photos.limit(limit.to_i)
     end
