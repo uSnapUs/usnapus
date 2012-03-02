@@ -58,9 +58,9 @@ load "deploy/assets"
 
 desc "Hot-reload God configuration for the Resque worker"
 deploy.task :reload_god_config do
-  run "#{sudo} god stop resque"
-  run "#{sudo} god load #{File.join deploy_to, 'current', 'config', 'resque.god'}"
-  run "#{sudo} god start resque"
+  run "#{sudo :as => user} god stop resque"
+  run "#{sudo :as => user} god load #{File.join deploy_to, 'current', 'config', 'resque.god'}"
+  run "#{sudo :as => user} god start resque"
 end
 
 
