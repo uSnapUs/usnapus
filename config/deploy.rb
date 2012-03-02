@@ -65,9 +65,9 @@ end
 
 desc "Hot-reload God configuration for the Resque worker"
 deploy.task :reload_god_config do
-  surun "god stop resque"
-  surun "god load #{File.join deploy_to, 'current', 'config', 'resque.god'}"
-  surun "god start resque"
+  surun "/etc/init.d/god-service stop resque"
+  surun "/etc/init.d/god-service load #{File.join deploy_to, 'current', 'config', 'resque.god'}"
+  surun "/etc/init.d/god-service start resque"
 end
 
 
