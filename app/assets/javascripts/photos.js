@@ -66,7 +66,7 @@ $(document).ready(function() {
       //Find the last photo, and load ones older than that
       var last_photo = $(".photo:last").attr("data-photo-id");
       
-      loadGalleryPhotos({limit: 4, before: last_photo}, function(data){
+      loadGalleryPhotos({limit: 8, before: last_photo}, function(data){
         if(data.length){ //Only recurse if there's more to load
           loadToBottom();
         }
@@ -75,7 +75,7 @@ $(document).ready(function() {
   }
   
   //If the window scrolls to the bottom, load some more photos
-  $(window).scroll(function(){
+  $(document).scroll(function(){
     loadToBottom();
   });
   
