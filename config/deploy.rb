@@ -56,13 +56,25 @@ after "deploy:restart" do
 end
 load "deploy/assets"
 
-# desc "Hot-reload God configuration for the Resque worker"
-# deploy.task :reload_god_config do
-#   sudo "god stop resque"
-#   sudo "god load #{File.join deploy_to, 'current', 'config', 'resque.god'}"
-#   sudo "god start resque"
-# end
-# 
-# 
-# # Reload the config file for the resque worker after deploy
-# after :deploy, 'deploy:reload_god_config'
+# Runs +command+ as root invoking the command with su -c
+# and handling the root password prompt.
+#
+#   surun "/etc/init.d/apache reload"
+#   # Executes
+#   # su - -c '/etc/init.d/apache reload'
+#
+def surun(command)
+  password = fetch(:root_password, Capistrano::CLI.password_prompt("root password: "))
+  run("su - -c '#{command}'") do |channel, stream, output|
+    channel.send_data("#{password}n") if output
+  end
+end
+
+desc "Hot-reload God configuration for the Resque worker"
+deploy.task :reload_god_config do
+  surun "god stop resque && god load #{File.join deploy_to, 'current', 'config', 'resque.god'} && god start resque"
+end
+
+
+# Reload the config file for the resque worker after deploy
+after :deploy, 'deploy:reload_god_config'
