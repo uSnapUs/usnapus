@@ -56,11 +56,18 @@ after "deploy:restart" do
 end
 load "deploy/assets"
 
+def surun(command)
+  password = fetch(:root_password, Capistrano::CLI.password_prompt("sudo #{user} password: "))
+  run("su #{user} -c '#{command}'") do |channel, stream, output|
+    channel.send_data("#{password}n") if output
+  end
+end
+
 desc "Hot-reload God configuration for the Resque worker"
 deploy.task :reload_god_config do
-  run "#{sudo :as => user} god stop resque"
-  run "#{sudo :as => user} god load #{File.join deploy_to, 'current', 'config', 'resque.god'}"
-  run "#{sudo :as => user} god start resque"
+  surun "god stop resque"
+  surun "god load #{File.join deploy_to, 'current', 'config', 'resque.god'}"
+  surun "god start resque"
 end
 
 
