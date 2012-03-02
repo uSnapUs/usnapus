@@ -31,13 +31,6 @@ namespace :deploy do
   task :restart, :roles => [:app], :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
-
-  task :symlink_configs do
-  end
-
-  task :precompile do
-   # run "cd #{release_path} && RAILS_ENV=production bundle install && RAILS_ENV=production bundle exec rake assets:precompile"
-  end
 end
 
 namespace :rvm do
@@ -53,7 +46,7 @@ load "deploy/assets"
 
 def surun(command)
   password = fetch(:root_password, Capistrano::CLI.password_prompt("root password: "))
-  run("su - -c #{command}") do |channel, stream, output|
+  run("su - -c '#{command}'") do |channel, stream, output|
     channel.send_data("#{password}n") if output
   end
 end
