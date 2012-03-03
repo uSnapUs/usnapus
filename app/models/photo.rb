@@ -14,17 +14,17 @@ class Photo < ActiveRecord::Base
   scope :processed, where(:photo_processing => nil)
   
   def as_json(options = {})
-    timestamp = "?#{updated_at.to_i}";
+    timestamp = "?#{updated_at.to_i}"
     super(options.merge({except: [:photo]})).merge(
-      device_name: "#{device.name if device}",
+      device_name: "#{device.name if device}", 
       photo: {
-        url: photo.url+timestamp,
+        url: "#{photo.url}#{timestamp}",
         thumbnail: {
-          url: photo.url(:thumbnail)+timestamp
+          url: "#{photo.url(:thumbnail)}#{timestamp}"
         },  
         xga: {
-          url: photo.url(:xga)+timestamp
-        },
+          url: "#{photo.url(:xga)}#{timestamp}"
+        }
       })
   end
   
