@@ -60,6 +60,7 @@ $(document).ready(function() {
   }
   
   window.loadGalleryPhotos = function(params, f){
+    console.log("Load");
     $.getJSON($("#photo_gallery").attr("data-json-url"), {limit: params.limit, before: params.before}, function(data){
       
       $.each(data, function(i, photo_data) {
@@ -70,18 +71,18 @@ $(document).ready(function() {
     });
   }
   
-  function distToBottom(){
-    return $("html").height() - $(window).innerHeight() - $(window).scrollTop();
-  }
-  
   //Load photos to the bottom of the screen
   window.loadToBottom = function(){
-    if(distToBottom() <= 0){
+    
+    var at_the_bottom = ($("html").height() - $(window).innerHeight() - $(window).scrollTop()) <= 0,
+    room_for_more = $(".photo:last").position().top < $(window).innerHeight();
+    
+    if(at_the_bottom || room_for_more){
       
       //Find the last photo, and load ones older than that
       var last_photo = $(".photo:last").attr("data-photo-id");
       
-      loadGalleryPhotos({limit: 8, before: last_photo}, function(data){
+      loadGalleryPhotos({limit: 4, before: last_photo}, function(data){
         if(data.length){ //Only recurse if there's more to load
           loadToBottom();
         }
@@ -96,7 +97,7 @@ $(document).ready(function() {
   
   if($("#photo_gallery").length > 0){
     //Load photos asynchronously on page load
-    loadGalleryPhotos({limit: 8}, function(data){
+    loadGalleryPhotos({limit: 4}, function(data){
       loadToBottom();
     });
   }
