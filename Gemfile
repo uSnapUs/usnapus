@@ -54,7 +54,7 @@ group :test do
   # Pretty printed test output
   # gem 'turn', '0.8.2', :require => false
   # Breaks mocha (https://github.com/rails/rails/commit/6eff04499e28865890e1ae3915fe80e4903a997b)
-  
+  gem 'faker'
   gem 'factory_girl_rails'
   gem 'mocha', :require => false
 end

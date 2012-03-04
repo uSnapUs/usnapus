@@ -9,7 +9,7 @@ class Photo < ActiveRecord::Base
   validates :event_id, presence: true
   validate :event_and_device_must_exist
   
-  attr_accessible :photo, :device_id
+  attr_accessible :photo
   
   scope :processed, where(:photo_processing => nil)
   

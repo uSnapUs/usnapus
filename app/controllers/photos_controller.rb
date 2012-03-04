@@ -32,7 +32,7 @@ class PhotosController < ApplicationController
   # POST /photos.json
   def create
     @photo = @event.photos.new(params[:photo])
-
+    
     respond_to do |format|
       if @photo.save
         format.json { render json: @photo, status: :created}
@@ -51,20 +51,28 @@ class PhotosController < ApplicationController
   end
   
   def destroy
-    @photo = @event.photos.find(params[:id])
+    @photo = Photo.find_by_id_and_event_id_and_device_id(params[:id], @event.id, current_device.id)
     
     respond_to do |format|
-      if @photo.destroy
+      if @photo && @photo.destroy
         format.json { head :ok }
       else
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
+        format.json { head :not_found }
       end
     end
   end
   
   private
     def get_event
-      @event = Event.visible.find(params[:event_id])
+      unless @event = if current_user #User can only see their events
+                        current_user.events.find_by_id(params[:event_id])
+                      elsif current_device #Device can see all events
+                        Event.find_by_id(params[:event_id])
+                      else #Public can only see by code
+                        Event.find_by_code(params[:code].try(:upcase))
+                      end
+        head 404
+      end
     end
   
 end

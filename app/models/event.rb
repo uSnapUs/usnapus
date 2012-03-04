@@ -17,7 +17,7 @@ class Event < ActiveRecord::Base
   validates :code, uniqueness: true
   validates :s3_token, presence: {allow_blank: false}, uniqueness: true
   
-  attr_accessible :location, :name, :latitude, :longitude, :starts, :ends, :code
+  attr_accessible :location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public
   
   scope :current, where(" :now > starts AND :now < ends ", {now: Time.zone.now})
   scope :visible, where(:is_public => true)

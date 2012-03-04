@@ -24,4 +24,16 @@ class DeviceTest < ActiveSupport::TestCase
     assert device.photos.include? photo
   end
   
+  test "device can't update guid" do
+    device = Factory :device
+    orig_g = device.guid
+    
+    device.guid = "123"
+    assert device.invalid?
+    
+    device.save!
+    
+    assert_equal orig_g, device.reload.guid
+  end
+    
 end

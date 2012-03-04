@@ -9,7 +9,7 @@ Usnapus::Application.routes.draw do
   
   resources :devices, only: [:create, :update]
 
-  resources :events, only: [:new, :index, :show] do
+  resources :events, only: [:new] do
     resources :photos, except: [:update, :edit] do
       collection do
         get :fullscreen
@@ -20,6 +20,6 @@ Usnapus::Application.routes.draw do
   resources :signups, only: [:create]
   
   #Keep at the end
-  get '*code', :to=> "events#show"
+  get '*code', :to=> "photos#index"
   
 end
