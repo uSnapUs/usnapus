@@ -6,16 +6,18 @@ class Event < ActiveRecord::Base
   after_validation :reverse_geocode
   
   has_many :photos
+  has_many :attendees
+  has_many :users, through: :attendees
   
-  validates :code, :format => {:with => /\A[A-HJKMNP-Z2-9]{7}\Z/, :on => :create}, :uniqueness => true
+  validates :code, format: {with: /\A[A-HJKMNP-Z2-9]{7}\Z/, on: :create}, uniqueness: true
   
-  before_validation :generate_codes, :on => :create
+  before_validation :generate_codes, on: :create
   
   validates :code, presence: {allow_blank: false}
   validates :code, uniqueness: true
   validates :s3_token, presence: {allow_blank: false}, uniqueness: true
   
-  attr_accessible :location, :name, :latitude, :longitude, :starts, :ends
+  attr_accessible :location, :name, :latitude, :longitude, :starts, :ends, :code
   
   scope :current, where(" :now > starts AND :now < ends ", {now: Time.zone.now})
   scope :visible, where(:is_public => true)

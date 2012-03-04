@@ -19,3 +19,14 @@ Factory.define :device do |d|
   d.guid "ABC123"
   d.name "Nick's iPhone"
 end
+
+Factory.define :user do |u|
+  u.sequence(:email) { |n| "factory_#{n}@example.com" }
+  u.password '123abc'
+  u.confirmed_at DateTime.now
+end
+
+Factory.define :attendee do |a|
+  a.association :user
+  a.association :event
+end
