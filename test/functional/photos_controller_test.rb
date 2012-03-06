@@ -5,13 +5,33 @@ class PhotosControllerTest < ActionController::TestCase
   setup do
     @user = Factory(:user)
     @event = Factory(:current_event, is_public: true)
-    Factory(:attendee, user: @user, event: @event)
+    @attendee = Factory(:attendee, user: @user, event: @event)
     @photo = Factory(:processed_photo, event: @event)
     
     sign_in @user
   end
   
+  teardown do
+    FileUtils.rm_rf "#{Rails.root}/public/uploads/"
+  end
+  
   test "can view photos with event id" do
+    get :index, event_id: @event.to_param
+    assert_response :success
+    assert_equal [@photo], assigns(:photos)
+    assert_select "#photo_gallery", 1
+  end
+
+  test "can get private event by id" do
+    @event.update_attributes is_public: false
+    get :index, event_id: @event.to_param
+    assert_response :success
+    assert_equal [@photo], assigns(:photos)
+    assert_select "#photo_gallery", 1
+  end
+  
+  test "can get private event by code" do
+    @event.update_attributes is_public: false
     get :index, event_id: @event.to_param
     assert_response :success
     assert_equal [@photo], assigns(:photos)
@@ -49,6 +69,40 @@ class PhotosControllerTest < ActionController::TestCase
     json = JSON.parse(@response.body)
     assert_equal 1, json.length
   end
+  
+  test "can upload photos" do
+    PhotoUploader.enable_processing = true
+    Resque.stubs(:enqueue)
+    Resque.expects(:enqueue).with(::CarrierWave::Workers::ProcessAsset, "Photo", Photo.last.id+1, :photo).once
+    assert_difference "Photo.count" do
+      post :create, 
+        event_id: @event.to_param, 
+        photo: {photo: fixture_file_upload('files/house.jpg','image/jpg')}
+    end
+    PhotoUploader.enable_processing = false
+    
+    photo = Photo.last
+    assert_equal @event, photo.event
+    assert_equal @user, photo.creator
+  end
+  
+  test "shouldn't be able to delete another creator's photo" do
+    assert_no_difference 'Photo.count' do
+      xhr :delete, :destroy, event_id: @event.to_param, id: @photo.id, format: "json"
+      assert_response :not_found
+    end
+  end
+  
+  test "should be able to delete a user's own photo" do
+    photo_id = Factory(:photo, creator: @user, event: @event).id
+    
+    assert_difference 'Photo.count', -1 do
+      xhr :delete, :destroy, event_id: @event.to_param, id: photo_id, format: "json"
+    end
+    
+    assert_response :success
+    assert_nil Photo.find_by_id(photo_id)
+  end
    
 end
 class NotSignedInPhotosControllerTest < ActionController::TestCase
@@ -74,13 +128,23 @@ class NotSignedInPhotosControllerTest < ActionController::TestCase
     assert_response :not_found
   end
   
-  test "can't get event by id if not signed in" do
-    @event.update_attributes is_public: false
+  test "can't get public event by id" do
+    @event.update_attributes is_public: true
     get :index, event_id: @event.to_param
     assert_response :not_found
   end
   
-  #Event by code in integration tests
+  test "can get public event by code" do
+    @event.update_attributes is_public: true
+    get :index, code: @event.code
+    assert_response :success
+  end
+  
+  test "can't get private event by code" do
+    @event.update_attributes is_public: false
+    get :index, code: @event.code
+    assert_response :not_found
+  end
 
 end
 class APIPhotosControllerTest < ActionController::TestCase
@@ -112,11 +176,11 @@ class APIPhotosControllerTest < ActionController::TestCase
     
     PhotoUploader.enable_processing = false
     
-    assert_equal @device, Photo.last.device
+    assert_equal @device, Photo.last.creator
   end
   
   
-  test "shouldn't be able to delete another device's photo with device auth" do
+  test "shouldn't be able to delete another creator's photo with device auth" do
     @request.env["Authorization"] = "Device token=\"#{@device.guid}\""
     
     assert_no_difference 'Photo.count' do
@@ -126,7 +190,7 @@ class APIPhotosControllerTest < ActionController::TestCase
   end
   
   test "should be able to delete a device's photo with device auth" do
-    photo_id = Factory(:photo, device: @device, event: @event).id
+    photo_id = Factory(:photo, creator: @device, event: @event).id
     
     @request.env["Authorization"] = "Device token=\"#{@device.guid}\""
     
@@ -138,5 +202,58 @@ class APIPhotosControllerTest < ActionController::TestCase
     assert_nil Photo.find_by_id(photo_id)
   end
   
+end
+class LegacyDeviceControllerTest < ActionController::TestCase
+  tests PhotosController
+
+  setup do
+    @device = Factory(:device)
+    @photo = Factory(:processed_photo)
+    @event = @photo.event
+  end
+  
+  teardown do
+    FileUtils.rm_rf "#{Rails.root}/public/uploads/"
+  end
+  
+  test "should create photo and start a background job with device token" do
+    
+    PhotoUploader.enable_processing = true
+    Resque.stubs(:enqueue)
+    Resque.expects(:enqueue).with(::CarrierWave::Workers::ProcessAsset, "Photo", Photo.last.id+1, :photo).once
+    
+    assert_difference 'Photo.count' do
+      xhr :post, :create,
+        event_id: @event.to_param, 
+        photo: {
+          photo: fixture_file_upload('files/house.jpg','image/jpg'),
+          device_id: @device.id},
+        format: "json"
+        
+      
+      assert_response :success
+    end
+    
+    PhotoUploader.enable_processing = false
+    
+    assert_equal @device, Photo.last.creator
+  end
+  
+  
+  test "shouldn't be able to delete another creator's photo with device auth" do
+    assert_no_difference 'Photo.count' do
+      xhr :delete, :destroy, event_id: @event.to_param, id: @photo.id, format: "json"
+      assert_response :not_found
+    end
+  end
+  
+  test "shouldn't be able to delete a device's photo with device token" do
+    photo_id = Factory(:photo, creator: @device, event: @event).id
+    
+    assert_no_difference 'Photo.count' do
+      xhr :delete, :destroy, event_id: @event.to_param, id: photo_id, device_id: @device.id, format: "json"
+      assert_response :not_found
+    end
+  end
   
 end

@@ -6,7 +6,8 @@ class EventsController < ApplicationController
     @events = []
     
     if params[:latitude] && params[:longitude]
-      @events = Event.near([params[:latitude].to_f, params[:longitude].to_f], 0.62)
+      #Only current events should show on the map
+      @events = Event.current.near([params[:latitude].to_f, params[:longitude].to_f], 0.62)
     elsif params[:code]
       @events = Event.where(code: params[:code].upcase)
     end

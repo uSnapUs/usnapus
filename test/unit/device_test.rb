@@ -18,7 +18,7 @@ class DeviceTest < ActiveSupport::TestCase
   
   test "device can have photos" do
     device = Factory :device
-    photo = Factory :photo, device: device 
+    photo = Factory :photo, creator: device 
     
     assert_equal 1, device.photos.size
     assert device.photos.include? photo
@@ -30,10 +30,6 @@ class DeviceTest < ActiveSupport::TestCase
     
     device.guid = "123"
     assert device.invalid?
-    
-    device.save!
-    
-    assert_equal orig_g, device.reload.guid
   end
     
 end

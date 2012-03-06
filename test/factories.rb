@@ -8,10 +8,12 @@ end
 
 Factory.define :photo do |p|
   p.association :event
+  p.association :creator, factory: :user
 end
 
-Factory.define :photo_with_device, parent: :photo do |p|
-  p.association :device
+Factory.define :photo_with_device, :class => Photo do |p|
+  p.association :event
+  p.association :creator, factory: :device
 end
 
 Factory.define :processed_photo, parent: :photo do |pp|

@@ -31,7 +31,10 @@ class PhotosController < ApplicationController
 
   # POST /photos.json
   def create
-    @photo = @event.photos.new(params[:photo])
+    @photo = @event.photos.new(params[:photo].slice(:photo))
+                                      #Legacy
+    @photo.creator = current_thing || (Device.find_by_id(params[:photo][:device_id]) if params[:photo])
+    
     
     respond_to do |format|
       if @photo.save
@@ -42,7 +45,6 @@ class PhotosController < ApplicationController
         }
       else
         format.html{
-          p @photo.errors
           render "new"
         }
         format.json { render json: @photo.errors, status: :unprocessable_entity }
@@ -51,7 +53,7 @@ class PhotosController < ApplicationController
   end
   
   def destroy
-    @photo = Photo.find_by_id_and_event_id_and_device_id(params[:id], @event.id, current_device.id)
+    @photo = current_thing.photos.find_by_id(params[:id]) if current_thing
     
     respond_to do |format|
       if @photo && @photo.destroy
@@ -64,15 +66,40 @@ class PhotosController < ApplicationController
   
   private
     def get_event
-      unless @event = if current_user #User can only see their events
-                        current_user.events.find_by_id(params[:event_id])
-                      elsif current_device #Device can see all events
-                        Event.find_by_id(params[:event_id])
-                      else #Public can only see by code
-                        Event.find_by_code(params[:code].try(:upcase))
-                      end
-        head 404
+      
+      #Signed in users can get their events by id or code
+      #Devices can get all events by id or code
+      #Public can get public events by code only
+      
+      events =  if current_user
+                  get_event_by_param Event.joins(:attendees).where("attendees.user_id = ?", current_user.id)
+                elsif current_device
+                  get_event_by_param Event
+                else
+                  Event.visible.where(:code => params[:code]) if params[:code]
+                end
+     
+      if request.post? && params[:photo] && params[:photo][:device_id]
+        #Legacy to let devices create new photos
+        @event = get_event_by_param(Event).first
+      
+      #No events, 404  
+      elsif !events || !(@event = events.first)
+        raise ActiveRecord::RecordNotFound.new("Event does not exist")
       end
+      
+    end
+    
+    def get_event_by_param(proxy)
+      if id = params[:event_id]
+        proxy.where("events.id = ?", id)
+      elsif code = params[:code]
+        proxy.where("events.code = ?", code)
+      end
+    end
+    
+    def current_thing
+      current_user || current_device
     end
   
 end
