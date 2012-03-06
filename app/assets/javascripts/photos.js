@@ -60,7 +60,6 @@ $(document).ready(function() {
   }
   
   window.loadGalleryPhotos = function(params, f){
-    console.log("Load");
     $.getJSON($("#photo_gallery").attr("data-json-url"), {limit: params.limit, before: params.before}, function(data){
       
       $.each(data, function(i, photo_data) {
@@ -190,6 +189,52 @@ $(document).ready(function() {
         "left": (browserwidth - img.width())/2,
         "top": ((browserheight - img.height())/2)+$(window).scrollTop()
       });
+  }
+  
+  window.twentyfour_to_twelve_hour = function(date){
+    var tf_h = date.getHours(),
+    tw_h = tf_h%12,
+    pm = (tf_h/12 >= 1);
+    
+    //Show both 0000 today and the next day as 12am today, event though that's wrong
+    tw_str = (tw_h == 0 ? 12 : tw_h);
+    
+    return ""+tw_str+(pm ? "pm" : "am");
+  }
+  
+  function numberToOrdinal(n) {
+     var s=["th","st","nd","rd"],
+         v=n%100;
+     return n+(s[(v-20)%10]||s[v]||s[0]);
+  }
+  
+  if($(".pretty_time").length){
+    
+    var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+    
+    var time_p = $(".pretty_time"),
+    starts = new Date(time_p.attr("data-utc-starts")),
+    ends = new Date(time_p.attr("data-utc-ends")),
+    time_string = "";
+    
+    //If the event is multiday, show the dates, otherwise show times
+    //If the event ends at midnight, treat that as 'the same day'
+    if(starts.getDate() == (new Date(ends-1)).getDate()){
+      
+      // Xam - Ypm, Zth of M
+      var starts_string = twentyfour_to_twelve_hour(starts),
+      ends_string = twentyfour_to_twelve_hour(ends),
+      date_string = numberToOrdinal(starts.getDate())+" "+months[starts.getMonth()];
+      
+      time_string = starts_string+" - "+ends_string+", "+date_string;
+      
+    }else{
+      //Xth - Yth M
+      time_string = numberToOrdinal(starts.getDate())+" - "+numberToOrdinal(ends.getDate())+" "+months[starts.getMonth()];
+    }
+    
+    time_p.html(time_string);
+    
   }
   
 });

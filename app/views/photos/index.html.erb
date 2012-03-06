@@ -5,7 +5,8 @@
   <div class="row">
     <div class="span12">
       <h1 class="brand event_name"><%= @event.name %></h1>
-      <p><%= pretty_time @event %></p>
+      <p class="pretty_time" data-utc-starts="<%= @event.starts %>" data-utc-ends="<%= @event.ends %>">
+      </p>
       <div class="buttons upcase bold">
           <%= link_to fullscreen_event_photos_path(@event) do %>
             &#9658; Slideshow
