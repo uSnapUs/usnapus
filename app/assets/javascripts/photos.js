@@ -74,14 +74,16 @@ $(document).ready(function() {
   window.loadToBottom = function(){
     
     var at_the_bottom = ($("html").height() - $(window).innerHeight() - $(window).scrollTop()) <= 0,
-    room_for_more = $(".photo:last").position().top < $(window).innerHeight();
+    last_photo = $(".photo:last"),
+    last_photo_pos = last_photo.length ? $(".photo:last").position().top : 0,
+    room_for_more = last_photo_pos < $(window).innerHeight();
     
     if(at_the_bottom || room_for_more){
       
       //Find the last photo, and load ones older than that
-      var last_photo = $(".photo:last").attr("data-photo-id");
+      var last_photo_id = last_photo.attr("data-photo-id");
       
-      loadGalleryPhotos({limit: 4, before: last_photo}, function(data){
+      loadGalleryPhotos({limit: 4, before: last_photo_id}, function(data){
         if(data.length){ //Only recurse if there's more to load
           loadToBottom();
         }
@@ -89,14 +91,14 @@ $(document).ready(function() {
     }
   }
   
-  //If the window scrolls to the bottom, load some more photos
-  $(document).scroll(function(){
-    loadToBottom();
-  });
-  
   if($("#photo_gallery").length > 0){
     //Load photos asynchronously on page load
     loadGalleryPhotos({limit: 4}, function(data){
+      loadToBottom();
+    });
+    
+    //If the window scrolls to the bottom, load some more photos
+    $(document).scroll(function(){
       loadToBottom();
     });
   }
