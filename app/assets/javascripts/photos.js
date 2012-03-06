@@ -219,6 +219,10 @@ $(document).ready(function() {
     ends = new Date(time_p.attr("data-utc-ends")),
     time_string = "";
     
+    if(isNaN(starts.getTime()) || isNaN(ends.getTime())){
+      return false;
+    }
+    
     //If the event is multiday, show the dates, otherwise show times
     //If the event ends at midnight, treat that as 'the same day'
     if(starts.getDate() == (new Date(ends-1)).getDate()){
