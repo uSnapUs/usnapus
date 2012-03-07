@@ -1,28 +1,60 @@
 form.event{
-  background-color: #aaa;
   
-  .container{
-    margin: 20px;
-    
+  #google_map {
+    width: 460px;
+    height: 460px;
+  }
+  
+  #float_over_google_map{
+    position: relative;
+    left: 20px;
+    top: 20px;
+
+    input{
+      position: absolute;
+      z-index: 10;
+      width: 410px;
+    }
+  }
+  
+  @media all and (max-width: 320px){
     #google_map {
       width: 330px;
       height: 330px;
-      margin: 20px 0;
     }
-    
-    #float_over_google_map{
-      margin: 20px 0;
-      position: relative;
-      left: 20px;
-      top: 20px;
-
-      input{
-        position: absolute;
-        z-index: 10;
-        width: 280px;
-      }
+    input{
+      width: 280px;
+      font-size: 120%;
     }
   }
+  
+  .padded{
+    padding-bottom: 30px;
+    
+    &.privacy{
+      padding-bottom: 10px;
+    }
+  }
+  
+  .btn-group > a {
+      float:none;
+      display:inline-block;
+      *display:inline; /* ie7 fix */
+       zoom:1; /* hasLayout ie7 trigger */
+  }
+
+  .btn-group {
+      text-align:center;
+  }
+  
+  .btn:first-child{
+    left: 3px;
+  }
+  
+  .continue{
+    padding: 6px 5px;
+  }
+  
 }
 
 .typeahead .dropdown-menu{

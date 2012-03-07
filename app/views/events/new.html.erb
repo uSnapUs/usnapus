@@ -1,20 +1,46 @@
 <section class="container">
-  <div class="row span12">
+  <div class="row">
     
-    <%= form_for Event.new, html: {class: "new_event event span4"} do |f| %>
-      <div class="container">
-        <h2>Your Event</h2>
-        <div id="float_over_google_map">
-          <%= f.text_field :location, "placeholder" => "Where's your event?" %>
-          <%= f.hidden_field :latitude %>
-          <%= f.hidden_field :longitude %>
+    <%= form_for Event.new, html: {class: "event"} do |f| %>
+        <h2 class="span12">
+          Your Event
+        </h2>
+        
+        <div class="span6 padded">
+          <div id="float_over_google_map">
+            <%= f.text_field :location, "placeholder" => "Where's your event?" %>
+            <%= f.hidden_field :latitude %>
+            <%= f.hidden_field :longitude %>
+          </div>
+          <div id="google_map">
+          </div>
         </div>
-        <div id="google_map">
+        
+        <div class="span5 offset1">
+          <div class="span3 padded">
+            <div class="datepicker" data-input="#event_starts"></div>
+            <%= f.hidden_field :starts %>
+            <%= f.hidden_field :ends %>
+          </div>
+        
+          <div class="span3 btn-group privacy padded">
+            <a class="btn active" data-val="public" href="#">Public</a>
+            <a class="btn" data-val="private" href="#">Private</a>
+          </div>
+          <%= f.hidden_field :is_public %>
+          
+          <div class="span3 explanation center padded">
+            <p>
+              <i class="icon-question-sign"></i>
+              <span class="public">Public: Any one with the link can view photos</span>
+              <span class="private hidden">Private: Guests need to log in to see photos</span>
+            </p>
+          </div>
+        
+          
+          <a class="btn btn-success btn-large span3 continue">Continue</a>
+          
         </div>
-        <div class="datepicker" data-input="#event_starts">
-        <%= f.hidden_field :starts %>
-        <%= f.hidden_field :ends %>
-      </div>
     <% end %>
     
   </div>

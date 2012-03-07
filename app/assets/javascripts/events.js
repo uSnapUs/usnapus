@@ -91,4 +91,19 @@ $(document).ready(function() {
     
   }
   
+  $(".btn-group.privacy").on("click", "a", function(){
+    var val = $(this).attr("data-val");
+    
+    if(val == "public")
+      $("#event_is_public").attr("checked", "checked");
+    else
+      $("#event_is_public").removeAttr("checked");
+    
+    //Toggle buttons
+    $(this).addClass("active").siblings().removeClass("active");
+    //Toggle explanation
+    $(".explanation").find("."+val).removeClass("hidden").siblings("span").addClass("hidden");
+    return false;
+  })
+  
 });
