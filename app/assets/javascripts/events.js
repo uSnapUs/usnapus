@@ -3,20 +3,34 @@ $(document).ready(function() {
   var geocoder, map, marker;
   
   window.updateLatLng = function(){
-    console.log(marker);
     if(marker !== undefined){
-      console.log(marker);
       $("#event_latitude").val(marker.getPosition().lat());
       $("#event_longitude").val(marker.getPosition().lng());
     }
   }
   
+  window.getPosition = function(callback){
+    var coords = {lat: 37.793508, lng: -122.419281}; //San Francisco
+    
+    // Check for geolocation support
+    if (navigator.geolocation) {
+    	// Use method getCurrentPosition to get coordinates
+    	navigator.geolocation.getCurrentPosition(function (position) {
+    		coords.lat = position.coords.latitude;
+    		coords.lng = position.coords.longitude;
+    		if (typeof callback == "function") callback(coords); //Callback
+    	}, function(){
+    	  if (typeof callback == "function") callback(coords); //Callback
+    	});
+    }
+  }
+  
   window.initializeMap = function(selector){
-  //MAP
-  if(!selector||!document.getElementById(selector))
-    return;
+    //MAP
+    if(!selector||!document.getElementById(selector))
+      return;
 
-    var latlng = new google.maps.LatLng(37.793508,-122.419281); //SF
+    var latlng = new google.maps.LatLng(37.793508,-122.419281);
     var options = {
       zoom: 10,
       center: latlng,
@@ -36,6 +50,13 @@ $(document).ready(function() {
     });
     
     google.maps.event.addListener(marker, "dragend", function() {
+      updateLatLng();
+    });
+    
+    getPosition(function(coords){
+      var location = new google.maps.LatLng(coords.lat, coords.lng);
+      marker.setPosition(location);
+      map.setCenter(location);
       updateLatLng();
     });
     
@@ -63,6 +84,7 @@ $(document).ready(function() {
         var location = new google.maps.LatLng(ui.item.lat, ui.item.lng);
         marker.setPosition(location);
         map.setCenter(location);
+        map.setZoom(17);
         updateLatLng();
       }
     });
