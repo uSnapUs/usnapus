@@ -91,7 +91,7 @@ $(document).ready(function() {
     
   }
   
-  $(".btn-group.privacy").on("click", "a", function(){
+  $("form.event .btn-group.privacy").on("click", "a", function(){
     var val = $(this).attr("data-val");
     
     if(val == "public")
@@ -104,6 +104,34 @@ $(document).ready(function() {
     //Toggle explanation
     $(".explanation").find("."+val).removeClass("hidden").siblings("span").addClass("hidden");
     return false;
+  })
+  
+  $("form.event .continue").on("click", function(){
+    var required_inputs = [$("#event_location"), $("#event_name")];
+    
+    $.each(required_inputs, function(i, input){
+      input.removeClass("error");
+      
+      if(input.val().trim() == ""){
+        input.addClass("error")
+      }
+      
+    });
+    
+    if($("form.event input.error").length){
+      console.log("errors!");
+      return false;
+    }
+    
+    $("form.event .details").fadeOut(500, function(){
+      $("form.event .payment .event_name").html($("#event_name").val());
+      $("form.event .payment").fadeIn();
+    });
+    
+  });
+  
+  $(".show_details").on("click", function(){
+    $(".pricing .details").fadeIn();
   })
   
 });

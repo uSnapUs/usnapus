@@ -15,3 +15,10 @@ hr{
 #google_map img {
   max-width: none;
 }
+
+input.error::-webkit-input-placeholder {
+  color: #B94A48;
+}
+input.error:-moz-placeholder{
+  color: #B94A48;
+}

@@ -5,15 +5,25 @@ form.event{
     height: 460px;
   }
   
+  input.large{
+    font-size: 120%;
+    line-height: 120%;
+    
+    &#event_name{
+      margin-top: 20px;
+    }
+  }
+  
+  
   #float_over_google_map{
     position: relative;
     left: 20px;
     top: 20px;
 
     input{
+      width: 410px;
       position: absolute;
       z-index: 10;
-      width: 410px;
     }
   }
   
@@ -24,7 +34,6 @@ form.event{
     }
     input{
       width: 280px;
-      font-size: 120%;
     }
   }
   
@@ -51,10 +60,65 @@ form.event{
     left: 3px;
   }
   
-  .continue{
-    padding: 6px 5px;
+  .datepicker{
+    width: 223px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
+  .payment{
+    display: none;
+    float: left;
+    text-align: center;
+    
+    p{
+      font-size: 120%;
+      line-height: 120%;
+      
+      a{
+        margin: 0 5px;
+      }
+      
+      .buy{
+        padding: 6px 75px;
+        font-size: 150%;
+        line-height: 150%;
+        margin: 10px 0;
+      }
+    }
+    
+    .hero-unit{
+      margin: 40px 0;
+      padding: 40px;
+      
+    }
+    
+    
+    .pricing{
+
+      h3{
+        cursor: pointer;
+        margin: 20px 0;
+        i{
+          margin-top: 3px;
+        }
+      }
+      
+      table{
+        display: none;
+        
+        tbody tr td:nth-child(2){
+          opacity: 0.5;
+        }
+      }
+      
+    }
+  }
+  
+}
+
+.grey_border:not(.error){
+  border-color: #333;
 }
 
 .typeahead .dropdown-menu{

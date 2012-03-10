@@ -1,49 +1,126 @@
 <section class="container">
-  <div class="row">
-    
-    <%= form_for Event.new, html: {class: "event"} do |f| %>
-        <h2 class="span12">
-          Your Event
-        </h2>
-        
-        <div class="span6 padded">
-          <div id="float_over_google_map">
-            <%= f.text_field :location, "placeholder" => "Where's your event?" %>
-            <%= f.hidden_field :latitude %>
-            <%= f.hidden_field :longitude %>
-          </div>
-          <div id="google_map">
-          </div>
+  
+  <%= form_for Event.new, html: {class: "event"} do |f| %>
+  
+    <div class="row details">
+      <h1 class="span12 padded">
+        Your event details
+      </h1>
+      
+      <div class="span6 padded">
+        <div id="float_over_google_map">
+          <%= f.text_field :location, "placeholder" => "Add the location of your event", :class=>"large grey_border", :tabindex => 1 %>
+          <%= f.hidden_field :latitude %>
+          <%= f.hidden_field :longitude %>
         </div>
-        
-        <div class="span5 offset1">
-          <div class="span3 padded">
-            <div class="datepicker" data-input="#event_starts"></div>
-            <%= f.hidden_field :starts %>
-            <%= f.hidden_field :ends %>
-          </div>
-        
-          <div class="span3 btn-group privacy padded">
-            <a class="btn active" data-val="public" href="#">Public</a>
-            <a class="btn" data-val="private" href="#">Private</a>
-          </div>
-          <%= f.hidden_field :is_public %>
-          
-          <div class="span3 explanation center padded">
-            <p>
-              <i class="icon-question-sign"></i>
-              <span class="public">Public: Any one with the link can view photos</span>
-              <span class="private hidden">Private: Guests need to log in to see photos</span>
-            </p>
-          </div>
-        
-          
-          <a class="btn btn-success btn-large span3 continue">Continue</a>
-          
+        <div id="google_map">
         </div>
-    <% end %>
+      </div>
+      <div class="offset1 span5 padded">
+        <%= f.text_field :name, "placeholder" => "Give your event a name", :class=>"span5 large grey_border", :tabindex => 2 %>
+      </div>
+      <div class="">
+        <div class="span5 offset1 padded">
+          <div class="datepicker" data-input="#event_starts"></div>
+          <%= f.hidden_field :starts %>
+          <%= f.hidden_field :ends %>
+        </div>
+      
+        <div class="span5 offset1 btn-group privacy padded">
+          <a class="btn active" data-val="public" href="#">Public</a>
+          <a class="btn" data-val="private" href="#">Private</a>
+        </div>
+        <%= f.hidden_field :is_public %>
+        
+        <div class="span5 offset1 explanation center padded">
+          <p>
+            <i class="icon-question-sign"></i>
+            <span class="public">Public: Any one with the link can view photos</span>
+            <span class="private hidden">Private: Guests need to log in to see photos</span>
+          </p>
+        </div>
+      </div>
+      <div class="span5 offset1">
+        <a class="btn btn-success btn-large continue">Continue</a>
+      </div>
+    </div>
     
-  </div>
+    <div class="row payment">
+      <div class="span12">
+        <div class="hero-unit">
+          <h1 class="event_name padded">Nick and Chelsea's Wedding
+          </h1>
+          
+          <p class="options">
+            <a class="btn btn-success btn-large buy">Buy Now</a><br />
+            or <a class="free">try it for free</a>
+          </p>
+        </div>
+      
+        <div class="pricing">
+          <h3 class="show_details">See pricing details <i class="icon-chevron-down"></i></h3>
+        
+          <table class="details table table-striped">
+            <thead>
+              <tr>
+                <td></td>
+                <td>Free</td>
+                <td>$99</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Live Photocast</td>
+                <td>First 10 photos only</td>
+                <td><i class="icon-ok"></i></td>
+              </tr>
+              <tr>
+                <td>Slideshow</td>
+                <td>First 10 photos only</td>
+                <td><i class="icon-ok"></i></td>
+              </tr>
+              <tr>
+                <td>Free iPhone app</td>
+                <td><i class="icon-ok"></i></td>
+                <td><i class="icon-ok"></i></td>
+              </tr>
+              <tr>
+                <td>Unlimited Guests</td>
+                <td><i class="icon-ok"></i></td>
+                <td><i class="icon-ok"></i></td>
+              </tr>
+              <tr>
+                <td>Unlimited Photos</td>
+                <td><i class="icon-ok"></i></td>
+                <td><i class="icon-ok"></i></td>
+              </tr>
+              <tr>
+                <td>Photo Sharing</td>
+                <td>Only you can view photos</td>
+                <td>Public or Private sharing</td>
+              </tr>
+              <tr>
+                <td>Custom Domain</td>
+                <td></td>
+                <td><i class="icon-ok"></i></td>
+              </tr>
+              <tr>
+                <td>Web page Hosting</td>
+                <td>30 Days</td>
+                <td>1 year</td>
+              </tr>
+              <tr>
+                <td>Bulk Photo Download</td>
+                <td></td>
+                <td><i class="icon-ok"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <div>
+  <% end %>
+    
 </section>
 
 <% content_for(:post_scripts) do %>
