@@ -1,13 +1,13 @@
 <section class="container">
   
-  <%= form_for Event.new, html: {class: "event"} do |f| %>
+  <%= form_for @event, html: {class: "event"} do |f| %>
   
     <div class="row details">
-      <h1 class="span12 padded">
+      <h1 class="span12 bottom_pad">
         Your event details
       </h1>
       
-      <div class="span6 padded">
+      <div class="span6 bottom_pad">
         <div id="float_over_google_map">
           <%= f.text_field :location, "placeholder" => "Add the location of your event", :class=>"large grey_border", :tabindex => 1 %>
           <%= f.hidden_field :latitude %>
@@ -16,23 +16,23 @@
         <div id="google_map">
         </div>
       </div>
-      <div class="offset1 span5 padded">
+      <div class="offset1 span5 bottom_pad">
         <%= f.text_field :name, "placeholder" => "Give your event a name", :class=>"span5 large grey_border", :tabindex => 2 %>
       </div>
       <div class="">
-        <div class="span5 offset1 padded">
+        <div class="span5 offset1 bottom_pad">
           <div class="datepicker" data-input="#event_starts"></div>
           <%= f.hidden_field :starts %>
           <%= f.hidden_field :ends %>
         </div>
       
-        <div class="span5 offset1 btn-group privacy padded">
+        <div class="span5 offset1 btn-group privacy bottom_pad">
           <a class="btn active" data-val="public" href="#">Public</a>
           <a class="btn" data-val="private" href="#">Private</a>
         </div>
         <%= f.hidden_field :is_public %>
         
-        <div class="span5 offset1 explanation center padded">
+        <div class="span5 offset1 explanation center bottom_pad">
           <p>
             <i class="icon-question-sign"></i>
             <span class="public">Public: Any one with the link can view photos</span>
@@ -48,7 +48,7 @@
     <div class="row payment">
       <div class="span12">
         <div class="hero-unit">
-          <h1 class="event_name padded">Nick and Chelsea's Wedding
+          <h1 class="event_name bottom_pad">Nick and Chelsea's Wedding
           </h1>
           
           <p class="options">
