@@ -20,6 +20,7 @@ gem 'jquery-rails'
 gem 'formtastic'
 gem 'formtastic-bootstrap'
 gem 'createsend'
+gem 'activemerchant', :require => 'active_merchant'
 gem 'carrierwave'
 gem 'carrierwave_backgrounder', :git=>"https://github.com/nickmalcolm/carrierwave_backgrounder"
 gem 'rmagick'
