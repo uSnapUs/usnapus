@@ -7,15 +7,14 @@ class Event < ActiveRecord::Base
   
   has_many :photos
   
-  validates :code, :format => {:with => /\A[A-HJKMNP-Z2-9]{7}\Z/, :on => :create}, :uniqueness => true
+  validates :code, :format => {:with => /\A[A-Z0-9]+\Z/, :on => :create}, :uniqueness => true
   
   before_validation :generate_codes, :on => :create
   
-  validates :code, presence: {allow_blank: false}
-  validates :code, uniqueness: true
+  validates :code, presence: {allow_blank: false}, uniqueness: true
   validates :s3_token, presence: {allow_blank: false}, uniqueness: true
   
-  attr_accessible :location, :name, :latitude, :longitude, :starts, :ends
+  attr_accessible :location, :name, :latitude, :longitude, :starts, :ends, :code
   
   scope :current, where(" :now > starts AND :now < ends ", {now: Time.zone.now})
   scope :visible, where(:is_public => true)
@@ -46,12 +45,16 @@ class Event < ActiveRecord::Base
     end
       
     def generate_event_code
-      #For usability, there are no I, 1, L, O, or 0
-      base = Anybase.new("ABCDEFGHJKMNPQRSTUVWXYZ23456789")
-      self.code = "#{base.random(7).upcase}"
+      if self.code_changed? && !self.code.blank?
+        self.code = self.code.upcase
+      else
+        #For usability, there are no I, 1, L, O, or 0
+        base = Anybase.new("ABCDEFGHJKMNPQRSTUVWXYZ23456789")
+        self.code = "#{base.random(7).upcase}"
       
-      #Ensure uniqueness
-      generate_event_code unless Event.find_by_code(self.code).nil?
+        #Ensure uniqueness
+        generate_event_code unless Event.find_by_code(self.code).nil?
+      end
     end
   
 end
