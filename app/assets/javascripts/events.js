@@ -102,7 +102,7 @@ $(document).ready(function() {
     //Toggle buttons
     $(this).addClass("active").siblings().removeClass("active");
     //Toggle explanation
-    $(".explanation").find("."+val).removeClass("hidden").siblings("span").addClass("hidden");
+    $(".explanation").find("."+val).removeClass("hidden").siblings("").addClass("hidden");
     return false;
   })
   

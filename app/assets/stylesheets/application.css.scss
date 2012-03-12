@@ -31,6 +31,8 @@ body{
 
 .brand{
   font-family: "bello-pro", arial, sans-serif;
+  font-size: 150%;
+  line-height: 150%;
 }
 
 .upcase{
@@ -76,7 +78,7 @@ body{
 }
 
 .blackbg{
-  background-color: #171c1e;
+  background-color: $black;
 }
 
 .bottom_pad{

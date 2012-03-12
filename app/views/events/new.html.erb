@@ -1,121 +1,138 @@
-<section class="container">
+<% @title = "Create an Event" %>
+<section class="container-fluid">
   
   <%= form_for @event, html: {class: "event"} do |f| %>
-  
-    <div class="row details">
-      <h1 class="span12 bottom_pad">
-        Your event details
-      </h1>
-      
-      <div class="span6 bottom_pad">
-        <div id="float_over_google_map">
-          <%= f.text_field :location, "placeholder" => "Add the location of your event", :class=>"large grey_border", :tabindex => 1 %>
-          <%= f.hidden_field :latitude %>
-          <%= f.hidden_field :longitude %>
+   
+      <div class="row-fluid details">  
+        <div class="span6 bottom_pad">
+          <div id="float_over_google_map">
+            <%= f.text_field :location, "placeholder" => "Add the location of your event", :class=>"large grey_border", :tabindex => 1 %>
+            <%= f.hidden_field :latitude %>
+            <%= f.hidden_field :longitude %>
+          </div>
+          <div id="google_map" class="">
+          </div>
         </div>
-        <div id="google_map">
+        
+        <div class="span6 bottom_pad">
+          <%= f.text_field :name, "placeholder" => "Give your event a name", :class=>"large grey_border", :tabindex => 2 %>
         </div>
-      </div>
-      <div class="offset1 span5 bottom_pad">
-        <%= f.text_field :name, "placeholder" => "Give your event a name", :class=>"span5 large grey_border", :tabindex => 2 %>
-      </div>
-      <div class="">
-        <div class="span5 offset1 bottom_pad">
+        
+        <div class="span6 bottom_pad">
           <div class="datepicker" data-input="#event_starts"></div>
           <%= f.hidden_field :starts %>
           <%= f.hidden_field :ends %>
         </div>
-      
-        <div class="span5 offset1 btn-group privacy bottom_pad">
+        
+        <div class="span6 btn-group privacy">
           <a class="btn active" data-val="public" href="#">Public</a>
           <a class="btn" data-val="private" href="#">Private</a>
         </div>
-        <%= f.hidden_field :is_public %>
-        
-        <div class="span5 offset1 explanation center bottom_pad">
-          <p>
-            <i class="icon-question-sign"></i>
-            <span class="public">Public: Any one with the link can view photos</span>
-            <span class="private hidden">Private: Guests need to log in to see photos</span>
-          </p>
-        </div>
-      </div>
-      <div class="span5 offset1">
-        <a class="btn btn-success btn-large continue">Continue</a>
-      </div>
-    </div>
-    
-    <div class="row payment">
-      <div class="span12">
-        <div class="hero-unit">
-          <h1 class="event_name bottom_pad">Nick and Chelsea's Wedding
-          </h1>
-          
-          <p class="options">
-            <a class="btn btn-success btn-large buy">Buy Now</a><br />
-            or <a class="free">try it for free</a>
-          </p>
-        </div>
       
-        <div class="pricing">
-          <h3 class="show_details">See pricing details <i class="icon-chevron-down"></i></h3>
+        <%= f.hidden_field :is_public %>
+      
+        <div class="span6 explanation center bottom_pad">
+          <div class="public">
+            <p>
+              <i class="icon-eye-open"></i>
+              Public: Any one with the link below can view photos
+            </p>
+            <p>
+              <div class="input-prepend event_code">
+                <span class="add-on">http://usnap.us/</span>
+                <%= f.text_field :code, :class => "input-small", value: Event.generate_unique_code %>
+              </div>
+            </p>
+          </div>
+          <div class="private hidden">
+            <p>
+              <i class="icon-lock"></i>
+              Private: Guests need to log in to see photos
+            </p>
+          </div>
+        </div>
         
-          <table class="details table table-striped">
-            <thead>
-              <tr>
-                <td></td>
-                <td>Free</td>
-                <td>$99</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Live Photocast</td>
-                <td>First 10 photos only</td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Slideshow</td>
-                <td>First 10 photos only</td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Free iPhone app</td>
-                <td><i class="icon-ok"></i></td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Unlimited Guests</td>
-                <td><i class="icon-ok"></i></td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Unlimited Photos</td>
-                <td><i class="icon-ok"></i></td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Photo Sharing</td>
-                <td>Only you can view photos</td>
-                <td>Public or Private sharing</td>
-              </tr>
-              <tr>
-                <td>Custom Domain</td>
-                <td></td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Web page Hosting</td>
-                <td>30 Days</td>
-                <td>1 year</td>
-              </tr>
-              <tr>
-                <td>Bulk Photo Download</td>
-                <td></td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="span6">
+          <a class="span7 btn btn-success btn-large continue">Continue</a>
+        </div>
+      </div>
+    
+      <div class="row payment">
+        <div class="span12">
+          <div class="hero-unit">
+            <div class="hero_pad">
+              <h1 class="event_name bottom_pad"></h1>
+          
+              <p class="options">
+                <%= f.submit "Get it Free", :class=>"btn btn-success btn-large buy" %>
+              </p>
+              <p>
+                <span class="brand">uSnap.us</span> is excited to knock $99 off the price for anyone who signs up before April 15th.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="span12">
+          <div class="pricing">
+            <h3 class="show_details">See pricing details <i class="icon-chevron-down"></i></h3>
+        
+            <table class="details table table-striped">
+              <thead>
+                <tr>
+                  <td></td>
+                  <td>Free</td>
+                  <td><del>$99</del> Free until April 15</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Live Photocast</td>
+                  <td>First 10 photos only</td>
+                  <td><i class="icon-ok"></i></td>
+                </tr>
+                <tr>
+                  <td>Slideshow</td>
+                  <td>First 10 photos only</td>
+                  <td><i class="icon-ok"></i></td>
+                </tr>
+                <tr>
+                  <td>Free iPhone app</td>
+                  <td><i class="icon-ok"></i></td>
+                  <td><i class="icon-ok"></i></td>
+                </tr>
+                <tr>
+                  <td>Unlimited Guests</td>
+                  <td><i class="icon-ok"></i></td>
+                  <td><i class="icon-ok"></i></td>
+                </tr>
+                <tr>
+                  <td>Unlimited Photos</td>
+                  <td><i class="icon-ok"></i></td>
+                  <td><i class="icon-ok"></i></td>
+                </tr>
+                <tr>
+                  <td>Photo Sharing</td>
+                  <td>Only you can view photos</td>
+                  <td>Public or Private sharing</td>
+                </tr>
+                <tr>
+                  <td>Custom Domain</td>
+                  <td></td>
+                  <td><i class="icon-ok"></i></td>
+                </tr>
+                <tr>
+                  <td>Web page Hosting</td>
+                  <td>30 Days</td>
+                  <td>1 year</td>
+                </tr>
+                <tr>
+                  <td>Bulk Photo Download</td>
+                  <td></td>
+                  <td><i class="icon-ok"></i></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     <div>

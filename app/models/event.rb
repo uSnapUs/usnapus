@@ -33,10 +33,23 @@ class Event < ActiveRecord::Base
     degree*Math::PI/180
   end
   
+  def self.generate_unique_code
+    #For usability, there are no I, 1, L, O, or 0
+    base = Anybase.new("ABCDEFGHJKMNPQRSTUVWXYZ23456789")
+    code = "#{base.random(7).upcase}"
+  
+    #Ensure uniqueness
+    if Event.find_by_code(code).nil?
+      code
+    else
+      Event.generate_unique_code 
+    end
+  end
+  
   private
     def generate_codes
       generate_s3_token
-      generate_event_code
+      assign_event_code
     end
     
     def generate_s3_token
@@ -44,16 +57,11 @@ class Event < ActiveRecord::Base
       generate_s3_token unless Event.find_by_s3_token(self.s3_token).nil?
     end
       
-    def generate_event_code
+    def assign_event_code
       if self.code_changed? && !self.code.blank?
         self.code = self.code.upcase
       else
-        #For usability, there are no I, 1, L, O, or 0
-        base = Anybase.new("ABCDEFGHJKMNPQRSTUVWXYZ23456789")
-        self.code = "#{base.random(7).upcase}"
-      
-        #Ensure uniqueness
-        generate_event_code unless Event.find_by_code(self.code).nil?
+        self.code = Event.generate_unique_code
       end
     end
   

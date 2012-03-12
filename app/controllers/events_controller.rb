@@ -16,12 +16,24 @@ class EventsController < ApplicationController
     end
   end
   
-  before_filter :authenticate_user!, :only => [:new]
+  before_filter :authenticate_user!, :only => [:new, :create]
   
   def new
     @event = Event.new
   end
   
+  def create
+    @event = current_user.events.new(params[:event])
+    
+    if @event.save
+      flash[:notice] = "Here's your event! Start snapping :)"
+      redirect_to event_photos_path @event
+    else
+      flash[:error] = "Please fix the errors below"
+      render "new"
+    end
+  end
+    
   def show
     #Could get here as /events/1 or /CODE
     if event = (Event.visible.find_by_id(params[:id]) || Event.find_by_code(params[:code].try(:upcase)))
