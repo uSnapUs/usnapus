@@ -85,7 +85,7 @@ class PhotosController < ApplicationController
       
       #No events, 404  
       elsif !events || !(@event = events.first)
-        raise ActiveRecord::RecordNotFound.new("Event does not exist")
+        raise ActiveRecord::RecordNotFound
       end
       
     end

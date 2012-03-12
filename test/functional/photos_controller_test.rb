@@ -118,20 +118,23 @@ class NotSignedInPhotosControllerTest < ActionController::TestCase
   end
   
   test "create and delete return 404" do
-    xhr :post, :create, 
-      event_id: @event.to_param, 
-      photo: {photo: fixture_file_upload('files/house.jpg','image/jpg')},
-      format: "json"
-    assert_response :not_found
+    assert_raises ActiveRecord::RecordNotFound do
+      xhr :post, :create, 
+        event_id: @event.to_param, 
+        photo: {photo: fixture_file_upload('files/house.jpg','image/jpg')},
+        format: "json"
+    end
     
-    xhr :delete, :destroy, event_id: @event.to_param, id: @photo.id, format: "json"
-    assert_response :not_found
+    assert_raises ActiveRecord::RecordNotFound do
+      xhr :delete, :destroy, event_id: @event.to_param, id: @photo.id, format: "json"
+    end
   end
   
   test "can't get public event by id" do
     @event.update_attributes is_public: true
-    get :index, event_id: @event.to_param
-    assert_response :not_found
+    assert_raises ActiveRecord::RecordNotFound do
+      get :index, event_id: @event.to_param
+    end
   end
   
   test "can get public event by code" do
@@ -142,8 +145,9 @@ class NotSignedInPhotosControllerTest < ActionController::TestCase
   
   test "can't get private event by code" do
     @event.update_attributes is_public: false
-    get :index, code: @event.code
-    assert_response :not_found
+    assert_raises ActiveRecord::RecordNotFound do
+      get :index, code: @event.code
+    end
   end
 
 end
@@ -237,23 +241,6 @@ class LegacyDeviceControllerTest < ActionController::TestCase
     PhotoUploader.enable_processing = false
     
     assert_equal @device, Photo.last.creator
-  end
-  
-  
-  test "shouldn't be able to delete another creator's photo with device auth" do
-    assert_no_difference 'Photo.count' do
-      xhr :delete, :destroy, event_id: @event.to_param, id: @photo.id, format: "json"
-      assert_response :not_found
-    end
-  end
-  
-  test "shouldn't be able to delete a device's photo with device token" do
-    photo_id = Factory(:photo, creator: @device, event: @event).id
-    
-    assert_no_difference 'Photo.count' do
-      xhr :delete, :destroy, event_id: @event.to_param, id: photo_id, device_id: @device.id, format: "json"
-      assert_response :not_found
-    end
   end
   
 end
