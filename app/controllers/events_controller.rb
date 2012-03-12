@@ -23,9 +23,13 @@ class EventsController < ApplicationController
   end
   
   def create
-    @event = current_user.events.new(params[:event])
+    @event = Event.new(params[:event])
     
     if @event.save
+      @event.attendees.create! do |at|
+        at.user = current_user
+      end
+      
       flash[:notice] = "Here's your event! Start snapping :)"
       redirect_to event_photos_path @event
     else
