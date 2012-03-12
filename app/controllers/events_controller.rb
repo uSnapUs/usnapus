@@ -28,6 +28,7 @@ class EventsController < ApplicationController
     if @event.save
       @event.attendees.create! do |at|
         at.user = current_user
+        at.is_admin = true
       end
       
       flash[:notice] = "Here's your event! Start snapping :)"

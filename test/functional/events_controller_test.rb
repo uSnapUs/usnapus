@@ -33,9 +33,10 @@ class EventsControllerTest < ActionController::TestCase
     end
     
     event = Event.last
-    
+    attendee = Attendee.between(@user, event)
     assert_redirected_to event_photos_path event
-    assert Attendee.between(@user, event)
+    assert attendee
+    assert attendee.is_admin?, "Attendee should be an admin"
   end
   
 end
