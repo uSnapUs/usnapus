@@ -165,8 +165,7 @@ $(document).ready(function() {
       return false;
     }
     
-    $("#date_incrementer").fadeOut();
-    $("form.event .details").fadeOut(500, function(){
+    $("form.event .details, .ui-autocomplete, #date_incrementer").fadeOut(500, function(){
       $("form.event .payment .event_name").html($("#event_name").val());
       $("form.event .payment").fadeIn();
     });

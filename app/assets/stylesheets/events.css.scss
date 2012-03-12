@@ -76,7 +76,7 @@ form.event{
   }
   
   .payment{
-    display: none;
+    display:none;
     float: left;
     text-align: center;
     
@@ -107,6 +107,10 @@ form.event{
     }
     
     .pricing{
+      .span12{
+        margin-left: 0;
+      }
+      
       h3{
         cursor: pointer;
         margin: 20px 0;
@@ -117,7 +121,6 @@ form.event{
       
       table{
         display: none;
-        
         tbody tr td:nth-child(2){
           opacity: 0.5;
         }
