@@ -12,6 +12,8 @@ class PhotosController < ApplicationController
       @photos = @photos.limit(limit.to_i)
     end
     
+    @attendee = Attendee.between(current_user, @event) if current_user
+    
     respond_to do |format|
       format.html
       format.json { 

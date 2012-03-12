@@ -20,6 +20,16 @@ class PhotosControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal [@photo], assigns(:photos)
     assert_select "#photo_gallery", 1
+    assert_select ".settings li a[href=#{destroy_user_session_path}]"
+  end
+
+  test "can view settings button if admin" do
+    @attendee.is_admin = true
+    @attendee.save!
+    
+    get :index, event_id: @event.to_param
+    assert_select ".settings li a[href=#{edit_event_path(@event)}]"
+    assert_select ".settings li a[href=#{destroy_user_session_path}]"
   end
 
   test "can get private event by id" do
