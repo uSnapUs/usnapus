@@ -20,7 +20,6 @@ class EventsController < ApplicationController
   
   def new
     @event = Event.new
-    @billing_detail = BillingDetail.new
   end
   
   def show
