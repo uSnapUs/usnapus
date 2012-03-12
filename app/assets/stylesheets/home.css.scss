@@ -5,7 +5,6 @@
 
 
 body.home{
-  background-color: #171c1e;
   text-align: center;
   
   p, input{
@@ -14,7 +13,6 @@ body.home{
 }
 
 .top_panel{
-  .container{
   .spiel{
     .cta{
      margin-top:20px;
@@ -45,7 +43,7 @@ body.home{
       margin-bottom:10px;
     }
   }
-  }
+  
   background-color: #fcfdff;
   color: $light_blue;
   h1, h2{
@@ -76,12 +74,14 @@ body.home{
     margin-top:20px;
     font-weight:600;
   }
+  
   .step_text
   {
     font-size:30px;
     font-weight:500;
     margin-top:22px;
   }
+  
   .step_text_desc
   {
     padding-left:10px;
@@ -92,7 +92,7 @@ body.home{
 }
 
 .top_panel, .bottom_panel, .footer{
-  padding: 70px 0 80px 0;
+  padding: 30px 0 80px 0;
 }
 .bottom_panel{
   padding-top:135px;

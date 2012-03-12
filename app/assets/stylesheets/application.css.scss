@@ -43,7 +43,6 @@ body{
 
 .alert{
   display: none;
-  margin-top: 20px;
   margin-bottom: 0;
 }
 
@@ -52,6 +51,7 @@ body{
 }
 
 .topbar{
+  margin-bottom: 30px;
   
   .fill{
     height:78px;
@@ -73,6 +73,14 @@ body{
       }
     }
   }
+}
+
+.blackbg{
+  background-color: #171c1e;
+}
+
+.bottom_pad{
+  padding-bottom: 30px;
 }
 
 .hidden{
