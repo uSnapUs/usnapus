@@ -22,3 +22,8 @@ input.error::-webkit-input-placeholder {
 input.error:-moz-placeholder{
   color: #B94A48;
 }
+
+.pull-right .dropdown-menu {
+  left: auto;
+  right: 0;
+}

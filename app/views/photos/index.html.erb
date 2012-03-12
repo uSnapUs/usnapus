@@ -1,6 +1,27 @@
 <% @title = "Photos from #{@event.name}"%>
 <% @topbar_class = "thin" %>
 
+<div class="settings pull-right">
+  <div class="btn-group">
+    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+      <i class="icon-cog"></i>
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li>
+        <%= link_to "Settings", edit_event_path(@event) %>
+      </li>
+      <li>
+        <%= link_to "Bulk Download", "#" %>
+      </li>
+      <li class="divider"></li>
+      <li>
+        <%= link_to "Sign Out", destroy_user_session_path %>
+      </li>
+    </ul>
+  </div>
+</div>
+
 <section class="container event_details bottom_pad">
   <div class="row">
     <div class="span12">
@@ -8,7 +29,7 @@
       <p class="pretty_time" data-utc-starts="<%= @event.starts %>" data-utc-ends="<%= @event.ends %>">
       </p>
       <div class="buttons upcase bold">
-          <%= link_to fullscreen_event_photos_path(@event) do %>
+          <%= link_to fullscreen_event_photos_path(@event), id: "goto_slideshow" do %>
             &#9658; Slideshow
           <% end %>
           <%= link_to "#", :id=>"show_latest_photos" do %>
