@@ -16,10 +16,18 @@ class EventsController < ApplicationController
     end
   end
   
-  before_filter :authenticate_user!, :only => [:new, :create]
+  before_filter :authenticate_user!, :except => [:index]
   
   def new
     @event = Event.new
+  end
+  
+  def edit
+    if at = Attendee.find_by_user_id_and_event_id_and_is_admin(current_user.id, params[:id], true)
+      @event = at.event
+    else
+      head :not_found
+    end
   end
   
   def create

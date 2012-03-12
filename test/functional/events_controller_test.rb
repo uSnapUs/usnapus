@@ -39,6 +39,28 @@ class EventsControllerTest < ActionController::TestCase
     assert attendee.is_admin?, "Attendee should be an admin"
   end
   
+  test "can edit event if admin" do
+    Attendee.create do |at|
+      at.event = @event
+      at.user = @user
+      at.is_admin = true
+    end
+    sign_in @user
+    get :edit, id: @event.to_param
+    assert_response :success
+    assert_equal @event, assigns(:event)
+  end
+  
+  test "can't edit event if not admin" do
+    Attendee.create do |at|
+      at.event = @event
+      at.user = @user
+    end
+    sign_in @user
+    get :edit, id: @event.to_param
+    assert_response :not_found
+  end
+  
 end
 class EventsAPIControllerTest < ActionController::TestCase
   tests EventsController
