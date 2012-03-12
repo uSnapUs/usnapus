@@ -20,6 +20,6 @@ Usnapus::Application.routes.draw do
   resources :signups, only: [:create]
   
   #Keep at the end
-  get '*code', :to=> "events#show"
+  get '*code', :to=> "photos#index"
   
 end

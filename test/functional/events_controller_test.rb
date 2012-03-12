@@ -1,6 +1,46 @@
 require 'test_helper'
 
-class EventsControllerTest < ActionController::TestCase\
+class EventsControllerTest < ActionController::TestCase
+
+  def setup
+    @user = Factory(:user)
+    @event = Factory(:event)
+  end
+  
+  test "new and create redirect if not signed in" do
+    get :new
+    assert_redirected_to new_user_session_path
+    
+    post :create, event: @event.attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public)
+    assert_redirected_to new_user_session_path
+  end
+  
+  test "can get new if signed in" do
+    sign_in @user
+    get :new
+    assert_select "input#event_location"
+    assert_select "input#event_name"
+    assert_select "input#event_code"
+  end
+  
+  test "can post new event if signed in" do
+    sign_in @user
+    
+    assert_difference "Attendee.count" do
+      assert_difference "Event.count" do
+        post :create, event: @event.attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public)
+      end
+    end
+    
+    event = Event.last
+    
+    assert_redirected_to event_photos_path event
+    assert Attendee.between(@user, event)
+  end
+  
+end
+class EventsAPIControllerTest < ActionController::TestCase
+  tests EventsController
   
   test "can get event by exact gps coordinates" do
     event = Factory :current_event, latitude: -41.244772, longitude: 172.617188
