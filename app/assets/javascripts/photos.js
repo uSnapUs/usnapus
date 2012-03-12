@@ -105,7 +105,20 @@ $(document).ready(function() {
   
   //The live photo cast
   $("#show_latest_photos").on("click", function(){
-    prepareFullscreenImage( $(".photo a:first img").attr("data-"+imageTypeForScreen()+"-src") );
+    if($(".photo").length){
+      prepareFullscreenImage( $(".photo a:first img").attr("data-"+imageTypeForScreen()+"-src") );
+    }else{
+      showAlert("info", "Sorry,", "you don't have any photos to show!");
+    }
+      
+  });
+  
+  //The live photo cast
+  $("#goto_slideshow").on("click", function(){
+    if($(".photo").length == 0){
+      showAlert("info", "Sorry,", "you don't have any photos to show!");
+      return false
+    }
   });
   
   //Show a photo fullscreen

@@ -44,12 +44,15 @@
         allowUserZoom: false
       }
 
-  		instance = PhotoSwipe.attach(photos, options);
-  		instance.show(0);
-      // onBeforeHide
-			instance.addEventHandler(PhotoSwipe.EventTypes.onBeforeHide, function(e){
-				window.location = event_url;
-			});
+      if(photos.length){
+        instance = PhotoSwipe.attach(photos, options);
+    		instance.show(0);
+        // onBeforeHide
+  			instance.addEventHandler(PhotoSwipe.EventTypes.onBeforeHide, function(e){
+  				window.location = event_url;
+  			});
+      }
+  		
     });
 	
 	});
