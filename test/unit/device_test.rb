@@ -18,10 +18,18 @@ class DeviceTest < ActiveSupport::TestCase
   
   test "device can have photos" do
     device = Factory :device
-    photo = Factory :photo, device: device 
+    photo = Factory :photo, creator: device 
     
     assert_equal 1, device.photos.size
     assert device.photos.include? photo
   end
   
+  test "device can't update guid" do
+    device = Factory :device
+    orig_g = device.guid
+    
+    device.guid = "123"
+    assert device.invalid?
+  end
+    
 end

@@ -4,19 +4,22 @@ class Photo < ActiveRecord::Base
   process_in_background :photo
   
   belongs_to :event
-  belongs_to :device
+  belongs_to :creator, polymorphic: true
   
   validates :event_id, presence: true
-  validate :event_and_device_must_exist
+  validates :creator_type, presence: true
+  validates :creator_id, presence: true
+  validate :event_exists
+  validate :creator_must_exist
   
-  attr_accessible :photo, :device_id
+  attr_accessible :photo
   
   scope :processed, where(:photo_processing => nil)
   
   def as_json(options = {})
     timestamp = "?#{updated_at.to_i}"
     super(options.merge({except: [:photo]})).merge(
-      device_name: "#{device.name if device}", 
+      creator_name: "#{creator.name}", 
       photo: {
         url: "#{photo.url}#{timestamp}",
         thumbnail: {
@@ -39,10 +42,12 @@ class Photo < ActiveRecord::Base
   end
   
   private
-  
-    def event_and_device_must_exist
-      errors.add(:event_id, "must point to an existing event") if event_id && event.nil?
-      errors.add(:device_id, "must point to an existing device") if device_id && device.nil?
+    def event_exists
+      errors.add(:event_id, "must point to an existing event") if event.nil?
+    end
+    
+    def creator_must_exist
+      errors.add(:creator, "must point to an existing device or user") if creator.nil?
     end
   
 end
