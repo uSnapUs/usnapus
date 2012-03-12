@@ -1,5 +1,12 @@
-<% @title = "Create an Event" %>
+<% @title = "Editing #{@event.name}" %>
+<% @topbar_class = "thin" %>
+
 <section class="container-fluid">
+  <div class="row">
+    <div class="span12">
+      <h1><%= @title %></h1>
+    </div>
+  </div>
   
   <%= form_for @event, html: {class: "event"} do |f| %>
     <div class="row-fluid details">  
@@ -52,90 +59,12 @@
       </div>
       
       <div class="span6">
-        <a class="span7 btn btn-success btn-large continue">Continue</a>
+        <%= f.submit "Save", class: "span7 btn btn-success btn-large" %>
       </div>
-    </div>
-  
-    <div class="row payment">
-      <div class="span12">
-        <div class="hero-unit">
-          <div class="hero_pad">
-            <h1 class="event_name bottom_pad"></h1>
-        
-            <p class="options">
-              <%= f.submit "Get it Free", :class=>"btn btn-success btn-large buy" %>
-            </p>
-            <p>
-              <span class="brand">uSnap.us</span> is excited to knock $99 off the price for anyone who signs up before April 15th.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="span12">
-        <div class="pricing">
-          <h3 class="show_details">See pricing details <i class="icon-chevron-down"></i></h3>
       
-          <table class="details table table-striped">
-            <thead>
-              <tr>
-                <td></td>
-                <td>Free</td>
-                <td><del>$99</del> Free until April 15</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Live Photocast</td>
-                <td>First 10 photos only</td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Slideshow</td>
-                <td>First 10 photos only</td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Free iPhone app</td>
-                <td><i class="icon-ok"></i></td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Unlimited Guests</td>
-                <td><i class="icon-ok"></i></td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Unlimited Photos</td>
-                <td><i class="icon-ok"></i></td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Photo Sharing</td>
-                <td>Only you can view photos</td>
-                <td>Public or Private sharing</td>
-              </tr>
-              <tr>
-                <td>Custom Domain</td>
-                <td></td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Web page Hosting</td>
-                <td>30 Days</td>
-                <td>1 year</td>
-              </tr>
-              <tr>
-                <td>Bulk Photo Download</td>
-                <td></td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   <% end %>
-    
+  
 </section>
 
 <% content_for(:post_scripts) do %>
@@ -152,6 +81,7 @@
 		minDate: 0,
 		altField: "#event_starts",
 		dateFormat: "@",
+		defaultDate: "<%= @event.starts.to_i*1000 %>",
 		onSelect: function(dateText, inst){
 		  $("#event_starts").val(dateText);
 		  $("#event_ends").val(dateText);
@@ -161,6 +91,30 @@
 		  $("#date_incrementer").fadeOut();
 		}
 	});
+  $("#event_ends").val("<%= @event.ends.to_i*1000 %>");
+  
+  var starts = <%= @event.starts.to_i %>,
+  ends = <%= @event.ends.to_i %>,
+  diff = (ends-starts)/60/60/24;
+  console.log(diff);
+  
+  //Show multiple selected dates
+  for(i = 1; i < diff; i++){
+    el = $(".datepicker .ui-datepicker-current-day:last + td");
+
+    if(!el.length){
+      //Try go to the next row
+      var row = $(".datepicker .ui-datepicker-current-day:last").parent().next();
+      if(row.length){
+        el = $(".datepicker .ui-datepicker-current-day:last").parent().next().find("td:first-child");
+      }
+    }
+    if(el.length){
+      el.addClass("ui-datepicker-current-day").find("a").addClass("ui-state-active");
+    }
+  }
+  
+  showDateIncrementer();
 <% end %>
 
 <div id="date_incrementer" class="date_incrementer">

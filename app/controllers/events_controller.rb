@@ -23,15 +23,34 @@ class EventsController < ApplicationController
   end
   
   def edit
-    if at = Attendee.find_by_user_id_and_event_id_and_is_admin(current_user.id, params[:id], true)
-      @event = at.event
-    else
-      head :not_found
+    unless @event = get_admin_event
+      head :not_found and return
     end
   end
   
+  def update
+    unless @event = get_admin_event
+      head :not_found and return
+    end
+    
+    @event.assign_attributes(params[:event])
+    
+    set_event_time(@event)
+    
+    if @event.save
+      flash[:notice] = "Changes saved!"
+      redirect_to event_photos_path @event
+    else
+      flash[:error] = "Please fix the errors below"
+      render "new"
+    end
+    
+  end
+    
+  
   def create
     @event = Event.new(params[:event])
+    set_event_time(@event)
     
     if @event.save
       @event.attendees.create! do |at|
@@ -47,4 +66,17 @@ class EventsController < ApplicationController
     end
   end
   
+  private
+    def get_admin_event
+      if at = Attendee.find_by_user_id_and_event_id_and_is_admin(current_user.id, params[:id], true)
+        at.event
+      end
+    end
+    
+    def set_event_time(event)
+      #Time comes through as ms since epoch
+      event.starts = Time.at(params[:event][:starts].to_i/1000)
+      event.ends = Time.at(params[:event][:ends].to_i/1000) + 1.day - 1.second #12am next day
+    end
+    
 end

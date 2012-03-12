@@ -11,8 +11,8 @@
     </title>
     
     <meta name="description" content="See your wedding through their eyes. Your guests' photos are delivered online instantly, at your fingertips whenever you want. Watch a live steam as your event unfolds. Perfect for wedding photos.">
-    <meta name="author" content="">
-    <meta name="keywords" content="wedding, photograph, photos, events, wedding ideas, disposable cameras, unique wedding">
+    <meta name="author" content="uSnap.us">
+    <meta name="keywords" content="<%= @title.split(" ").join(", ") if @title %>, wedding, photograph, photos, events, wedding ideas, disposable cameras, unique wedding">
 
 
     <meta property="og:title" content="uSnap.us" />
@@ -48,16 +48,44 @@
     <div class="topbar <%= @topbar_class %>">
       <div class="fill">
         <div class="container">
+          
+          <% if current_user %>
+            <div class="settings pull-right">
+              <div class="btn-group">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                  &nbsp;&nbsp;<i class="icon-cog"></i>&nbsp;&nbsp;
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <% if @attendee.try(:is_admin) %>
+                    <li>
+                      <%= link_to "Settings", edit_event_path(@event) %>
+                    </li>
+                    <li>
+                      <%= link_to "Bulk Download", "#" %>
+                    </li>
+                    <li class="divider"></li>
+                  <% end %>
+                  <li>
+                    <%= link_to "Sign Out", destroy_user_session_path %>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          <% end %>
+          
           <h1 class="brand row">
             <div class="span12">
               <%= link_to (image_tag "logo-header.png", :title => "uSnap.us"), root_path %>
             </div>
           </h1>
+          
         </div>
       </div>
     </div>
     
-  
+    
+    
     <section class="container">
       <div class="row" id="alert-area">
       </div>

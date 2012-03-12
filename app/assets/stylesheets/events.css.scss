@@ -145,3 +145,54 @@ form.event{
 .typeahead .dropdown-menu{
   max-width: none;
 }
+
+.date_incrementer{
+  display: none;
+  
+  background-color: #777;
+  font-size: 18px;
+  line-height: 18px;
+  color: #fff;
+  font-weight: bold;
+  float: left;
+  text-align: center;
+  position: relative;
+
+  
+  .arrow_wrap{
+  
+    
+    span, a{
+      display: block;
+      padding: 5px 7px;
+      float: left;
+    }
+    
+    a.plus, a.minus{
+      color: #fff;
+      
+      &:hover{
+        text-decoration: none;
+        background-color: #444;
+        cursor: pointer;
+      }
+      &:active{
+        background-color: #333;
+      }
+    }
+    
+  
+    &:after{
+      content: '';
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-width: 10px;
+      border-style: solid;
+      border-color: #777 transparent transparent;
+      position: absolute;
+      top: 26px;
+      left: 59px;
+    }
+  }
+}

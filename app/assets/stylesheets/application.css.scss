@@ -14,6 +14,7 @@
 */
 
 @import "configuration";
+@import "_font_awesome";
 
 body{
   font-family: "freight-sans-pro", arial, sans-serif;
@@ -70,10 +71,14 @@ body{
   &.thin{
     .fill{
       height: 5px;
-      .container{
+      .brand{
         display: none;
       }
+      .settings{
+        top: 40px;
+      }
     }
+    overflow: visible;
   }
 }
 
@@ -92,5 +97,11 @@ body{
 .settings{
   position: absolute;
   right: 30px;
+  top: 24px;
   z-index: 10;
+  
+  a.dropdown-toggle{
+    font-size: 18px;
+    line-height: 18px;
+  }
 }

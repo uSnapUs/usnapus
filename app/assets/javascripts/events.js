@@ -91,6 +91,48 @@ $(document).ready(function() {
     
   }
   
+  window.showDateIncrementer = function(){
+    console.log($(".datepicker .ui-state-hover:first-child"))
+    var pos = $(".datepicker .ui-state-hover:first-child").position();
+    $("#date_incrementer").css({position: "absolute", top: pos.top-35, left: pos.left-50}).fadeIn();
+  }
+  
+  function setEndDate(offset){
+    var ends = $("#event_ends"),
+    current_ends = new Date(parseInt(ends.val()));
+    current_ends.setDate( current_ends.getDate() + offset);
+    ends.val( current_ends.getTime() );
+  }
+  
+  $("#date_incrementer").on("click", "a", function(){
+    var plus = $(this).hasClass("plus"), el;
+    
+      console.log(plus)
+    if(plus){
+      
+      el = $(".datepicker .ui-datepicker-current-day:last + td");
+      
+      if(!el.length){
+        //Try go to the next row
+        var row = $(".datepicker .ui-datepicker-current-day:last").parent().next();
+        if(row.length){
+          el = $(".datepicker .ui-datepicker-current-day:last").parent().next().find("td:first-child");
+        }
+      }
+      if(el.length){
+        el.addClass("ui-datepicker-current-day").find("a").addClass("ui-state-active");
+        setEndDate(1);
+      }
+      
+    }else{
+      el = $(".datepicker .ui-datepicker-current-day")
+      if(el.length > 1){
+        el.last().removeClass("ui-datepicker-current-day").find("a").removeClass("ui-state-active");
+        setEndDate(-1);
+      }
+    }
+  })
+  
   $("form.event .btn-group.privacy").on("click", "a", function(){
     var val = $(this).attr("data-val");
     
@@ -123,6 +165,7 @@ $(document).ready(function() {
       return false;
     }
     
+    $("#date_incrementer").fadeOut();
     $("form.event .details").fadeOut(500, function(){
       $("form.event .payment .event_name").html($("#event_name").val());
       $("form.event .payment").fadeIn();
