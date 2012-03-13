@@ -22,7 +22,7 @@
 
 <section class="container gallery">
   <div class="row">
-    <div id="photo_gallery" data-json-url="<%= event_photos_url @event, format: 'json' %>">
+    <div id="photo_gallery" data-json-url="<%= "/#{@event.code}.json" %>">
     </div>
   </div>
 </section>

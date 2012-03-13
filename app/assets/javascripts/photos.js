@@ -91,6 +91,8 @@ $(document).ready(function() {
     }
   }
   
+  var scrollTimer;
+  
   if($("#photo_gallery").length > 0){
     //Load photos asynchronously on page load
     loadGalleryPhotos({limit: 4}, function(data){
@@ -99,7 +101,10 @@ $(document).ready(function() {
     
     //If the window scrolls to the bottom, load some more photos
     $(document).scroll(function(){
-      loadToBottom();
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout( function(){
+        loadToBottom();
+      }, 200)
     });
   }
   

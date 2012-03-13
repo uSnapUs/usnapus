@@ -153,6 +153,14 @@ class NotSignedInPhotosControllerTest < ActionController::TestCase
     assert_response :success
   end
   
+  test "can get public event json by code" do
+    @event.update_attributes is_public: true
+    xhr :get, :index, code: @event.code, format: "json"
+    assert_response :success
+    json = JSON.parse(@response.body)
+    assert_equal @photo.id, json[0]["id"]
+  end
+  
   test "can't get private event by code" do
     @event.update_attributes is_public: false
     assert_raises ActiveRecord::RecordNotFound do

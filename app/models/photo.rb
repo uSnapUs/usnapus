@@ -19,7 +19,7 @@ class Photo < ActiveRecord::Base
   def as_json(options = {})
     timestamp = "?#{updated_at.to_i}"
     super(options.merge({except: [:photo]})).merge(
-      creator_name: "#{creator.name}", 
+      creator_name: "#{creator.name if creator}", 
       photo: {
         url: "#{photo.url}#{timestamp}",
         thumbnail: {
