@@ -147,6 +147,8 @@
   <%= stylesheet_link_tag "jquery-ui-1.8.18" %>
 <% end %>
 <% content_for(:jquery) do %>
+  var six_am_in_ms = 6*60*60*1000;
+  
   $(".datepicker").datepicker({
 		changeMonth: true,
 		changeYear: true,
@@ -156,14 +158,18 @@
 		altField: "#event_starts",
 		dateFormat: "@",
 		onSelect: function(dateText, inst){
-		  $("#event_starts").val(dateText);
-		  $("#event_ends").val(dateText);
+		  $("#event_starts").val(parseInt(dateText)+six_am_in_ms);
+		  $("#event_ends").val(end_of_date(parseInt(dateText)).getTime());
 		  showDateIncrementer();
 		},
 		onChangeMonthYear: function(){
 		  $("#date_incrementer").fadeOut();
 		}
 	});
+	//Default the start time to 6am
+	$("#event_starts").val(parseInt($("#event_starts").val())+six_am_in_ms);
+	//Default ends at to starts at's date, 23:59:59
+  $("#event_ends").val(end_of_date(parseInt($("#event_starts").val())).getTime());
 <% end %>
 
 <div id="date_incrementer" class="date_incrementer">

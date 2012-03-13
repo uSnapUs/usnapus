@@ -92,7 +92,6 @@ $(document).ready(function() {
   }
   
   window.showDateIncrementer = function(){
-    console.log($(".datepicker .ui-state-hover:first-child"))
     var pos = $(".datepicker .ui-state-hover:first-child").position();
     $("#date_incrementer").css({position: "absolute", top: pos.top-35, left: pos.left-50}).fadeIn();
   }
@@ -101,13 +100,22 @@ $(document).ready(function() {
     var ends = $("#event_ends"),
     current_ends = new Date(parseInt(ends.val()));
     current_ends.setDate( current_ends.getDate() + offset);
+    current_ends = end_of_date(current_ends.getTime())
     ends.val( current_ends.getTime() );
+  }
+  
+  window.end_of_date = function(ms_since_epoch){
+    datetime = new Date();
+    datetime.setTime(ms_since_epoch);
+    datetime.setHours(23);
+    datetime.setMinutes(59);
+    datetime.setSeconds(59);
+    return datetime;
   }
   
   $("#date_incrementer").on("click", "a", function(){
     var plus = $(this).hasClass("plus"), el;
     
-      console.log(plus)
     if(plus){
       
       el = $(".datepicker .ui-datepicker-current-day:last + td");
@@ -157,29 +165,58 @@ $(document).ready(function() {
     }
   }
   
-  $("form.event .continue").on("click", function(){
-    var required_inputs = [$("#event_location"), $("#event_name")];
+  function checkEventFields(){
+    var required_inputs = [$("#event_location"), $("#event_name"), $("#event_code")];
     
     $.each(required_inputs, function(i, input){
       input.removeClass("error");
       
       if(input.val().trim() == ""){
-        input.addClass("error")
+        console.log(input);
+        input.addClass("error");
       }
       
     });
     
     if($("form.event input.error").length){
-      console.log("errors!");
       return false;
     }
+    return true;
+  }
+  
+  $("form.event").on("click", ".continue", function(){
     
+    if(!checkEventFields())
+      return false;
+      
     $("form.event .details, .ui-autocomplete, #date_incrementer").fadeOut(500, function(){
       $("form.event .payment .event_name").html($("#event_name").val());
       $("form.event .payment").fadeIn();
     });
     
+  }).on("submit", function(){
+    if(!checkEventFields())
+      return false;
   });
+  
+  window.showRange = function(starts_msec, ends_msec){
+    var diff = (ends_msec-starts_msec)/60/60/24;
+    //Show multiple selected dates
+    for(i = 1; i < diff; i++){
+      el = $(".datepicker .ui-datepicker-current-day:last + td");
+
+      if(!el.length){
+        //Try go to the next row
+        var row = $(".datepicker .ui-datepicker-current-day:last").parent().next();
+        if(row.length){
+          el = $(".datepicker .ui-datepicker-current-day:last").parent().next().find("td:first-child");
+        }
+      }
+      if(el.length){
+        el.addClass("ui-datepicker-current-day").find("a").addClass("ui-state-active");
+      }
+    }
+  }
   
   $(".show_details").on("click", function(){
     $(".pricing .details").fadeIn();

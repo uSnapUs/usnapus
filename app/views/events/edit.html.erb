@@ -84,7 +84,7 @@
 		defaultDate: "<%= @event.starts.to_i*1000 %>",
 		onSelect: function(dateText, inst){
 		  $("#event_starts").val(dateText);
-		  $("#event_ends").val(dateText);
+		  $("#event_ends").val(end_of_date(parseInt(dateText)).getTime());
 		  showDateIncrementer();
 		},
 		onChangeMonthYear: function(){
@@ -93,28 +93,22 @@
 	});
   $("#event_ends").val("<%= @event.ends.to_i*1000 %>");
   
-  var starts = <%= @event.starts.to_i %>,
-  ends = <%= @event.ends.to_i %>,
-  diff = (ends-starts)/60/60/24;
-  console.log(diff);
-  
-  //Show multiple selected dates
-  for(i = 1; i < diff; i++){
-    el = $(".datepicker .ui-datepicker-current-day:last + td");
-
-    if(!el.length){
-      //Try go to the next row
-      var row = $(".datepicker .ui-datepicker-current-day:last").parent().next();
-      if(row.length){
-        el = $(".datepicker .ui-datepicker-current-day:last").parent().next().find("td:first-child");
-      }
-    }
-    if(el.length){
-      el.addClass("ui-datepicker-current-day").find("a").addClass("ui-state-active");
-    }
-  }
-  
+  showRange(<%= @event.starts.to_i %>, <%= @event.ends.to_i %>);
   showDateIncrementer();
+  
+  <% if @event.errors %>
+    var json = <%= raw @event.errors.messages.to_json %>;
+    $.each(json, function(attr, errors){
+      if(errors.length){
+        var input = $("#event_"+attr);
+        input.addClass("error");
+        input.tooltip({
+          title: "Sorry, "+attr+" "+errors[0], 
+          trigger: "manual"
+        }).tooltip('show');
+      }
+    })
+  <% end %>
 <% end %>
 
 <div id="date_incrementer" class="date_incrementer">

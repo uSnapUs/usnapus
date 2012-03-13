@@ -242,13 +242,23 @@ $(document).ready(function() {
     }
     
     //If the event is multiday, show the dates, otherwise show times
-    //If the event ends at midnight, treat that as 'the same day'
-    if(starts.getDate() == (new Date(ends-1)).getDate()){
+    if(starts.getDate() == (new Date(ends)).getDate()){
       
       // Xam - Ypm, Zth of M
-      var starts_string = twentyfour_to_twelve_hour(starts),
-      ends_string = twentyfour_to_twelve_hour(ends),
-      date_string = numberToOrdinal(starts.getDate())+" "+months[starts.getMonth()];
+      var date_string = numberToOrdinal(starts.getDate())+" "+months[starts.getMonth()],
+      starts_string, ends_string;
+      
+      //If the event ends at 00:00, treat that as midnight
+      if(starts.getHours() == 00 && starts.getMinutes() == 00)
+        starts_string = "Midnight"
+      else
+        starts_string = twentyfour_to_twelve_hour(starts)
+        
+      //If the event ends at 11:59, treat that as midnight
+      if(ends.getHours() == 23 && ends.getMinutes() == 59)
+        ends_string = "Midnight"
+      else
+        ends_string = twentyfour_to_twelve_hour(ends)
       
       time_string = starts_string+" - "+ends_string+", "+date_string;
       

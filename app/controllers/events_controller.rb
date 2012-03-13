@@ -41,8 +41,8 @@ class EventsController < ApplicationController
       flash[:notice] = "Changes saved!"
       redirect_to event_photos_path @event
     else
-      flash[:error] = "Please fix the errors below"
-      render "new"
+      flash.now[:error] = "Please fix the errors below"
+      render "edit"
     end
     
   end
@@ -51,7 +51,6 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(params[:event])
     set_event_time(@event)
-    
     if @event.save
       @event.attendees.create! do |at|
         at.user = current_user
@@ -76,7 +75,7 @@ class EventsController < ApplicationController
     def set_event_time(event)
       #Time comes through as ms since epoch
       event.starts = Time.at(params[:event][:starts].to_i/1000)
-      event.ends = Time.at(params[:event][:ends].to_i/1000) + 1.day - 1.second #12am next day
+      event.ends = Time.at(params[:event][:ends].to_i/1000)
     end
     
 end

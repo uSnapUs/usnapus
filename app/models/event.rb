@@ -9,10 +9,10 @@ class Event < ActiveRecord::Base
   has_many :attendees
   has_many :users, through: :attendees
   
-  validates :code, :format => {:with => /\A[A-Z0-9]+\Z/, :on => :create}, :uniqueness => true
+  validates :code, :format => {:with => /\A[A-Z0-9\-]+\Z/}, :uniqueness => true
   
   before_validation :generate_codes, on: :create
-  before_save :assign_event_code, except: :create
+  before_validation :assign_event_code, except: :create
   
   validates :code, presence: {allow_blank: false}, uniqueness: true
   validates :s3_token, presence: {allow_blank: false}, uniqueness: true
