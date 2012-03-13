@@ -106,8 +106,8 @@
         <% if flash[:notice] %>
           showAlert("info", "", "<%= flash[:notice] %>")
         <% end %>
-        <% if flash[:alert] %>
-          showAlert("error", "Oops!", "<%= flash[:alert] %>")
+        <% if err = (flash[:alert] || flash[:error]) %>
+          showAlert("error", "Oops!", "<%= err %>")
         <% end %>
         
       });
