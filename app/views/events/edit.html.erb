@@ -30,7 +30,7 @@
         <%= f.hidden_field :ends %>
       </div>
       
-      <div class="span6 btn-group privacy">
+      <div class="span6 btn-group privacy" data-is-public="<%= @event.is_public %>">
         <a class="btn active" data-val="public" href="#">Public</a>
         <a class="btn" data-val="private" href="#">Private</a>
       </div>

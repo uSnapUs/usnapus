@@ -137,16 +137,25 @@ $(document).ready(function() {
     var val = $(this).attr("data-val");
     
     if(val == "public")
-      $("#event_is_public").attr("checked", "checked");
+      $("#event_is_public").val(1);
     else
-      $("#event_is_public").removeAttr("checked");
+      $("#event_is_public").val(0);
     
     //Toggle buttons
     $(this).addClass("active").siblings().removeClass("active");
     //Toggle explanation
-    $(".explanation").find("."+val).removeClass("hidden").siblings("").addClass("hidden");
+    $(".explanation div.hidden").removeClass("hidden").siblings().addClass("hidden");
     return false;
   })
+  
+  if($(".btn-group.privacy").length){
+    if($(".btn-group.privacy").attr("data-is-public") == "false"){
+      //Toggle buttons
+      $(".btn-group.privacy .btn.active").removeClass("active").siblings().addClass("active");
+      //Toggle explanation
+      $(".explanation").find(".private").removeClass("hidden").siblings().addClass("hidden");
+    }
+  }
   
   $("form.event .continue").on("click", function(){
     var required_inputs = [$("#event_location"), $("#event_name")];
