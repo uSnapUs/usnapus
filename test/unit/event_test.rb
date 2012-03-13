@@ -22,6 +22,10 @@ class EventTest < ActiveSupport::TestCase
     assert_equal "NICK", Factory(:event, code: "nick").code
   end
   
+  test "new event code is parameterized" do
+    assert_equal "NICK-S-1-EVENT", Factory(:event, code: "Nick's #1 Event").code
+  end
+  
   test "new event has an s3 token" do
     assert_equal 32, Factory(:event).s3_token.length
   end

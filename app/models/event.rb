@@ -12,6 +12,7 @@ class Event < ActiveRecord::Base
   validates :code, :format => {:with => /\A[A-Z0-9]+\Z/, :on => :create}, :uniqueness => true
   
   before_validation :generate_codes, on: :create
+  before_save :assign_event_code, except: :create
   
   validates :code, presence: {allow_blank: false}, uniqueness: true
   validates :s3_token, presence: {allow_blank: false}, uniqueness: true
@@ -61,7 +62,9 @@ class Event < ActiveRecord::Base
       
     def assign_event_code
       if self.code_changed? && !self.code.blank?
-        self.code = self.code.upcase
+        p self.code
+        self.code = self.code.parameterize.upcase
+        p self.code
       else
         self.code = Event.generate_unique_code
       end
