@@ -183,7 +183,7 @@ class APIPhotosControllerTest < ActionController::TestCase
   end
   
   test "should create photo and start a background job with device auth" do
-    @request.env["Authorization"] = "Device token=\"#{@device.guid}\""
+    @request.env["Authorization"] = "Device token=#{@device.guid}"
     
     PhotoUploader.enable_processing = true
     Resque.stubs(:enqueue)
@@ -203,7 +203,7 @@ class APIPhotosControllerTest < ActionController::TestCase
   
   
   test "shouldn't be able to delete another creator's photo with device auth" do
-    @request.env["Authorization"] = "Device token=\"#{@device.guid}\""
+    @request.env["Authorization"] = "Device token=#{@device.guid}"
     
     assert_no_difference 'Photo.count' do
       xhr :delete, :destroy, event_id: @event.to_param, id: @photo.id, format: "json"
@@ -214,7 +214,7 @@ class APIPhotosControllerTest < ActionController::TestCase
   test "should be able to delete a device's photo with device auth" do
     photo_id = Factory(:photo, creator: @device, event: @event).id
     
-    @request.env["Authorization"] = "Device token=\"#{@device.guid}\""
+    @request.env["Authorization"] = "Device token=#{@device.guid}"
     
     assert_difference 'Photo.count', -1 do
       xhr :delete, :destroy, event_id: @event.to_param, id: photo_id, format: "json"
