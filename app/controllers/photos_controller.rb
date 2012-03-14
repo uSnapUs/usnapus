@@ -34,8 +34,7 @@ class PhotosController < ApplicationController
   # POST /photos.json
   def create
     @photo = @event.photos.new(params[:photo].slice(:photo))
-                                      #Legacy
-    @photo.creator = current_thing || (Device.find_by_id(params[:photo][:device_id]) if params[:photo])
+    @photo.creator = current_thing
     
     
     respond_to do |format|
@@ -71,22 +70,20 @@ class PhotosController < ApplicationController
       
       #Signed in users can get their events by id or code
       #Devices can get all events by id or code
-      #Public can get public events by code only
       
       events =  if current_user
                   get_event_by_param Event.joins(:attendees).where("attendees.user_id = ?", current_user.id)
                 elsif current_device
                   get_event_by_param Event
-                else
-                  Event.visible.where(:code => params[:code]) if params[:code]
                 end
-     
-      if request.post? && params[:photo] && params[:photo][:device_id]
-        #Legacy to let devices create new photos
-        @event = get_event_by_param(Event).first
       
-      #No events, 404  
-      elsif !events || !(@event = events.first)
+      #Public (or signed in non-attendees) can get public events by code only          
+      if !events.try(:any?) && params[:code]
+        events = Event.visible.where(:code => params[:code])
+      end
+      
+      #Still no events? 404  
+      unless @event = events.try(:first)
         raise ActiveRecord::RecordNotFound
       end
       
