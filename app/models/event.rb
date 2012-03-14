@@ -62,9 +62,7 @@ class Event < ActiveRecord::Base
       
     def assign_event_code
       if self.code_changed? && !self.code.blank?
-        p self.code
         self.code = self.code.parameterize.upcase
-        p self.code
       else
         self.code = Event.generate_unique_code
       end
