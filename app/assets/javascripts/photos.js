@@ -73,7 +73,7 @@ $(document).ready(function() {
   //Load photos to the bottom of the screen
   window.loadToBottom = function(){
     
-    var at_the_bottom = ($("html").height() - $(window).innerHeight() - $(window).scrollTop()) <= 0,
+    var at_the_bottom = ($("html").height() - $(window).innerHeight() - $(window).scrollTop()) <= 60,
     last_photo = $(".photo:last"),
     last_photo_pos = last_photo.length ? $(".photo:last").position().top : 0,
     room_for_more = last_photo_pos < $(window).innerHeight();
