@@ -54,7 +54,11 @@ class PhotosController < ApplicationController
   end
   
   def destroy
-    @photo = current_thing.photos.find_by_id(params[:id]) if current_thing
+    @photo =  if current_attendee.try(:is_admin?)
+                @event.photos.find_by_id(params[:id])
+              else
+                current_thing.photos.find_by_id(params[:id]) if current_thing
+              end
     
     respond_to do |format|
       if @photo && @photo.destroy
@@ -95,10 +99,6 @@ class PhotosController < ApplicationController
       elsif code = params[:code]
         proxy.where("events.code = ?", code)
       end
-    end
-    
-    def current_thing
-      current_user || current_device
     end
   
 end

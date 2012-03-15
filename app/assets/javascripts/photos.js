@@ -271,4 +271,20 @@ $(document).ready(function() {
     
   }
   
+  $("#delete_photo_mode").on("click", function(e){
+    $(".hide_photo").show();
+    
+    $(".hide_photo").on("click", "a", function(e){
+      
+      var photo = $(this).parents(".photo");
+      
+      $.post($(this).attr("href"), {_method: "delete"}, null, "script");
+      
+      photo.fadeOut(500, function(){$(this).remove()});
+      
+      e.preventDefault();
+      e.stopPropagation();
+    });
+  });
+  
 });

@@ -114,6 +114,20 @@ class PhotosControllerTest < ActionController::TestCase
     assert_nil Photo.find_by_id(photo_id)
   end
    
+  test "should be able to delete another creator's photo if admin" do
+    photo_id = @photo.id
+    
+    @attendee.is_admin = true
+    @attendee.save!
+    
+    assert_difference 'Photo.count', -1 do
+      xhr :delete, :destroy, event_id: @event.to_param, id: photo_id, format: "json"
+      assert_response :success
+    end
+    
+    assert_nil Photo.find_by_id(photo_id)
+  end
+  
 end
 class NotSignedInPhotosControllerTest < ActionController::TestCase
   tests PhotosController

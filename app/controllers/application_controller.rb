@@ -12,4 +12,14 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def current_attendee
+    if current_user && @event
+      Attendee.find_by_user_id_and_event_id(current_user.id, @event.id)
+    end
+  end
+  
+  def current_thing
+    current_user || current_device
+  end
+  
 end

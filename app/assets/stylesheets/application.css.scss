@@ -105,3 +105,11 @@ body{
     line-height: 18px;
   }
 }
+
+.red, a.red{
+  color: $red;
+}
+
+.dropdown-menu li > a.red:hover, .dropdown-menu .active > a.red, .dropdown-menu .active > a.red:hover{
+  background-color: $red;
+}

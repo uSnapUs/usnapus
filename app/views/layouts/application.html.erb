@@ -57,15 +57,7 @@
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                  <% if @attendee.try(:is_admin) %>
-                    <li>
-                      <%= link_to "Settings", edit_event_path(@event) %>
-                    </li>
-                    <li>
-                      <%= link_to "Bulk Download", "#" %>
-                    </li>
-                    <li class="divider"></li>
-                  <% end %>
+                  <%= content_for(:dropdown_options) %>
                   <li>
                     <%= link_to "Sign Out", destroy_user_session_path %>
                   </li>

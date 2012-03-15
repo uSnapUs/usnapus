@@ -1,6 +1,21 @@
 <% @title = "Photos from #{@event.name}"%>
 <% @topbar_class = "thin" %>
 
+<% content_for(:dropdown_options) do %>
+  <% if @attendee.try(:is_admin) %>
+    <li>
+      <%= link_to "Settings", edit_event_path(@event) %>
+    </li>
+    <li>
+      <%= link_to "Bulk Download", "#" %>
+    </li>
+    <li>
+      <%= link_to "Hide Photo Mode", "#", :id => "delete_photo_mode", :class=>"red" %>
+    </li>
+    <li class="divider"></li>
+  <% end %>
+<% end %>
+
 <section class="container event_details bottom_pad">
   <div class="row">
     <div class="span12">
@@ -51,9 +66,11 @@
 <script type="text/html" id="gallery_photo_template">
   <div class="photo" id="photo_{{id}}" data-photo-id="{{id}}">
   {{#photo}}
-    <% if false %>
-      <a href="#" class="hide_photo" title="Hide this forever"><span class="close_button"></span></a>
-    <% end %>
+    <span class="hide_photo">
+      <a href="<%= event_photos_path(@event) %>/{{id}}" class="close_button" title="Hide this forever">
+        <i class="icon-remove-sign"></i>
+      </a>
+    </span>
     <a href="{{original_src}}" title="Photo taken by {{alt}}. Click to view original.">
       <img src="{{thumbnail_src}}" data-xga-src="{{xga_src}}" data-original-src="{{original_src}}" alt="Photo taken by {{alt}}" />
     </a>
