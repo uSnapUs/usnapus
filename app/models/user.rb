@@ -7,9 +7,8 @@ class User < ActiveRecord::Base
   has_many :attendees
   has_many :events, through: :attendees
   has_many :photos, as: :creator
-  before_validation :skip_password_confirmation, on: :create
   
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :remember_me
   
   def going_to? event
     attendees.where(:event_id => event.id).any?
@@ -18,10 +17,5 @@ class User < ActiveRecord::Base
   def name
     email
   end
-  
-  private
-    def skip_password_confirmation
-      self.password_confirmation = self.password
-    end
   
 end
