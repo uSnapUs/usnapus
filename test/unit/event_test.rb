@@ -18,8 +18,11 @@ class EventTest < ActiveSupport::TestCase
     assert_match /\A[A-HJKMNP-Z2-9]{7}\Z/, Factory(:event).code
   end
   
-  test "new event keeps code if passed" do
-    assert_equal "NICK", Factory(:event, code: "nick").code
+  test "new event keeps custom code" do
+    nick = Factory(:event, code: "nick")
+    assert_equal "NICK", nick.code
+    nick.save!
+    assert_equal "NICK", nick.code
   end
   
   test "new event code is parameterized" do
