@@ -69,6 +69,15 @@ class PhotosController < ApplicationController
     end
   end
   
+  def download
+    if current_attendee.try(:is_admin?)
+      Notifier.bulk_download_request(current_user, @event).deliver
+      head :ok
+    else
+      head :not_found
+    end
+  end
+  
   private
     def get_event
       

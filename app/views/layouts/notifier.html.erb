@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" style="background: #eee;">
+  <head>
+    <meta charset="utf-8">
+    <title><%= @subject %></title>
+  </head>
+  <body style="margin:0;padding:0;background: #eee;">
+    <div style="background: #eee;color: #444;font-family: helvetica, sans-serif;padding:10px;">
+      <div style="margin: 20px 20px 20px 20px;background-color: #fff; border: 1px solid #ddd;">
+        <div style="background:url('http://usnap.us/assets/headerstrip.png') repeat-x">
+          <h1 style="width:100%;text-align:center;margin:0;padding-top:8px">
+            <%= image_tag "http://usnap.us/assets/logo-header.png", alt: "uSnap.us", title: "uSnap.us" %>
+          </h1>
+        </div>
+        <div style="margin:20px">
+          <%= yield %>
+        </div>
+      </div>
+      <p style="text-align:center;font-size:75%;color: #999">
+        Sent from <%= link_to "uSnap.us", "http://uSnap.us", :style => "color:#999" %>
+      </p>
+    </div>
+  </body>
+</body>

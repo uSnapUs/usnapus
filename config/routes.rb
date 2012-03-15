@@ -13,11 +13,14 @@ Usnapus::Application.routes.draw do
     resources :photos, except: [:update, :edit] do
       collection do
         get :fullscreen
+        get :download
       end
     end
   end
 
   resources :signups, only: [:create]
+  
+  match "notifier/:action", :controller => "notifier"
   
   #Keep at the end
   get '*code', :to=> "photos#index"

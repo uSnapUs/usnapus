@@ -7,7 +7,7 @@
       <%= link_to "Settings", edit_event_path(@event) %>
     </li>
     <li>
-      <%= link_to "Bulk Download", "#" %>
+      <%= link_to "Bulk Download", download_event_photos_path(@event), :id => "bulk_download" %>
     </li>
     <li>
       <%= link_to "Hide Photo Mode", "#", :id => "delete_photo_mode", :class=>"red" %>

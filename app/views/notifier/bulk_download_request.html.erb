@@ -1,0 +1,5 @@
+<p>All hail the supreme leaders!</p>
+<p>Can you send <%= link_to @user.email, "mailto:#{@user.email};subject:Your photos from #{@event.name} are ready to be downloaded!" %> <%= "(#{@user.name})" if @user.name %> the link to a zip of photos for <%= @event.name %> (code: <%= @event.code %>), pretty please?</p>
+<p>&nbsp;</p>
+<p>Cheers,<br />
+The gnomes inside the uSnap.us server</p>

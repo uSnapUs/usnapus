@@ -128,6 +128,23 @@ class PhotosControllerTest < ActionController::TestCase
     assert_nil Photo.find_by_id(photo_id)
   end
   
+  test "admin should be able to request photo download" do
+    @attendee.is_admin = true
+    @attendee.save!
+    
+    assert_difference "ActionMailer::Base.deliveries.count" do
+      xhr :get, :download, event_id: @event.to_param
+      assert_response :success
+    end
+  end
+  
+  test "non-admin shouldn't be able to request photo download" do
+    assert_no_difference "ActionMailer::Base.deliveries.count" do
+      xhr :get, :download, event_id: @event.to_param
+      assert_response :not_found
+    end
+  end
+  
 end
 class NotSignedInPhotosControllerTest < ActionController::TestCase
   tests PhotosController

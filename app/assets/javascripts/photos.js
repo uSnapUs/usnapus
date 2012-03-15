@@ -271,6 +271,12 @@ $(document).ready(function() {
     
   }
   
+  $("#bulk_download").on("click", function(){
+    $.get($(this).attr("href"), null, null, "script");
+    showAlert("info", "", "We've summoned our elves! They'll email you a download link soon :)");
+    return false;
+  });
+  
   $("#delete_photo_mode").on("click", function(e){
     $(".hide_photo").show();
     
