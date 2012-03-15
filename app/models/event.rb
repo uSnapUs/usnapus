@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   
   geocoded_by :location
-  after_validation :geocode
+  after_validation :geocode_if_lat_lng_missing
   reverse_geocoded_by :latitude, :longitude, address: :location
   after_validation :reverse_geocode
   
@@ -65,6 +65,16 @@ class Event < ActiveRecord::Base
         self.code = Event.generate_unique_code
       else
         self.code = self.code.parameterize.upcase
+      end
+    end
+    
+    def geocode_if_lat_lng_missing
+      #We prioritize a given lat and long, so people can customize
+      # the actual event location.
+      #However if only a address is provided, we need
+      # to figure out the lat and long ourselves.
+      if latitude.nil? && longitude.nil?
+        self.geocode
       end
     end
   
