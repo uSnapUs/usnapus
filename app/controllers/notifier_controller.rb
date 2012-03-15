@@ -3,6 +3,11 @@ class NotifierController < ApplicationController
   layout 'notifier'
   before_filter :dev_only
   
+  def welcome
+    @user = User.first
+    @event = Event.first
+  end
+  
   def bulk_download_request
     @user = User.first
     @event = Event.first

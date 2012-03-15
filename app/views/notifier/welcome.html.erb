@@ -1,0 +1,19 @@
+<h2>Woo hoo, you're here!</h2>
+
+<p>Hey <%= @user.name %>,</p>
+
+<p>We're Nick and Owen, and we run <%= link_to "uSnap.us", "http://usnap.us" %>. Thanks for joining with us to make your event awesome! 
+</p>
+
+<p>If you have any question at all, or want to pass on some feedback, get in touch with us at <%= link_to Notifier::SUPPORT, "mailto:#{Notifier::SUPPORT}" %>.</p>
+
+<p>Here's a quick run down of the features, if you want dive right into it:</p>
+
+<p>Download the app</p>
+<p>Log in by code</p>
+<p>Take Photo, watch it pop up</p>
+
+<p style="text-align:center; width: 100%;">
+  <%= link_to "Open #{@event.name}", new_user_session_url, 
+  style: "-webkit-box-shadow: rgba(255, 255, 255, 0.199219) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.046875) 0px 1px 2px 0px;  background-color: #5BB75B;  background-image: -webkit-linear-gradient(top, #62C462, #51A351);  background-repeat: repeat-x;  border-bottom-color: rgba(0, 0, 0, 0.246094);  border-bottom-left-radius: 5px;  border-bottom-right-radius: 5px;  border-bottom-style: solid;  border-bottom-width: 1px;  border-left-color: rgba(0, 0, 0, 0.0976563);  border-left-style: solid;  border-left-width: 1px;  border-right-color: rgba(0, 0, 0, 0.0976563);  border-right-style: solid;  border-right-width: 1px;  border-top-color: rgba(0, 0, 0, 0.0976563);  border-top-left-radius: 5px;  border-top-right-radius: 5px;  border-top-style: solid;  border-top-width: 1px;  box-shadow: rgba(255, 255, 255, 0.199219) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.046875) 0px 1px 2px 0px;  color: white;  cursor: pointer;  display: block;  float: none;  font-family: arial, sans-serif;  font-size: 150%; padding: 2% 0;  text-align: center;  text-decoration: none;  text-shadow: rgba(0, 0, 0, 0.246094) 0px -1px 0px;width:50%;margin-left:25%" %>
+</p>
