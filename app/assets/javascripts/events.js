@@ -9,20 +9,58 @@ $(document).ready(function() {
     }
   }
   
-  window.getPosition = function(callback){
-    var coords = {lat: 37.793508, lng: -122.419281}; //San Francisco
-    
-    // Check for geolocation support
-    if (navigator.geolocation) {
-    	// Use method getCurrentPosition to get coordinates
-    	navigator.geolocation.getCurrentPosition(function (position) {
-    		coords.lat = position.coords.latitude;
-    		coords.lng = position.coords.longitude;
-    		if (typeof callback == "function") callback(coords); //Callback
-    	}, function(){
-    	  if (typeof callback == "function") callback(coords); //Callback
-    	});
+  window.updateLocation = function(){
+    if(marker !== undefined){
+      $.getJSON("/geocode_search.json", {
+          "search": marker.getPosition().lat()+", "+marker.getPosition().lng()
+        }, 
+        function(data){
+          console.log(data);
+          if(data.length){
+            $("#event_location").val(data[0]["data"].formatted_address);
+          }
+        }
+      );
     }
+  }
+  
+  //Find a location for the event, either the event's existing location, user's current position, or SF
+  window.getDefaultPosition = function(selector, callback){
+    
+    //Try and get existing position
+    var map = $("#"+selector);
+    var lat = map.attr("data-lat"), lng = map.attr("data-lng");
+    
+    if(lat !== undefined && lng !== undefined){
+      
+      if (typeof callback == "function") callback({lat: lat, lng: lng});
+      return;
+    
+    //No existing position
+    }else{
+      
+      var coords = {lat: 37.793508, lng: -122.419281}; //San Francisco
+
+      // Check for geolocation support
+      if (navigator.geolocation) {
+
+      	// Use getCurrentPosition to async get coordinates and then fire callback
+      	navigator.geolocation.getCurrentPosition(
+
+      	//Geolocation
+      	  function (position) {
+      		  coords.lat = position.coords.latitude;
+      		  coords.lng = position.coords.longitude;
+      		  if (typeof callback == "function") callback(coords);
+
+      	//No geolocation
+      	}, function(){
+      	  if (typeof callback == "function") callback(coords);
+      	});
+      }
+      
+    }
+    
   }
   
   window.initializeMap = function(selector){
@@ -34,8 +72,7 @@ $(document).ready(function() {
     var options = {
       zoom: 10,
       center: latlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      disableDefaultUI: true
+      mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
     map = new google.maps.Map(document.getElementById(selector), options);
@@ -51,9 +88,10 @@ $(document).ready(function() {
     
     google.maps.event.addListener(marker, "dragend", function() {
       updateLatLng();
+      updateLocation();
     });
     
-    getPosition(function(coords){
+    getDefaultPosition(selector, function(coords){
       var location = new google.maps.LatLng(coords.lat, coords.lng);
       marker.setPosition(location);
       map.setCenter(location);

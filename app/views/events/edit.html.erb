@@ -16,7 +16,7 @@
           <%= f.hidden_field :latitude %>
           <%= f.hidden_field :longitude %>
         </div>
-        <div id="google_map" class="">
+        <div id="google_map" class="" data-lat="<%= @event.latitude %>" data-lng="<%= @event.longitude %>">
         </div>
       </div>
       
