@@ -19,10 +19,10 @@ class EventTest < ActiveSupport::TestCase
   end
   
   test "new event keeps custom code" do
-    nick = Factory(:event, code: "nick")
-    assert_equal "NICK", nick.code
+    nick = Factory(:event, code: "nicks")
+    assert_equal "NICKS", nick.code
     nick.save!
-    assert_equal "NICK", nick.code
+    assert_equal "NICKS", nick.code
   end
   
   test "new event code is parameterized" do
@@ -38,6 +38,14 @@ class EventTest < ActiveSupport::TestCase
     e = Factory(:event)
     e.code = new_code
     assert e.invalid?
+  end
+  
+  test "event code can't be in blacklist" do
+    assert_not_nil Event::CODE_BLACKLIST
+    
+    Event::CODE_BLACKLIST.each do |blocked|
+      assert Factory.build(:event, code: blocked).invalid? ,"#{blocked} should be an invalid code"
+    end
   end
   
 end

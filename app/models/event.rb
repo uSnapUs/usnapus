@@ -1,5 +1,7 @@
 class Event < ActiveRecord::Base
   
+  CODE_BLACKLIST = %w(NICK OWEN BROCK LUKE TEAM HELP SUPPORT RESQUE PRIVACY WEBMASTER TERMS BLOG PRESS ABOUT USERS EVENTS ADMIN DEVICES)
+  
   geocoded_by :location
   after_validation :geocode_if_lat_lng_missing
   reverse_geocoded_by :latitude, :longitude, address: :location
@@ -9,13 +11,12 @@ class Event < ActiveRecord::Base
   has_many :attendees
   has_many :users, through: :attendees
   
-  validates :code, :format => {:with => /\A[A-Z0-9\-]+\Z/}, :uniqueness => true
-  
   before_validation :generate_codes, on: :create
   before_validation :assign_event_code
   
-  validates :code, presence: {allow_blank: false}, uniqueness: true
   validates :s3_token, presence: {allow_blank: false}, uniqueness: true
+  validates :code, format: { with: /\A[A-Z0-9\-]+\Z/}, uniqueness: true
+  validates_exclusion_of :code, in: CODE_BLACKLIST, message: "%{value} is already taken"
   
   attr_accessible :location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public
   
