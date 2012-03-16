@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120315095553) do
+ActiveRecord::Schema.define(:version => 20120316080330) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "user_id"
@@ -70,6 +70,19 @@ ActiveRecord::Schema.define(:version => 20120315095553) do
   end
 
   add_index "events", ["code"], :name => "index_events_on_code", :unique => true
+
+  create_table "inbound_emails", :force => true do |t|
+    t.string   "from"
+    t.string   "to"
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "inbound_emails", ["event_id"], :name => "index_inbound_emails_on_event_id"
+  add_index "inbound_emails", ["user_id"], :name => "index_inbound_emails_on_user_id"
 
   create_table "photos", :force => true do |t|
     t.string   "photo"

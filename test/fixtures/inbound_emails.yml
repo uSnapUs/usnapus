@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  from: MyString
+  to: MyString
+  name: MyString
+  user: 
+  event: 
+
+two:
+  from: MyString
+  to: MyString
+  name: MyString
+  user: 
+  event: 

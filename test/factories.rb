@@ -35,3 +35,8 @@ Factory.define :attendee do |a|
   a.association :user
   a.association :event
 end
+
+Factory.define :inbound_email do |ie|
+  ie.association :event
+  ie.to          {"#{event.code.upcase}@usnap.us"}
+end
