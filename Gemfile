@@ -34,6 +34,7 @@ gem "airbrake"
 gem 'resque'
 gem "pusher"
 gem 'postmark-rails'
+gem "postmark-mitt"
 gem "devise"
 gem "geocoder", ">= 1.1.1"
 
