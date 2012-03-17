@@ -6,6 +6,7 @@ class CreateInboundEmails < ActiveRecord::Migration
       t.string :name
       t.references :user
       t.references :event
+      t.string :message_id
 
       t.timestamps
     end

@@ -17,5 +17,11 @@ class InboundEmailTest < ActiveSupport::TestCase
     assert Factory.build(:inbound_email, to: "").invalid?
   end
   
+  test "id needs to be unique" do
+    ie = Factory(:inbound_email)
+    assert Factory.build(:inbound_email, message_id: ie.message_id).invalid?
+  end
+    
+  
   
 end

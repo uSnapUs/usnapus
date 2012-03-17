@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20120316080330) do
     t.string   "name"
     t.integer  "user_id"
     t.integer  "event_id"
+    t.string   "message_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
