@@ -4,13 +4,16 @@ class InboundEmail < ActiveRecord::Base
   belongs_to :event
   has_many :photos
   
-  validates :event, presence: true
   validates :to, presence: {allow_blank: nil}
   validates :message_id, presence: {allow_blank: nil}, uniqueness: true
   
   before_validation :assign_event, on: :create
   
   attr_accessible :to, :from, :name
+  
+  def has_event?
+    !Event.find_by_id(self.event_id).nil?
+  end
   
   private
     def assign_event
