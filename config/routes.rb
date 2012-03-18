@@ -21,6 +21,8 @@ Usnapus::Application.routes.draw do
   resources :signups, only: [:create]
   
   match "notifier/:action", :controller => "notifier"
+  post "postmark/:token/inbound_emails", to: "inbound_emails#create"
+  
   
   #Keep at the end
   get '*code', :to=> "photos#index"

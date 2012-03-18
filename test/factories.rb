@@ -37,6 +37,7 @@ Factory.define :attendee do |a|
 end
 
 Factory.define :inbound_email do |ie|
+  ie.message_id {SecureRandom.hex(6)}
   ie.association :event
   ie.to          {"#{event.code.upcase}@usnap.us"}
 end

@@ -6,6 +6,7 @@ class InboundEmail < ActiveRecord::Base
   
   validates :event, presence: true
   validates :to, presence: {allow_blank: nil}
+  validates :message_id, presence: {allow_blank: nil}, uniqueness: true
   
   before_validation :assign_event, on: :create
   
