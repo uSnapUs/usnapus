@@ -31,13 +31,13 @@ class InboundEmailsController < ApplicationController
                       raw
                     end
           
-          dir = "#{Rails.root.join("tmp")}/ie/#{ie.message_id.parameterize}"
+          dir = "#{Rails.root.join("tmp")}/ie/#{inbound_email.message_id.parameterize}"
           FileUtils.mkdir_p(dir)
           File.open("#{dir}/test.jpg", 'wb') do |f|
             f.write(Base64.decode64(content))
           end
           
-          Photo.create do |photo|
+          Photo.create! do |photo|
             photo.event   = inbound_email.event
             photo.creator = inbound_email
             photo.photo = File.open("#{dir}/test.jpg")
