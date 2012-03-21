@@ -15,24 +15,38 @@ class InboundEmailsController < ApplicationController
     if inbound_email.try(:has_event?)
       email.attachments.each do |attachment|
         if %w(image/jpeg image/png).include? attachment.content_type
+          
+          ext = ""
+          case attachment.content_type
+          when "image/jpeg"
+            ext = "jpg"
+          when "image/png"
+            ext = "png"
+          end
+          
+          raw = attachment.source["Content"]
+          content = if raw.respond_to?(:force_encoding)
+                      raw.force_encoding("UTF-8")
+                    else
+                      raw
+                    end
+          
+          dir = "#{Rails.root.join("tmp")}/ie/#{ie.message_id.parameterize}"
+          FileUtils.mkdir_p(dir)
+          File.open("#{dir}/test.jpg", 'wb') do |f|
+            f.write(Base64.decode64(content))
+          end
+          
           Photo.create do |photo|
             photo.event   = inbound_email.event
             photo.creator = inbound_email
-            
-            raw = attachment.source["Content"]
-            
-            content = if raw.respond_to?(:force_encoding)
-                       raw.force_encoding("UTF-8")
-                      else
-                        raw
-                      end
-                      
-            photo.photo   = Base64Photo.new(content, attachment.file_name, attachment.content_type)
+            photo.photo = File.open("#{dir}/test.jpg")
           end
         end
       end
     end
     
+    head :ok
   end
   
   private
