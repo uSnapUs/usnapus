@@ -25,6 +25,7 @@ Usnapus::Application.routes.draw do
   
   
   #Keep at the end
-  get '*code', :to=> "photos#index"
+  get ':code/fullscreen', :to=> "photos#fullscreen"
+  get ':code', :to=> "photos#index"
   
 end
