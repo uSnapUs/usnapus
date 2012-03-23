@@ -82,6 +82,22 @@ body{
   }
 }
 
+
+.blue {
+  background-color: $background_blue;
+  .fill {
+    background-image: none;
+    .container{
+      width: 100%;
+      margin: 0 30px;
+      .brand{
+        text-align: left;
+      }
+    }
+  }
+}
+
+
 .blackbg{
   background-color: $black;
 }

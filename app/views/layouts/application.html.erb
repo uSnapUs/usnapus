@@ -43,7 +43,7 @@
     <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-retina.png" />
   </head>
 
-  <body class="<%= "home" if request.path.eql? "/" %>">
+  <body class="<%= @body_class %><%= " home" if request.path.eql? "/" %>">
     
     <div class="topbar <%= @topbar_class %>">
       <div class="fill">

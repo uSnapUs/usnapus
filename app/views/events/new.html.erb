@@ -1,8 +1,12 @@
-<% @title = "Create an Event" %>
+<% @title = "Create an Event"
+@body_class = "blue"%>
 <section class="container-fluid">
   
   <%= form_for @event, html: {class: "event"} do |f| %>
-    <div class="row-fluid details">  
+    <div class="row-fluid details"> 
+      
+      <div class="span4"></div>
+      
       <div class="span6 bottom_pad">
         <div id="float_over_google_map">
           <%= f.text_field :location, "placeholder" => "Add the location of your event", :class=>"large grey_border", :tabindex => 1 %>
