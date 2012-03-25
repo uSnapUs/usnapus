@@ -37,8 +37,10 @@
 	
 </head>
 <body>
-<div id="gallery" data-event-url="<%= "/#{@event.code}.json" %>"></div>
-<h1>No photos yet...</h1>
-<p><%= link_to "Back", event_photos_path(@event) %></p>
+<div id="gallery" data-event-url="<%= event_code_path(@event, suffix: ".json") %>"></div>
+<div id="no_photos" style="font-family: arial; display: none">
+  <h1>No photos yet...</h1>
+  <p><%= link_to "Take me back to my event", event_code_path(@event) %></p>
+</div>
 </body>
 </html>
