@@ -7,7 +7,7 @@
   text-align: center;
   
   p{
-    color: $light_blue;
+    color: $med_blue;
     font-size: 14px;
   }
   
@@ -20,8 +20,8 @@
       padding: 0 15px;
       margin: 5px 5px;
       line-height: 30px;
-      border: 1px solid $light_blue;
-      color: $light_blue;
+      border: 1px solid $med_blue;
+      color: $med_blue;
       display: inline-block;
       
       &:hover, &:active{
@@ -108,11 +108,11 @@
 
 .gallery_footer{
   background-color: #fff;
-  border-top: 1px solid $light_blue;
+  border-top: 1px solid $med_blue;
   margin-top: 40px;
   padding: 20px 0;
   p{
-    color: $light_blue;
+    color: $med_blue;
     margin: 0;
     
     .brand{

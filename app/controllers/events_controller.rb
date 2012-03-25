@@ -19,7 +19,7 @@ class EventsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index]
   
   def new
-    @event = Event.new
+    @event = Event.new(code: Event.generate_unique_code)
   end
   
   def edit

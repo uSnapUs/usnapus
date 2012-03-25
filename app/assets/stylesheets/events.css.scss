@@ -1,8 +1,8 @@
+@import "configuration";
+
 form.event{
   
-  #google_map {
-    height: 510px;
-  }
+  
   
   input.large{
     font-size: 120%;
@@ -16,57 +16,12 @@ form.event{
     }
   }
   
-  
-  #float_over_google_map{
-    position: relative;
-    left: 20px;
-    top: 20px;
-
-    input{
-      position: absolute;
-      z-index: 10;
-    }
-  }
-  
-  .privacy{
-    padding-bottom: 8px;
-    
-    &.btn-group {
-      text-align:center;
-      
-      a {
-        float:none;
-        display:inline-block;
-        *display:inline; /* ie7 fix */
-        zoom:1; /* hasLayout ie7 trigger */
-        
-        &:first-child{
-          left: 3px;
-        }
-      }
-    }
-  }
-  
   .datepicker{
     width: 223px;
     margin-left: auto;
     margin-right: auto;
   }
   
-  .event_code {
-    margin-left: auto;
-    margin-right: auto;
-    width: 198px;
-    
-    .add-on{
-      font-size: 12px;
-      color: #333;
-      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    }
-    input{
-      float: left;
-    }
-  }
   
   .continue{
     float: none;
@@ -199,3 +154,127 @@ form.event{
     }
   }
 }
+
+.wizard.container{
+  
+  .box{
+    background-color: #fff;
+    text-align: center;
+    color: $med_blue;
+    
+    
+    .light_blue{
+      background-color: #EAF3FC;
+      
+      .invitation{
+        padding: 100px 10px;
+        input{
+          font-weight: 200;
+          background: transparent;
+          border: none;
+          text-align: center;
+          width: 75%;
+          font-size: 225%;
+          height: 250%;
+          box-shadow: none;
+
+          &::-webkit-input-placeholder {
+            color: $dark_blue;
+          }
+          &:-moz-placeholder {
+            color: $dark_blue;
+          }
+        }
+
+        hr{
+          border-bottom: 1px solid #C9DDF2;
+          width: 85%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+      
+      .map{
+        #google_map {
+          height: 299px;
+          opacity: 0.5;
+        }
+        
+        #float_over_google_map{
+          position: relative;
+          left: 0;
+          top: 130px;
+
+          input{
+            position: absolute;
+            z-index: 10;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+        
+      }
+    
+      .time{
+        padding: 49px 0;
+      }
+      
+      .code{
+        padding: 70px 0;
+        
+        .privacy{
+          padding-bottom: 8px;
+
+          &.btn-group {
+            text-align:center;
+
+            a {
+              float:none;
+              display:inline-block;
+              *display:inline; /* ie7 fix */
+              zoom:1; /* hasLayout ie7 trigger */
+
+              &:first-child{
+                left: 3px;
+              }
+            }
+          }
+        }
+        
+      }
+      
+      
+    }
+
+    .top{
+      padding: 20px;
+      
+    }
+    
+    .bottom{
+      padding: 20px 0;
+      
+      p {
+        margin-bottom: 0;
+      }
+      
+      
+      .steps a {
+        color: #EAF3FC;
+        text-decoration: none;
+        font-size: 200%;
+      }
+      
+    }
+    
+    .steps a.active, a.cancel, .steps a:hover{
+      color: $med_blue;
+    }
+    
+    h2, input{
+      color: $dark_blue;
+    }
+    
+  }
+}
+

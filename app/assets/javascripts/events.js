@@ -129,55 +129,6 @@ $(document).ready(function() {
     
   }
   
-  window.showDateIncrementer = function(){
-    var pos = $(".datepicker .ui-state-hover:first-child").position();
-    $("#date_incrementer").css({position: "absolute", top: pos.top-35, left: pos.left-50}).fadeIn();
-  }
-  
-  function setEndDate(offset){
-    var ends = $("#event_ends"),
-    current_ends = new Date(parseInt(ends.val()));
-    current_ends.setDate( current_ends.getDate() + offset);
-    current_ends = end_of_date(current_ends.getTime())
-    ends.val( current_ends.getTime() );
-  }
-  
-  window.end_of_date = function(ms_since_epoch){
-    datetime = new Date();
-    datetime.setTime(ms_since_epoch);
-    datetime.setHours(23);
-    datetime.setMinutes(59);
-    datetime.setSeconds(59);
-    return datetime;
-  }
-  
-  $("#date_incrementer").on("click", "a", function(){
-    var plus = $(this).hasClass("plus"), el;
-    
-    if(plus){
-      
-      el = $(".datepicker .ui-datepicker-current-day:last + td");
-      
-      if(!el.length){
-        //Try go to the next row
-        var row = $(".datepicker .ui-datepicker-current-day:last").parent().next();
-        if(row.length){
-          el = $(".datepicker .ui-datepicker-current-day:last").parent().next().find("td:first-child");
-        }
-      }
-      if(el.length){
-        el.addClass("ui-datepicker-current-day").find("a").addClass("ui-state-active");
-        setEndDate(1);
-      }
-      
-    }else{
-      el = $(".datepicker .ui-datepicker-current-day")
-      if(el.length > 1){
-        el.last().removeClass("ui-datepicker-current-day").find("a").removeClass("ui-state-active");
-        setEndDate(-1);
-      }
-    }
-  })
   
   $("form.event .btn-group.privacy").on("click", "a", function(){
     var val = $(this).attr("data-val");
@@ -258,6 +209,48 @@ $(document).ready(function() {
   
   $(".show_details").on("click", function(){
     $(".pricing .details").fadeIn();
+  })
+  
+  $("#event_code").on("keyup", function(){
+    $("#event_code_tip").html($("#event_code").val());
+  });
+  
+  var form = $("form.event");
+  
+  function goToStep(step){
+    
+    form.attr("data-step", step);
+    
+    $("div.active").removeClass("active").addClass("hidden");
+    $("div[data-step="+step+"]").removeClass("hidden").addClass("active");
+    
+    $(".steps a.active").removeClass("active");
+    $(".steps a[data-step="+step+"]").addClass("active");
+    
+    if(step == 2){
+      google.maps.event.trigger(map, 'resize');
+    }
+    
+  }
+  
+  
+  
+  form.on("click", "a.next", function(){
+    
+    var step = parseInt(form.attr("data-step"))+1;
+    
+    if(step <= 4){
+      goToStep(step);
+    }
+    
+    return false;
+  }).on("click", ".steps a", function(){
+    console.log($(this))
+    var step = parseInt($(this).attr("data-step"));
+    console.log(step)
+    goToStep(step);
+    
+    return false;
   })
   
 });

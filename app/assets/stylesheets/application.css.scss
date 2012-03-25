@@ -88,7 +88,6 @@ body{
   .fill {
     background-image: none;
     .container{
-      width: 100%;
       margin: 0 30px;
       .brand{
         text-align: left;
@@ -128,4 +127,10 @@ body{
 
 .dropdown-menu li > a.red:hover, .dropdown-menu .active > a.red, .dropdown-menu .active > a.red:hover{
   background-color: $red;
+}
+
+.shadow{
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
 }
