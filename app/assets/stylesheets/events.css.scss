@@ -20,6 +20,10 @@ form.event{
     width: 223px;
     margin-left: auto;
     margin-right: auto;
+    
+    &.error{
+      border: 1px solid $red;
+    }
   }
   
   
@@ -30,129 +34,11 @@ form.event{
     margin-right: auto;
   }
   
-  .payment{
-    display:none;
-    float: left;
-    text-align: center;
-    
-    p{
-      font-size: 120%;
-      line-height: 120%;
-      
-      a{
-        margin: 0 5px;
-      }
-    }
-    
-    .hero-unit{
-      margin: 0 0 40px 0;
-      padding: 0px;
-      font-size: 80%;
-      .hero_pad {
-        padding: 40px 10px;
-      }
-      
-      .buy{
-        padding: 6px 75px;
-        font-size: 150%;
-        line-height: 150%;
-        margin: 10px 0;
-      }
-      
-    }
-    
-    .pricing{
-      .span12{
-        margin-left: 0;
-      }
-      
-      h3{
-        cursor: pointer;
-        margin: 20px 0;
-        i{
-          margin-top: 3px;
-        }
-      }
-      
-      table{
-        display: none;
-        tbody tr td:nth-child(2){
-          opacity: 0.5;
-        }
-      }
-      
-    }
-  }
-  
-  @media all and (max-width: 480px){
-    #google_map {
-      height: 300px;
-    }
-    
-    .hero-unit h1{
-      font-size: 200%;
-    }
-  }
-  
 }
 
-.grey_border:not(.error){
-  border-color: #333;
-}
 
 .typeahead .dropdown-menu{
   max-width: none;
-}
-
-.date_incrementer{
-  display: none;
-  
-  background-color: #777;
-  font-size: 18px;
-  line-height: 18px;
-  color: #fff;
-  font-weight: bold;
-  float: left;
-  text-align: center;
-  position: relative;
-
-  
-  .arrow_wrap{
-  
-    
-    span, a{
-      display: block;
-      padding: 5px 7px;
-      float: left;
-    }
-    
-    a.plus, a.minus{
-      color: #fff;
-      
-      &:hover{
-        text-decoration: none;
-        background-color: #444;
-        cursor: pointer;
-      }
-      &:active{
-        background-color: #333;
-      }
-    }
-    
-  
-    &:after{
-      content: '';
-      display: inline-block;
-      width: 0;
-      height: 0;
-      border-width: 10px;
-      border-style: solid;
-      border-color: #777 transparent transparent;
-      position: absolute;
-      top: 26px;
-      left: 59px;
-    }
-  }
 }
 
 .wizard.container{
@@ -162,19 +48,29 @@ form.event{
     text-align: center;
     color: $med_blue;
     
+    h2, input{
+      color: $dark_blue;
+    }
+    
+    input.error{
+      color: $red;
+    }
     
     .light_blue{
       background-color: #EAF3FC;
       
       .invitation{
         padding: 100px 10px;
+      }
+      
+      .invitation, .map{
         input{
           font-weight: 200;
           background: transparent;
           border: none;
           text-align: center;
           width: 75%;
-          font-size: 225%;
+          font-size: 175%;
           height: 250%;
           box-shadow: none;
 
@@ -183,6 +79,14 @@ form.event{
           }
           &:-moz-placeholder {
             color: $dark_blue;
+          }
+        }
+        input.error{
+          &::-webkit-input-placeholder {
+            color: $red;
+          }
+          &:-moz-placeholder {
+            color: $red;
           }
         }
 
@@ -197,17 +101,16 @@ form.event{
       .map{
         #google_map {
           height: 299px;
-          opacity: 0.5;
+          opacity: 0.3;
         }
         
         #float_over_google_map{
-          position: relative;
-          left: 0;
-          top: 130px;
-
-          input{
-            position: absolute;
-            z-index: 10;
+          position: absolute;
+          z-index: 10;
+          margin-left: 0;
+          input, hr{
+            position: relative;
+            top: 130px;
             margin-left: auto;
             margin-right: auto;
           }
@@ -240,9 +143,30 @@ form.event{
             }
           }
         }
+        .valid_chars{
+          display: none;
+        }
+        
+        
+        .event_code {
+          width: 144px;
+          margin-left: auto;
+          margin-right: auto;
+          
+          .add-on{
+            font-size: 12px;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+          }
+          input{
+            float: left;
+          }
+        }
         
       }
       
+      .payment{
+        padding: 50px 0;
+      }
       
     }
 
@@ -269,10 +193,6 @@ form.event{
     
     .steps a.active, a.cancel, .steps a:hover{
       color: $med_blue;
-    }
-    
-    h2, input{
-      color: $dark_blue;
     }
     
   }

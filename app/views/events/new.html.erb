@@ -3,24 +3,25 @@
 
 <section class="wizard container">
   <div class="row">
-    <%= form_for @event, html: {class: "span6 offset3 box shadow event", data: {step: "1"}} do |f| %>
+    <%= form_for @event, html: {class: "span6 offset3 box shadow event", data: {step: "1", max_step: "1"}} do |f| %>
       <div class="top">
-        <h2>So, what's the occasion?</h2>
-        <p>Just name your event to get started. Try it for free, pay when you're ready.</p>
+        <h2 class="title">So, what's the occasion?</h2>
+        <p class="subtitle">Just name your event to get started. Try it for free, pay when you're ready.</p>
       </div>
       
       
       <div class="light_blue">
         
-        <div class="invitation active" data-step="1">
+        <div class="invitation hidden" data-step="1">
           <span class="invite bold upcase">An invitation to</span>
           <%= f.text_field :name, "placeholder" => "Name your special occasion", :class=>"large brand" %>
           <hr />
         </div>
         
         <div class="map hidden" data-step="2">
-          <div id="float_over_google_map">
-            <%= f.text_field :location, "placeholder" => "Find an address", :class=>"span4 grey_border", :tabindex => 1 %>
+          <div id="float_over_google_map" class="span6">
+            <%= f.text_field :location, "placeholder" => "Find an address", :class=>"span4 large brand", :tabindex => 1 %>
+            <hr />
             <%= f.hidden_field :latitude %>
             <%= f.hidden_field :longitude %>
           </div>
@@ -61,17 +62,41 @@
             </div>
           </div>
           
-          <div class="event_code">
+          <div class="event_code input-prepend">
+            <span class="add-on">@</span>
             <%= f.text_field :code, :class => "input-small", value: @event.code %>
           </div>
           
           <div class="explanation center ">
-              <p>
-                <i class="icon-map-marker"></i>
-                Use this code to snap photos at other locations
-              </p>
+            <p>
+              <i class="icon-map-marker"></i>
+              Use this code to snap photos at other locations
+            </p>
+          </div>
+          <div class="explanation center red valid_chars">
+            <p>
+              <i class="icon-exclamation-sign"></i>
+              Sorry, you can only use letters, numbers and dashes.
+            </p>
           </div>
           
+        </div>
+        
+        <div class="payment active" data-step="5">
+          <div class="check_me">
+            <p>
+              <%= check_box_tag "accept" %>&nbsp;&nbsp;I agree to the <%= link_to "Terms & Conditions", "#" %> and I've read the <%= link_to "Privacy Policy", "#" %>.</p>
+          </div>
+          <div class="">
+            <%= f.submit "Purchase now for $199", class: "btn btn-large btn-blue" %>
+          </div>
+          <h3>Or try it for free with a few limitations</h3>
+          <p>
+            Only the first 10 photos will be visible, and they'll be removed 30 days after they're shared.
+          </p>
+          <p>
+            You can purchase at any time to show all shared photos, and they'll never be removed.
+          </p>
         </div>
         
       </div>
@@ -87,9 +112,10 @@
           <%= link_to raw("&bull;"), "#", data: {step: 2} %>
           <%= link_to raw("&bull;"), "#", data: {step: 3} %>
           <%= link_to raw("&bull;"), "#", data: {step: 4} %>
+          <%= link_to raw("&bull;"), "#", data: {step: 5} %>
         </p>
         <p class="pull-right span2">
-          <%= link_to "Next", "", class: "btn btn-large green disabled next" %>
+          <%= link_to "Next", "", class: "btn btn-large btn-green disabled next" %>
         </p>
       </div>
     <% end %>
@@ -111,13 +137,3 @@
 		dateFormat: "@",
 	});
 <% end %>
-
-<div id="date_incrementer" class="date_incrementer">
-  <div class="arrow_wrap">
-    <span>Duration</span><a class="minus"><i class="icon-minus"></i></a><a class="plus"><i class="icon-plus"></i></a>
-  </div>
-</div>
-
-<script type="text/html" id="map_template">
-  
-</script>
