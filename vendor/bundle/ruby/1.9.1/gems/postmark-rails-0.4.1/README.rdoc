@@ -1,0 +1,150 @@
+= postmark-rails gem
+
+The Postmark Rails Gem is a drop-in plug-in for ActionMailer to send emails via Postmark, an email delivery service for web apps. The gem has been created for fast implementation and fully supports all of Postmark’s features.
+
+== Supported Rails Versions
+
+* lower than 2.3: could work, but not tested
+* 2.3 and higher
+* 3.0
+
+== Install
+
+    sudo gem install postmark-rails
+
+== Requirements
+
+* "postmark" gem version 0.8 and higher is required.
+* You will also need a Postmark account, server and sender signature set up to use it. To get an account, sign up at http://postmarkapp.com.
+
+== Configuring your Rails application
+
+=== Rails 3
+
+Add this to your Gemfile: (change version numbers if needed)
+
+    gem 'postmark-rails', '0.4.0'
+    
+Don't forget to run "bundle install" command every time you change something in the Gemfile.
+
+Add this to your config/application.rb:
+
+    config.action_mailer.delivery_method   = :postmark
+    config.action_mailer.postmark_settings = { :api_key => "your-api-key" }
+    
+=== Rails 2
+
+Add this to config/environment.rb:
+
+    Rails::Initializer.run do |config|
+    
+      ...
+    
+      config.gem 'postmark-rails'
+      require    'postmark-rails'
+      
+      config.action_mailer.postmark_api_key = "your-api-key"
+      config.action_mailer.delivery_method  = :postmark
+      
+      ...
+      
+    end
+
+For API details, refer to the developer documentation at http://developer.postmarkapp.com.
+
+== Tagging your deliveries
+
+You can use a tag to categorize outgoing messages and attach application-specific information. Tagging the different types of email that you send lets you review statistics and bounce reports separately. Read more at http://developer.postmarkapp.com/developer-build.html#message-format.
+
+=== Rails 3
+
+    class TestMailer < ActionMailer::Base
+    
+      def tagged_message
+        mail(
+          :subject => 'hello',
+          :to      => 'sheldon@bigbangtheory.com',
+          :from    => 'leonard@bigbangtheory.com',
+          :tag     => 'my-tag'
+        )
+      end
+      
+    end
+      
+=== Rails 2
+
+    class SuperMailer < ActionMailer::Base
+    
+      def email
+        from       "no-reply@example.com"
+        subject    "Some marvelous email message"
+        recipients "someone-fancy@example.com"
+        tag        "my-another-tag"
+      end
+    
+    end
+
+== Sending attachments
+
+You can also send file attachments with Postmark. Read more here: http://developer.postmarkapp.com/developer-build.html#attachments
+
+=== Rails 3
+
+    class TestMailer < ActionMailer::Base
+    
+      def message_with_attachment
+        mail(
+          :subject              => 'hello',
+          :to                   => 'sheldon@bigbangtheory.com',
+          :from                 => 'leonard@bigbangtheory.com',
+          :postmark_attachments => [File.open("/path/to/file")]
+        )
+      end
+      
+    end
+
+=== Rails 2
+
+    class SuperMailer < ActionMailer::Base
+    
+      def email
+        from                 "no-reply@example.com"
+        subject              "Some marvelous email message"
+        recipients           "someone-fancy@example.com"
+        postmark_attachments [File.open("/path/to/file")]
+      end
+    
+    end
+    
+You can pass either an array of File objects or a single object. Postmark will detect the file name automatically and send an attachment with the "application/octet-stream" content type. If you want more control on how attachments get formatted, you can pass Hash objects, which contain the custom settings such as file name or content-type. Here is an example:
+
+    #
+    # Don't forget to read your file and base64-encode it,
+    # before assigning it to "Content".
+    #
+    message.postmark_attachments = {
+      "Name"        => "fancy-file-name.jpg",
+      "Content"     => [ IO.read("path/to/file") ].pack("m"),
+      "ContentType" => "image/jpeg"
+    }
+
+== Note on Patches/Pull Requests
+
+* Fork the project.
+* Make your feature addition or bug fix.
+* Add tests for it. This is important so we don’t break it in a future version unintentionally.
+* Commit, do not mess with rakefile, version, or history.
+* Send a pull request. Bonus points for topic branches.
+
+== Authors & Contributors
+
+* Petyo Ivanov
+* Ilya Sabanin
+* Hristo Deshev
+* Randy Schmidt
+* Chris Williams
+* Nicolás Sanguinetti
+
+== Copyright
+
+Copyright © 2010 Wildbit LLC. See LICENSE for details.

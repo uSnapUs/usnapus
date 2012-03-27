@@ -1,0 +1,35 @@
+= Changelog
+
+== 0.9.6
+
+* Fixed exception when content-type wasn't explicitly specified.
+* Removed tmail from the list of dependencies.
+
+== 0.9.5
+
+* Fixed a problem of HTML content detection when using Mail gem.
+
+== 0.9.4
+
+* Fixed bug that caused full name to be dropped from From address.
+
+== 0.9.3
+
+* Removed all "try" calls from the code. It's not always available and not essential anyway.
+
+== 0.9.2
+
+* Fixed "Illegal email address ']'" bug on Ruby 1.9
+
+== 0.9.1
+
+* Fixed TypeError when calling Bounce.all.
+* Fixed NoMethodError when trying to read bounce info.
+
+== 0.9.0
+
+* Added support for attachments.
+
+== 0.8.0
+
+* Added support for Rails 3.

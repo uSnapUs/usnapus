@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      <% if @title %>
+        <%= "#{@title} | uSnap.us - See your wedding through their eyes."%>
+      <% else %>
+      uSnap.us - See your wedding through their eyes. Wedding and event photos, taken by your guests and put online for you to see
+      <% end %>
+    </title>
+    
+    <meta name="description" content="See your wedding through their eyes. Your guests' photos are delivered online instantly, at your fingertips whenever you want. Watch a live steam as your event unfolds. Perfect for wedding photos.">
+    <meta name="author" content="uSnap.us">
+    <meta name="keywords" content="<%= @title.split(" ").join(", ") if @title %>, wedding, photograph, photos, events, wedding ideas, disposable cameras, unique wedding">
+
+
+    <meta property="og:title" content="uSnap.us" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://usnap.us" />
+    <meta property="og:image" content="http://usnap.us<%= path_to_image('explain-grid.jpg') %>" />
+    <meta property="og:site_name" content="uSnap.Us" />
+    <meta property="fb:admins" content="689651850" />
+    <meta property="og:description"
+              content="See your wedding through their eyes. Your guests' photos are delivered online instantly, at your fingertips whenever you want. Watch a live steam as your event unfolds. Perfect for wedding photos."/>
+
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <%= stylesheet_link_tag    "application" %>
+    <%= content_for(:head) %>
+    
+    <%= csrf_meta_tags %>
+    
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    
+   <!-- Le fav and touch icons -->
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-retina.png" />
+  </head>
+
+  <body class="<%= "home" if request.path.eql? "/" %>">
+    
+   
+      
+    <%= yield %>
+    
+    
+    <%= airbrake_javascript_notifier %>
+    <%= content_for(:pre_scripts) %>
+    <%= javascript_include_tag "application" %>
+    <%= content_for(:post_scripts) %>
+    
+    <script type="text/javascript">
+    	$(document).ready(function(){
+        <%= content_for(:jquery) %>
+        
+        <% if flash[:notice] %>
+          showAlert("info", "", "<%= flash[:notice] %>")
+        <% end %>
+        <% if err = (flash[:alert] || flash[:error]) %>
+          showAlert("error", "Oops!", "<%= err %>")
+        <% end %>
+        
+      });
+    </script>
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-28870030-1']);
+      _gaq.push(['_setDomainName', 'usnap.us']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+    <script type="text/html" id="alert_template">
+      <div class="span8 offset2 alert alert-{{alert_type}}">
+        <a class="close">×</a>
+        <strong>{{alert_heading}}</strong>  {{{alert_message}}}
+      </div>
+    </script>
+    
+    <script type="text/javascript" src="http://use.typekit.com/avj2ysl.js"></script>     
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  </body>
+  
+</html>
