@@ -25,6 +25,8 @@ Usnapus::Application.routes.draw do
   
   
   #Keep at the end
+  get "/terms_of_use", to: "home#terms_of_use"
+  get "/privacy_policy", to: "home#privacy_policy"
   get '*code', :to=> "photos#index"
   
 end
