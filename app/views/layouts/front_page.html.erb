@@ -45,9 +45,10 @@
 
   <body class="<%= "home" if request.path.eql? "/" %>">
     
-   
+   <div class="container">
       
     <%= yield %>
+  </div>
     
     
     <%= airbrake_javascript_notifier %>
