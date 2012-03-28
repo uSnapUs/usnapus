@@ -12,7 +12,7 @@
       
       <div class="light_blue">
         
-        <div class="invitation hidden" data-step="1">
+        <div class="invitation active" data-step="1">
           <span class="invite bold upcase">An invitation to</span>
           <%= f.text_field :name, "placeholder" => "Name your special occasion", :class=>"large brand" %>
           <hr />
@@ -82,7 +82,7 @@
           
         </div>
         
-        <div class="payment active" data-step="5">
+        <div class="payment hidden" data-step="5">
           <div class="check_me">
             <p>
               <%= check_box_tag "accept" %>&nbsp;&nbsp;I agree to the <%= link_to "Terms & Conditions", "#" %> and I've read the <%= link_to "Privacy Policy", "#" %>.</p>
