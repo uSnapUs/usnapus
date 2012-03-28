@@ -15,7 +15,8 @@ body.home{
 .panel{
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size:18px;
-  height:800px;
+      margin-bottom:80px;
+
 }
 .head_menu{
 	height:20;
@@ -24,7 +25,6 @@ body.home{
 	font-size:14px;
 }
 #panel_1{
-  
 	color:white;
   background-image:url('panel1_bg.jpg');
   background-color:#13D289;
@@ -37,6 +37,7 @@ body.home{
    font-size:22px;
   }
   .items{
+     margin-bottom:80px;
   align:center;
   	margin-top:100px;
   	.dot{
@@ -56,11 +57,12 @@ body.home{
   }
 }
 #panel_2,#panel_3{
-	padding-top:80px;
+	padding-top:40px;
 	.points{
-	padding-top:100px;
+	padding-top:20px;
 	.header{
 	font-size:34px;
+  line-height:38px;
 	color:#525252;
 		font-family: "bello-pro", arial, sans-serif;
 	}
@@ -71,7 +73,7 @@ body.home{
 	}
 	.description{
 	margin-top:20px;
-	margin-bottom:55px;
+	margin-bottom:80px;
 	}
 	}
 }
