@@ -6,6 +6,7 @@
 
 body.home{
   text-align: center;
+  background:#FBFCFF;
   
   p, input{
     font-size: 16px;
@@ -16,6 +17,8 @@ body.home{
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size:18px;
       margin-bottom:80px;
+      border-bottom:1px solid #D7E4F3;
+padding-bottom:50px;
 
 }
 .head_menu{
@@ -23,6 +26,7 @@ body.home{
 	margin-top:10px;
 	margin-bottom:200px;
 	font-size:14px;
+
 }
 #panel_1{
 	color:white;
@@ -38,10 +42,12 @@ body.home{
   }
   .items{
      margin-bottom:80px;
+
   align:center;
   	margin-top:100px;
   	.dot{
-  	height:50px;
+  	margin-top:20px;
+    margin-bottom:25px;
   	}
   	.item_title{
   	font-size:34px;
@@ -76,4 +82,20 @@ body.home{
 	margin-bottom:80px;
 	}
 	}
+}
+#panel_4{
+  .tagline{
+  margin-bottom:30px;
+
+  }
+  .line{
+  margin-bottom:5px;
+  }
+  .get_started{
+  margin-top:20px;
+  a{
+  color:#85a7bb;
+  font-weight:bold;
+  }
+  }
 }
