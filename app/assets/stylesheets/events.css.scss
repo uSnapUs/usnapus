@@ -198,3 +198,12 @@ form.event{
   }
 }
 
+.lightbox{
+  background-color: #fff;
+  position: absolute;
+  z-index: 10;
+  
+  iframe{
+    margin: 20px;
+  }
+}
