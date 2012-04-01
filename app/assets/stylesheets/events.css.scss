@@ -48,7 +48,7 @@ form.event{
     text-align: center;
     color: $med_blue;
     
-    h2, input{
+    h2, input[type=text]{
       color: $dark_blue;
     }
     
@@ -166,6 +166,22 @@ form.event{
       
       .payment{
         padding: 50px 0;
+        input[type=submit]{
+          padding: 10px 25px;
+          margin: 10px 0;
+          font-weight: 800;
+          font-size: 110%;
+        }
+        h3{
+          color: $dark_blue;
+          margin: 10px 0;
+        }
+        p{
+          margin: 0 40px;
+        }
+        label{
+          display: inline;
+        }
       }
       
     }
@@ -180,6 +196,7 @@ form.event{
       
       p {
         margin-bottom: 0;
+        padding: 10px 0;
       }
       
       
@@ -193,6 +210,20 @@ form.event{
     
     .steps a.active, a.cancel, .steps a:hover{
       color: $med_blue;
+    }
+    
+    p.pull-right{
+      padding: 0;
+    }
+    
+    .next{
+      min-width: 70px;
+      font-weight: 800;
+      color: #fff;
+    }
+    
+    .next:hover{
+      
     }
     
   }

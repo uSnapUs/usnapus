@@ -85,10 +85,11 @@
         <div class="payment hidden" data-step="5">
           <div class="check_me">
             <p>
-              <%= check_box_tag "accept" %>&nbsp;&nbsp;I agree to the <%= link_to "Terms & Conditions", "#" %> and I've read the <%= link_to "Privacy Policy", "#" %>.</p>
+              <%= check_box_tag "accept" %>
+              <label for="accept">&nbsp;&nbsp;I agree to the <%= link_to "Terms & Conditions", "#" %> and I've read the <%= link_to "Privacy Policy", "#" %>.</label></p>
           </div>
           <div class="">
-            <%= f.submit "Purchase now for $199", class: "btn btn-large btn-blue" %>
+            <%= f.submit "Purchase now for $199", class: "btn btn-large btn-green round" %>
           </div>
           <h3>Or try it for free with a few limitations</h3>
           <p>
@@ -115,7 +116,8 @@
           <%= link_to raw("&bull;"), "#", data: {step: 5} %>
         </p>
         <p class="pull-right span2">
-          <%= link_to "Next", "", class: "btn btn-large btn-green disabled next" %>
+          <%= link_to "Next", "", class: "disabled btn btn-large btn-blue round next" %>
+          <%= f.submit "Try it for free", class: "btn btn-large btn-blue round hidden free" %>
         </p>
       </div>
     <% end %>
@@ -137,7 +139,3 @@
 		dateFormat: "@",
 	});
 <% end %>
-
-<div id="terms_of_use" class="lightbox span12 shadow">
-  <iframe src="<%= terms_of_use_path %>" class="span12"></iframe>
-</div>

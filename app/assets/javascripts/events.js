@@ -158,6 +158,12 @@ $(document).ready(function() {
       if(step == 2){
         google.maps.event.trigger(map, 'resize');
       }
+      else if(step == 5){
+        $(".next").addClass("hidden");
+        $("input[type=submit].free").removeClass("hidden");
+      }
+      
+      setNextButton();
     }
     
   }
@@ -207,8 +213,12 @@ $(document).ready(function() {
       goToStep(next_step);
     }
     return false;
-  });
-  
+  }).on("submit", function(){
+    if( $("#accept").length && ($("#accept").attr("checked") != "checked") ){
+      $("label[for=accept]").addClass("red");
+      return false;
+    }
+  });  
   
   $("form.event .btn-group.privacy").on("click", "a", function(){
     var val = $(this).attr("data-val");
@@ -259,5 +269,20 @@ $(document).ready(function() {
     if(checkEventCode())
       $("#event_code_tip").html($("#event_code").val());
   });
+  
+  //Watch event inputs and enable next button
+  form.on("keyup", "input", function(){
+    setNextButton()
+  });
+  
+  function setNextButton(){
+    if($(".next").length){
+      if($("input:visible").length && !$("input:visible").val().length){
+        $(".next").removeClass("btn-green").addClass(".btn-blue .disabled");
+      }else{
+        $(".next").addClass("btn-green").removeClass(".btn-blue .disabled");
+      }
+    }
+  }
   
 });
