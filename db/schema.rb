@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120316080330) do
+ActiveRecord::Schema.define(:version => 20120401100058) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "user_id"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20120316080330) do
     t.boolean  "is_public",  :default => true
     t.string   "s3_token"
     t.string   "location"
+    t.boolean  "free"
   end
 
   add_index "events", ["code"], :name => "index_events_on_code", :unique => true

@@ -213,12 +213,14 @@ $(document).ready(function() {
       goToStep(next_step);
     }
     return false;
+  }).on("click", "input.free", function(){
+    $("#event_free").val(1);
   }).on("submit", function(){
     if( $("#accept").length && ($("#accept").attr("checked") != "checked") ){
       $("label[for=accept]").addClass("red");
       return false;
     }
-  });  
+  });
   
   $("form.event .btn-group.privacy").on("click", "a", function(){
     var val = $(this).attr("data-val");
