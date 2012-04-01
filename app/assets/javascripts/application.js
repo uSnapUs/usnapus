@@ -16,6 +16,7 @@
 //= require signups
 
 $(document).ready(function() {
+  $('input, textarea').placeholder();
   window.showAlert = function(alert_type, alert_heading, alert_message){
     var html = Mustache.to_html($("#alert_template").html(), {
       "alert_type": alert_type,

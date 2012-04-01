@@ -111,7 +111,7 @@ $(document).ready(function() {
   //The live photo cast
   $("#show_latest_photos").on("click", function(){
     if($(".photo").length){
-      prepareFullscreenImage( $(".photo a:first img").attr("data-"+imageTypeForScreen()+"-src") );
+      prepareFullscreenImage( $(".photo a:eq(1) img").attr("data-"+imageTypeForScreen()+"-src") );
     }else{
       showAlert("info", "Sorry,", "you don't have any photos to show!");
     }
