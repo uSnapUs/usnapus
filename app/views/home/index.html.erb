@@ -1,146 +1,174 @@
-<div class="row panel" id="panel_1">
-  <div class="head_menu row">
-        <% if current_user %>
-            <div class="settings pull-right">
-              <div class="btn-group">
-                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                  &nbsp;&nbsp;<i class="icon-cog"></i>&nbsp;&nbsp;
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <%= content_for(:dropdown_options) %>
-                  <% if events = current_user.events %>
-                    <% events.each do |event| %>
-                      <% unless request.path.eql? event_photos_path(event).to_s %>
-                        <li>
-                          <%= link_to event.name, event_photos_path(event) %>
-                        </li>
-                      <% end %>
-                    <% end %>
-                    <li class="divider"></li>
-                  <% end %>
-                  <li>
-                    <%= link_to "My Account", edit_user_registration_path %>
-                  </li>
-                  <li>
-                    <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          <% else %>
-  	<div class="offset10 span1">
+ <div class="row panel" id="panel_1">
+    <div class="head_menu row">
+      <% if current_user %>
 
-  <%= link_to('Login', new_user_session_path)  %> 
-  		
-  	</div>
-    <%end%>
-  </div>
-  <div class="title row">
-    <div class="title brand">
-      <%= image_tag "logo-header.png", :title => "uSnap.us" %>
+      <div class="settings pull-right">
+        <div class="btn-group">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href=
+          "#">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+
+          <ul class="dropdown-menu">
+            <%= content_for(:dropdown_options) %><% if events = current_user.events %><% events.each do |event| %><% unless request.path.eql? event_photos_path(event).to_s %>
+
+            <li>
+            <%= link_to event.name, event_photos_path(event) %></li><% end %><% end %><% end %>
+
+            <li><%= link_to "My Account", edit_user_registration_path %></li>
+
+            <li>
+            <%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+          </ul>
+        </div>
+      </div><% else %>
+
+      <div class="offset10 span1">
+        <%= link_to('Login', new_user_session_path)  %>
+      </div><%end%>
+    </div>
+
+    <div class="title row">
+      <div class="title brand">
+        <%= image_tag "logo-header.png", :title => "uSnap.us" %>
+      </div>
+    </div>
+
+    <div class="row subtitle">
+      Let your guests capture your wedding, party or conference &amp; see it unfold live.
+    </div>
+
+    <div class="row items">
+      <div class="span4">
+        <div class="row dot">
+          <%= image_tag "item_dot.png", :title => "create an event" %>
+        </div>
+
+        <div class="row item_title">
+          Create an event
+        </div>
+
+        <div class="row item_description">
+          Sign up to add your event,<br>
+          invite guests to get the App.
+        </div>
+      </div>
+
+      <div class="span4">
+        <div class="row dot">
+          <%= image_tag "item_dot.png", :title => "guests snap pics" %>
+        </div>
+
+        <div class="row item_title">
+          Guests snap pics
+        </div>
+
+        <div class="row item_description">
+          Their photos are instantly<br>
+          shared with you.
+        </div>
+      </div>
+
+      <div class="span4">
+        <div class="row dot">
+          <%= image_tag "item_dot.png", :title => "see it unfold live" %>
+        </div>
+
+        <div class="row item_title">
+          See it unfold live
+        </div>
+
+        <div class="row item_description">
+          Watch photos appear in real time,<br>
+          revisit them whenever you like.
+        </div>
+      </div>
     </div>
   </div>
-  <div class="row subtitle">
-  	Let your guests capture your wedding, party or conference & see it unfold live.
+  <div class="row signup">
+    <div class="get_started row">
+      Get started
+    </div>
+    <div class="row fields">
+      <form action="/users" method="post" id="create_form">
+        <input type="text" name="user[name]" placeholder="Your name"></input>
+        <input type="text" name="user[email]" placeholder="Your email address"></input>   
+        <input type="password" name="user[password]" placeholder="Create a password"></input>
+        <div>
+          <a href="#" id="submit_create">
+            <%= image_tag "create_event_button.png", :title => "Create an event" %>
+          </a>
+        </div>
+      </form>
+    </div>
   </div>
-  <div class="row items">
-  <div class="span4">
-  	<div class="row dot">
-      <%= image_tag "item_dot.png", :title => "create an event" %>
-  	</div>
-  	<div class="row item_title">
-  		Create an event
-  	</div>
-  	<div class="row item_description">
-  		Sign up to add your event,<br/>
-  		invite guests to get the App. 
-  	</div>
+
+  <div class="row panel" id="panel_2">
+    <div class="span6">
+      <%= image_tag "phones.png", :title => "uSnap.us app" %>
+    </div>
+
+    <div class="span6 points">
+      <div class="row header">
+        Pics from all your guests
+      </div>
+
+      <div class="row description">
+        Using the free app, pics snapped by your guests are instantly shared with you the
+        moment theyre taken.
+      </div>
+
+      <div class="row header">
+        Just point and shoot
+      </div>
+
+      <div class="row description">
+        Guests don&acirc;&euro;&trade;t need to create accounts or login, their phone
+        simply uses its location to place them at your event. Just open the app and start
+        snapping.
+      </div>
+    </div>
   </div>
-  <div class="span4">
-  		<div class="row dot">
-           <%= image_tag "item_dot.png", :title => "guests snap pics" %>
-  	</div>
-  	<div class="row item_title">
-  		Guests snap pics
-  	</div>
-  	<div class="row item_description">
-  		Their photos are instantly<br/>
-  		shared with you.
-  	</div>
+
+  <div class="row panel" id="panel_3">
+    <div class="span6 points">
+      <div class="row header">
+        Share it live
+      </div>
+
+      <div class="row description">
+        Share the live stream with family and friends that can&acirc;&euro;&trade;t make
+        it on the day, or play a live slideshow at the event.
+      </div>
+
+      <div class="row header">
+        Keep the memories forever
+      </div>
+
+      <div class="row description">
+        Revisit everyones pics after the day, share them with others. Publish them to
+        Facebook, create prints, make a book - it&acirc;&euro;&trade;s simple when
+        everyone&acirc;&euro;&trade;s pics are together.
+      </div>
+    </div>
+
+    <div class="span6">
+      <%= image_tag "gallery.png", :title => "uSnap.us app" %>
+    </div>
   </div>
-  <div class="span4">
-  		<div class="row dot">
-           <%= image_tag "item_dot.png", :title => "see it unfold live" %>
-  	</div>
-  	<div class="row item_title">
-  		See it unfold live
-  	</div>
-  	<div class="row item_description">
-  		Watch photos appear in real time,<br/>
-  		revisit them whenever you like.
-  	</div>
-  </div>
-</div>
-</div> 
-<div class="row panel" id="panel_2">
-	<div class="span6">
-		<%= image_tag "phones.png", :title => "uSnap.us app" %>
-	</div>
-	<div class="span6 points">
-		<div class="row header">
-			Pics from all your guests
-		</div>
-		<div class="row description">
-			Using the free app, pics snapped by your guests are instantly shared with you the moment theyre taken.
-		</div>
-		<div class="row header">
-			Just point and shoot
-		</div>
-		<div class="row description">
-			Guests don’t need to create accounts or login, their phone simply uses its location to place them at your event. Just open the app and start snapping.
-		</div>
 
-	</div>
-	</div>
-
-
-<div class="row panel" id="panel_3">
-	
-	<div class="span6 points">
-		<div class="row header">
-			Share it live
-		</div>
-		<div class="row description">
-			Share the live stream with family and friends that can’t make it on the day, or play a live slideshow at the event.
-		</div>
-		<div class="row header">
-			Keep the memories forever
-		</div>
-		<div class="row description">
-			Revisit everyones pics after the day, share them with others. Publish them to Facebook, create prints, make a book - it’s simple when everyone’s pics are together.
-		</div>
-
-	</div>
-	<div class="span6">
-		<%= image_tag "gallery.png", :title => "uSnap.us app" %>
-	</div>
-	</div>
-<div class="row panel" id="panel_4">
-  <div class="row tagline">
+  <div class="row panel" id="panel_4">
+    <div class="row tagline">
       <%= image_tag "tag_line.png", :title => "uSnap.us app" %>
     </div>
+
     <div class="row line">
       Unlimited guests
     </div>
-     <div class="row line">
+
+    <div class="row line">
       Photo's saved forever
     </div>
-    <div class="row get_started">
-      <a href="#">
-      Get started for free
-    </a>
-    </div>
 
-</div>
-  
+    <div class="row get_started">
+      <a href="#">Get started for free</a>
+    </div>
+  </div>
