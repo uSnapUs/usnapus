@@ -49,8 +49,14 @@ class EventsController < ApplicationController
     
   
   def create
-    @event = Event.new(params[:event])
+    @event = Event.new(params[:event].except(:free))
+    
     set_event_time(@event)
+    
+    if params[:event] && (free = params[:event][:free])
+      @event.free = free
+    end
+    
     if @event.save
       @event.attendees.create! do |at|
         at.user = current_user
@@ -73,9 +79,8 @@ class EventsController < ApplicationController
     end
     
     def set_event_time(event)
-      #Time comes through as ms since epoch
-      event.starts = Time.at(params[:event][:starts].to_i/1000)
-      event.ends = Time.at(params[:event][:ends].to_i/1000)
+      event.starts = Time.at(params[:event][:starts].to_i/1000).beginning_of_day + 6.hours
+      event.ends = event.starts + 1.day
     end
     
 end
