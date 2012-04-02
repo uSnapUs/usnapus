@@ -23,7 +23,7 @@
       <p class="pretty_time" data-utc-starts="<%= @event.starts %>" data-utc-ends="<%= @event.ends %>">
       </p>
       <div class="buttons upcase bold">
-          <%= link_to fullscreen_event_photos_path(@event), id: "goto_slideshow" do %>
+          <%= link_to "#{event_code_path @event}/fullscreen", id: "goto_slideshow" do %>
             &#9658; Slideshow
           <% end %>
           <%= link_to "#", :id=>"show_latest_photos" do %>
@@ -37,7 +37,7 @@
 
 <section class="container gallery">
   <div class="row">
-    <div id="photo_gallery" data-json-url="<%= "/#{@event.code}.json" %>">
+    <div id="photo_gallery" data-json-url="<%= event_code_path @event, suffix: ".json" %>">
     </div>
   </div>
 </section>

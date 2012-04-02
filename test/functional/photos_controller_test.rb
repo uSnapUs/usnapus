@@ -51,6 +51,8 @@ class PhotosControllerTest < ActionController::TestCase
   test "can watch slideshow" do
     get :fullscreen, event_id: @event.to_param
     assert_response :success
+    get :fullscreen, code: @event.code
+    assert_response :success
   end
   
   test "photos are returned most recent first" do
@@ -181,6 +183,11 @@ class NotSignedInPhotosControllerTest < ActionController::TestCase
   test "can get public event by code" do
     @event.update_attributes is_public: true
     get :index, code: @event.code
+    assert_response :success
+  end
+  
+  test "can watch slideshow" do
+    get :fullscreen, code: @event.code
     assert_response :success
   end
   

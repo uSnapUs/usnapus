@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   caches_page :index
   
   def index
+    @user = User.new
   end
   
   def terms_of_use

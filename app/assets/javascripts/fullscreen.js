@@ -49,8 +49,10 @@
     		instance.show(0);
         // onBeforeHide
   			instance.addEventHandler(PhotoSwipe.EventTypes.onBeforeHide, function(e){
-  				window.location = event_url;
+  				window.location = event_url.replace(".json", "");
   			});
+      }else{
+        $("#no_photos").fadeIn();
       }
   		
     });
