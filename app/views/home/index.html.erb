@@ -1,10 +1,9 @@
 <% @topbar_class = "hidden" %>
 
 <div class="photo_back">
-  <div class="container center">
-    
+  <div class="container nav">
     <div class="row">
-      <div class="offset10 span1">
+      <div class="span12">
         <% if current_user %>
           Logged In
         <% else %>
@@ -12,9 +11,12 @@
         <% end %>
       </div>
     </div>
+  </div>
+  
+  <div class="container center shadow">
     
     <div class="row">
-      <h1 class="span12 logo brand shadow">uSnap.us</h1>
+      <h1 class="span12 logo brand">uSnap.us</h1>
     </div>
     
     <div class="row">
@@ -24,12 +26,14 @@
     </div>
     
     <div class="row signup">
-      <%= form_for @user, url: registration_path(@user), html: {class: "span12 form-horizontal"} do |f| %>
-        <%= f.text_field :name, placeholder: "Your Name" %>
-        <%= f.email_field :email, placeholder: "Your Email" %>
-        <%= f.password_field :password, placeholder: "Your Password" %>
-        <%= f.submit "Create your event now", class: "btn btn-green" %>
-      <% end %>
+      <div class="span12">
+        <%= form_for @user, url: registration_path(@user), html: {class: "background small round form-horizontal"} do |f| %>
+          <%= f.text_field :name, placeholder: "Your Name" %>
+          <%= f.email_field :email, placeholder: "Your Email" %>
+          <%= f.password_field :password, placeholder: "Your Password" %>
+          <%= f.submit "Create your event now", class: "btn btn-green" %>
+        <% end %>
+      </div>
     </div>
 
     <div class="row items">
@@ -38,7 +42,7 @@
           <%= image_tag "item_dot.png", :title => "create an event" %>
         </div>
 
-        <h2 class="brand shadow">
+        <h2 class="brand">
           Create an event
         </h2>
 
@@ -53,7 +57,7 @@
           <%= image_tag "item_dot.png", :title => "guests snap pics" %>
         </div>
 
-        <h2 class="brand shadow">
+        <h2 class="brand">
           Guests snap pics
         </h2>
 
@@ -68,7 +72,7 @@
           <%= image_tag "item_dot.png", :title => "see it unfold live" %>
         </div>
 
-        <h2 class="brand shadow">
+        <h2 class="brand">
           See it unfold live
         </h2>
 
