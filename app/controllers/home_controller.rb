@@ -3,7 +3,7 @@ class HomeController < ApplicationController
   caches_page :index
   
   def index
-  	render :layout=>'front_page'
+    @user = User.new
   end
   
   def geocode_search

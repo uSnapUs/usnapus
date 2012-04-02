@@ -4,145 +4,92 @@
 @import "configuration";
 
 
-body.home{
-    text-align: center;
-    background:#FBFCFF;
+body.home {
+  background: #FBFCFF;
+}
+
+.photo_back {
+  color: white;
+  background-image: url('panel1_bg.jpg');
+  background-color: #0BD9CC;
+  background-position: center top;
+  background-repeat: no-repeat;
+  margin-bottom: 80px;
+  
+  .logo{
+    font-size: 80px;
+    margin: 100px 0;
+  }
+  
+  .brand{
+    color: #fff;
+    font-weight: normal;
+  }
+  
+  p.subtitle {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 120%;
+  }
+  
+  .items {
+    margin-bottom: 60px;
     
-    p, input{
-        font-size: 16px;
+    h2 {
+      font-size: 34px;
     }
+    
+    p{
+      font-weight: 400;
+      margin-top: 30px;
+      font-size: 20px;
+      line-height: 25px;
+    }
+    
+    .dot {
+      margin-top: 20px;
+      margin-bottom: 25px;
+    }
+
+  }
+  
+  .signup {
+    margin: 60px 0;
+    input:not([type='submit']){
+      margin: 5px 0;
+      font-size: 20px;
+      line-height: 20px;
+      padding: 6px;
+    }
+  }
+
 }
 
 .panel{
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size:18px;
-    margin-bottom:80px;
-    border-bottom:1px solid #D7E4F3;
-    padding-bottom:50px;
-    
+  h2{
+    color: $dark_blue;
+    font-size: 200%;
+    font-weight: normal;
+    margin: 20px 0 20px 0;
+    @media all and (max-width: 480px){
+      text-align: center;
+    }
+    @media all and (min-width: 480px){
+      margin-top: 90px;
+    }
+  }
+  p{
+    font-size: 18px;
+    line-height: 120%;
+    color: $light_blue;
+    margin: 20px 0;
+  }
 }
-.head_menu{
-    height:20;
-    margin-top:10px;
-    margin-bottom:200px;
-    font-size:14px;
-    a{
-        color:#FFF;
-        font-size:14px;
-        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-        font-weight:bold;
-    }
-    
-}
-#panel_1{
-    color:white;
-    background-image:url('panel1_bg.jpg');
-    background-color:#13D289;
-    background-position:center;
-    background-repeat:no-repeat;
-    margin-bottom:0px;
-    .title div.title{
-        font-size:76px;
-    }
-    .subtitle{
-        font-size:22px;
-    }
-    .items{
-        margin-bottom:80px;
-        
-        align:center;
-        margin-top:100px;
-        .dot{
-            margin-top:20px;
-            margin-bottom:25px;
-        }
-        .item_title{
-            font-size:34px;
-            font-family: "bello-pro", arial, sans-serif;
-            font-weight:normal;
-            -webkit-text-shadow:0px 1px 1px rgba(00, 00, 00, 0.3);
-            text-shadow: 0px 1px 1px rgba(00, 00, 00, 0.3);
-        }
-        .item_description{
-            margin-top:30px;
-            font-size:18px;
-        }
-    }
-    
-}
-.signup
-{
-    background:#eaf3fc;
-    height:200px;
-    .get_started{
-        margin-top:20px;
-        margin-bottom:20px;
-        color:#000;
-        font-size:34px;
-        font-family: "bello-pro", arial, sans-serif;
-    }
-    
-    .fields{
-      vertical-align:middle;
-      input{
-       top:-20px;
-      }
-     
-      img{
-        top:20px;
-       
-      }
-    }
-}
-#panel_2,#panel_3{
-    padding-top:40px;
-    .points{
-        padding-top:20px;
-        .header{
-            font-size:34px;
-            line-height:38px;
-            color:#525252;
-            font-family: "bello-pro", arial, sans-serif;
-        }
-        .row{
-            padding-left:80px;
-            padding-right:80px;
-            text-align:left;
-        }
-        .description{
-            margin-top:20px;
-            margin-bottom:80px;
-        }
-    }
-}
-#panel_4{
-    margin-bottom:5px;
-    .tagline{
-        margin-bottom:30px;
-        
-    }
-    .line{
-        margin-bottom:5px;
-    }
-    .get_started{
-        margin-top:20px;
-        
-        a{
-            color:#85a7bb;
-            font-weight:bold;
-        }
-    }
-    
-    
-}
-.footer{
-    margin-bottom:10px;
-    .footer_link{
-        margin-right:10px;
-        margin-left:10px;
-        color:#000;
-        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-        font-size:18px;
-        font-weight:normal;
-    }
+
+.footer {
+  margin-bottom: 10px;
+  font-size: 14px;
+  a{
+    margin: 0 20px;
+  }
 }
