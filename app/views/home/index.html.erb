@@ -1,14 +1,31 @@
 <% @topbar_class = "hidden" %>
 
 <div class="photo_back">
-  <div class="container nav">
-    <div class="row">
+  
+  <div class="container">
+    <div class="row navbar">
       <div class="span12">
-        <% if current_user %>
-          Logged In
-        <% else %>
-          <%= link_to('Login', new_user_session_path)  %>
-        <% end %>
+        <ul class="nav pull-right">
+          <% if current_user %>
+            <li>
+              <% if event = current_user.events.first %>
+                <%= link_to event.name, event  %>
+              <% else %>
+                <%= link_to "Create Event", new_event_path  %>
+              <% end %>
+            <li>
+            <li>
+              <%= link_to "My Account", edit_user_registration_path %>
+            </li>
+            <li>
+              <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+            </li>
+          <% else %>
+            <li>
+              <%= link_to('Login', new_user_session_path)  %>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>

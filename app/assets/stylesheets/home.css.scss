@@ -16,9 +16,32 @@ body.home {
   background-repeat: no-repeat;
   margin-bottom: 40px;
   
+  .nav{
+    li > a{
+      text-align: center;
+      font-weight: 600;
+      color: $med_blue;
+      padding: 10px 15px;
+      background-color: #fff;
+      background-color: rgba(255,255,255,0.8);
+      float: right;
+      text-shadow: none;
+      margin: 0 10px;
+      
+      -webkit-border-radius: 0 0 3px 3px;
+         -moz-border-radius: 0 0 3px 3px;
+              border-radius: 0 0 3px 3px;
+      
+      &:hover{
+        background-color: #aaa;
+        background-color: rgba(255,255,255,0.2);
+      }
+    }
+  }
+  
   .logo{
     font-size: 80px;
-    margin: 100px 0;
+    margin: 80px 0 100px 0;
   }
   
   .brand{
