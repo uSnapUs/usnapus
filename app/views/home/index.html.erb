@@ -9,7 +9,7 @@
           <% if current_user %>
             <li>
               <% if event = current_user.events.first %>
-                <%= link_to event.name, event  %>
+                <%= link_to event.name, event_code_path(event)  %>
               <% else %>
                 <%= link_to "Create Event", new_event_path  %>
               <% end %>
@@ -29,6 +29,12 @@
       </div>
     </div>
   </div>
+  
+  
+  <section class="container">
+    <div class="row" id="alert-area">
+    </div>
+  </section>
   
   <div class="container center shadow">
     
@@ -168,8 +174,8 @@
 
   <div class="row footer">
     <p class="span12 center">
-      <%= link_to "Terms of Use", "#" %>
-      <%= link_to "Privacy Policy", "#" %>
+      <%= link_to "Terms of Use", terms_of_use_path %>
+      <%= link_to "Privacy Policy", privacy_policy_path %>
     </p>
   </div>
 </div>

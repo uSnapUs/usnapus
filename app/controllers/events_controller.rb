@@ -63,7 +63,7 @@ class EventsController < ApplicationController
         at.is_admin = true
       end
       
-      flash[:notice] = "Here's your event! Start snapping :)"
+      flash[:notice] = "Now download the app! Use the code '#{@event.code}' to start snapping :)"
       redirect_to event_photos_path @event
     else
       flash[:error] = "Please fix the errors below"

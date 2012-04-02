@@ -3,7 +3,7 @@
 
 <section class="wizard container">
   <div class="row">
-    <%= form_for @event, html: {class: "span6 offset3 box shadow event", data: {step: "1", max_step: "1"}} do |f| %>
+    <%= form_for @event, html: {class: "span6 offset3 box box_shadow event", data: {step: "1", max_step: "1"}} do |f| %>
       <div class="top">
         <h2 class="title">So, what's the occasion?</h2>
         <p class="subtitle">Just name your event to get started. Try it for free, pay when you're ready.</p>
@@ -86,7 +86,7 @@
           <div class="check_me">
             <p>
               <%= check_box_tag "accept" %>
-              <label for="accept">&nbsp;&nbsp;I agree to the <%= link_to "Terms & Conditions", "#" %> and I've read the <%= link_to "Privacy Policy", "#" %>.</label></p>
+              <label for="accept">&nbsp;&nbsp;I agree to the <%= link_to "Terms of Use", terms_of_use_path, target: "blank" %> and I've read the <%= link_to "Privacy Policy", privacy_policy_path, target: "blank" %>.</label></p>
           </div>
           <div class="">
             <%= f.submit "Purchase now for $199", class: "btn btn-large btn-green round" %>

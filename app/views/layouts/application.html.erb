@@ -58,16 +58,13 @@
                 </a>
                 <ul class="dropdown-menu">
                   <%= content_for(:dropdown_options) %>
-                  <% if events = current_user.events %>
-                    <% events.each do |event| %>
-                      <% unless request.path.eql? event_photos_path(event).to_s %>
-                        <li>
-                          <%= link_to event.name, event_photos_path(event) %>
-                        </li>
-                      <% end %>
+                  <li>
+                    <% if event = current_user.events.first %>
+                      <%= link_to event.name, event_code_path(event)  %>
+                    <% else %>
+                      <%= link_to "Create Event", new_event_path  %>
                     <% end %>
-                    <li class="divider"></li>
-                  <% end %>
+                  </li>
                   <li>
                     <%= link_to "My Account", edit_user_registration_path %>
                   </li>
@@ -90,11 +87,12 @@
     </div>
     
     
-    
-    <section class="container">
-      <div class="row" id="alert-area">
-      </div>
-    </section>
+    <% unless request.path.eql? "/" %>
+      <section class="container">
+        <div class="row" id="alert-area">
+        </div>
+      </section>
+    <% end %>
       
     <%= yield %>
     
