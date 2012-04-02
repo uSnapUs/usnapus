@@ -20,7 +20,8 @@
   <div class="row">
     <div class="span12">
       <h1 class="brand event_name"><%= @event.name %></h1>
-      <p class="pretty_time" data-utc-starts="<%= @event.starts %>" data-utc-ends="<%= @event.ends %>">
+      <p>
+        <%= "#{@event.starts.day.ordinalize} #{@event.starts.strftime("%B")}"%>
       </p>
       <div class="buttons upcase bold">
           <%= link_to "#{event_code_path @event}/fullscreen", id: "goto_slideshow" do %>
