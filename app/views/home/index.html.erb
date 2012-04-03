@@ -50,12 +50,14 @@
     
     <div class="row signup">
       <div class="span12">
-        <%= form_for @user, url: registration_path(@user), html: {class: "background small round form-horizontal"} do |f| %>
-          <%= f.text_field :name, placeholder: "Your Name" %>
-          <%= f.email_field :email, placeholder: "Your Email" %>
-          <%= f.password_field :password, placeholder: "Your Password" %>
-          <%= f.submit "Create your event now", class: "btn btn-green" %>
-        <% end %>
+        <div class="">
+          <%= form_for @user, url: registration_path(@user), html: {class: "background small round form-horizontal"} do |f| %>
+            <%= f.text_field :name, placeholder: "Your Name" %>
+            <%= f.email_field :email, placeholder: "Your Email" %>
+            <%= f.password_field :password, placeholder: "Your Password" %>
+            <%= f.submit "Create your event now", class: "btn btn-green" %>
+          <% end %>
+        </div>
       </div>
     </div>
 

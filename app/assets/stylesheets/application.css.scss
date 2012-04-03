@@ -231,6 +231,15 @@ body{
   background-position: 0;
 }
 
+.btn:hover{
+  background-position: 0 -40px;
+  -webkit-transition: background-position 0.1s linear;
+     -moz-transition: none;
+      -ms-transition: background-position 0.1s linear;
+       -o-transition: background-position 0.1s linear;
+          transition: background-position 0.1s linear;
+}
+
 hr{
   border-bottom-color: $med_blue;
   border-bottom-color: rgba(119, 152, 180, 0.5);
