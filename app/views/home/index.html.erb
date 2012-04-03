@@ -128,6 +128,7 @@
   <hr />
   
   <div class="row panel">
+    <%= image_tag "try_it_free_box.png", :title => "uSnap.us app" %>
     <div class="span12 signup">
      <%= form_for @user, url: registration_path(@user), html: {class: "span12 form-horizontal"} do |f| %>
         <%= f.email_field :email, placeholder: "Your email address" %>
