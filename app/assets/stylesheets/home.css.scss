@@ -59,6 +59,7 @@ body.home {
 .signup {
   background:$form_blue;
   text-align:center;
+  border:1px solid $border_blue;
   @include box-shadow($shadow: 1px 1px 2px $form_drop_shadow);
   margin: 60px 0;
   padding-top:15px;
