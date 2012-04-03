@@ -25,10 +25,9 @@
     
     <div class="row signup">
       <%= form_for @user, url: registration_path(@user), html: {class: "span12 form-horizontal"} do |f| %>
-        <%= f.text_field :name, placeholder: "Your Name" %>
-        <%= f.email_field :email, placeholder: "Your Email" %>
-        <%= f.password_field :password, placeholder: "Your Password" %><br />
-        <%= f.submit "Create your event for free", class: "btn round btn-white" %>
+        <%= f.email_field :email, placeholder: "Your email address" %>
+        <%= f.password_field :password, placeholder: "Create a password" %>
+        <%= f.submit "Get started for free", class: "btn round btn-green" %>
       <% end %>
     </div>
 
@@ -129,18 +128,20 @@
   <hr />
   
   <div class="row panel">
-    <div class="span12 center">
-      <p>
-        <%= link_to "Create your event for free", class: "btn round" %>
-      </p>
+    <div class="span12 signup">
+     <%= form_for @user, url: registration_path(@user), html: {class: "span12 form-horizontal"} do |f| %>
+        <%= f.email_field :email, placeholder: "Your email address" %>
+        <%= f.password_field :password, placeholder: "Create a password" %>
+        <%= f.submit "Get started for free", class: "btn round btn-green" %>
+      <% end %>
     </div>
   </div>
 
 
   <div class="row footer">
     <p class="span12 center">
-      <%= link_to "Terms of Use", "#" %>
-      <%= link_to "Privacy Policy", "#" %>
+      <%= link_to "Terms of Use", "/terms_of_use" %>
+      <%= link_to "Privacy Policy", "/privacy_policy" %>
     </p>
   </div>
 </div>
