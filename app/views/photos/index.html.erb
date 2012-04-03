@@ -79,7 +79,7 @@
 </script>
 
 <% content_for(:jquery) do %>
-  <% if @photo_count > 10 %>
+  <% if @event.free and @photo_count > 10 %>
     $(document).ready(function() {
       showAlert("notice", "Upgrade to the full version", "to see your remaining <%= pluralize @photo_count, "photo" %>");
     });

@@ -162,7 +162,7 @@ $(document).ready(function() {
         $(".next").addClass("hidden");
         $("input[type=submit].free").removeClass("hidden");
       }
-      
+       _gaq.push(['_trackEvent', 'SignUpStep', step]);
       setNextButton();
     }
     
