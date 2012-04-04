@@ -24,29 +24,6 @@ ActiveRecord::Schema.define(:version => 20120401100058) do
   add_index "attendees", ["event_id"], :name => "index_attendees_on_event_id"
   add_index "attendees", ["user_id"], :name => "index_attendees_on_user_id"
 
-  create_table "billing_details", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "card_type"
-    t.string   "card_name"
-    t.string   "last_four_digits"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-  end
-
-  add_index "billing_details", ["user_id"], :name => "index_billing_details_on_user_id"
-
-  create_table "charge_attempts", :force => true do |t|
-    t.integer  "billing_detail_id"
-    t.boolean  "success"
-    t.string   "message"
-    t.string   "authorization"
-    t.integer  "amount"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-  end
-
-  add_index "charge_attempts", ["billing_detail_id"], :name => "index_charge_attempts_on_billing_detail_id"
-
   create_table "devices", :force => true do |t|
     t.string   "guid"
     t.string   "name"
@@ -118,8 +95,8 @@ ActiveRecord::Schema.define(:version => 20120401100058) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "authentication_token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
     t.string   "name"
   end
 

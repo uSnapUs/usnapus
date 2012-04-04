@@ -15,9 +15,11 @@ class PhotosController < ApplicationController
     
     if @event.free
       @photo_count = photos.count #For a little teaser message
-      p @photo_count
-      max = photos.limit(10).last.id
-      @photos = @photos.where("id < ?", max)
+      if(@photo_count>10)
+        p @photo_count
+        max = photos.limit(10).last.id
+        @photos = @photos.where("id < ?", max)
+      end
     end
     
     @attendee = Attendee.between(current_user, @event) if current_user
