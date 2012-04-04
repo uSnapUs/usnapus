@@ -11,7 +11,11 @@ body.home {
 .photo_back {
   color: white;
   background-color: #bed2e5;
-  background-image: url('photo_bg.png');
+  background-image: url('photo_bg.jpg');
+  @media (max-width: 768px) {
+    background-image: url('photo_bg_768.jpg');
+  }
+  
   background-position: center top;
   background-repeat: no-repeat;
   margin-bottom: 40px;
