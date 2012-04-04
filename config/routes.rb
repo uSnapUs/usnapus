@@ -2,7 +2,7 @@ Usnapus::Application.routes.draw do
   
   mount Resque::Server.new, :at => "/resque"
   
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => 'registrations' }
   
   root to: "home#index"
   get "geocode_search", to: "home#geocode_search"
