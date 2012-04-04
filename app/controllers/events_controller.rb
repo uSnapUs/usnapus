@@ -75,7 +75,7 @@ class EventsController < ApplicationController
     end
     
     Notifier.upgrade(current_user, @event).deliver
-    flash[:notice] = "You've been upgraded! We'll invoice you soon, in the mean time get snapping!"
+    flash[:notice] = "Thanks! You've been upgraded, and we'll invoice you soon."
     @event.free = false
     @event.save!
     

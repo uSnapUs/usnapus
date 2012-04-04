@@ -41,9 +41,15 @@
 <section class="container gallery">
   <div class="row">
     <div id="photo_gallery" data-json-url="<%= event_code_path @event, suffix: ".json" %>">
+      
+      <% if @event.free %>
+        <div class="photo" id="photo_upgrade">
+          <%= link_to (image_tag "upgrade_photo.jpg"), upgrade_event_path(@event), title: "Upgrade now!" %>
+        </div>
+      <% end %>
     </div>
     <% if @photos.empty? %>
-      <div class="center">
+      <div id="blank_slate" class="center">
         <h2>
           <%= link_to "Get the uSnap.us iPhone app from the App Store", "http://itunes.apple.com/us/app/usnap.us/id502448652" %>
         </h2>
@@ -53,14 +59,14 @@
         <p class="blue">
           Give it a try now - open the iPhone app and use the event code <strong><%= @event.code %></strong>.
         </p>
-      
+      </div>
     <% end %>
   </div>
 </section>
 
 <section class="container-fluid">
   <div class="row-fluid gallery_footer">
-    <p class="pull-left">Contribute your own photos. <strong><%= link_to "Get the free app.", "http://itunes.apple.com/us/app/usnap.us/id502448652" %></strong></p>
+    <p class="pull-left">Contribute your own photos with the <strong><%= link_to "free uSnap.us app.", "http://itunes.apple.com/us/app/usnap.us/id502448652" %></strong></p>
     <p class="pull-right"><span class="upcase">With love from</span> <span class="brand">uSnap.us</span></p>
   </div>
 </section>
@@ -77,6 +83,7 @@
   channel.bind('update_photo', function(data) {
     updatePhoto(data);
   });
+  
 </script>
 
 <script type="text/html" id="gallery_photo_template">
@@ -93,11 +100,3 @@
   {{/photo}}
   </div>
 </script>
-
-<% content_for(:jquery) do %>
-  <% if @photo_count && (@photo_count > 10) %>
-    $(document).ready(function() {
-      showAlert("notice", "Upgrade to the full version", "to see your remaining <%= pluralize @photo_count, "photo" %>");
-    });
-  <% end %>
-<% end %>
