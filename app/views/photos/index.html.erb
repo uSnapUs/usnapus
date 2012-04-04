@@ -5,7 +5,7 @@
   <% if @attendee.try(:is_admin) %>
     <% if @event.free %>
       <li>
-        <%= link_to "Upgrade for $199", edit_event_path(@event) %>
+        <%= link_to "Upgrade for $199", upgrade_event_path(@event) %>
       </li>
     <% end %>
     <li>

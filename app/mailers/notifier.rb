@@ -1,6 +1,12 @@
 class Notifier < Devise::Mailer
   default_url_options[:host] = "usnap.us"
-  SUPPORT = "team@usnap.us"
+  
+  SUPPORT = if Rails.env.dev?
+              "nick@usnap.us"
+            else
+              "team@usnap.us"
+            end
+            
   default :from => SUPPORT
   
   def welcome(user, event)
@@ -14,6 +20,13 @@ class Notifier < Devise::Mailer
     @user = user
     @event = event
     @subject = "Bulk download request for #{@event.code}"
+    mail to: SUPPORT, subject: @subject
+  end
+  
+  def upgrade(user, event)
+    @user = user
+    @event = event
+    @subject = "#{@event.name} upgraded!"
     mail to: SUPPORT, subject: @subject
   end
   

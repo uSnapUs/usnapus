@@ -1,0 +1,5 @@
+<p>Someone wants to give us money!</p>
+<p>Send an invoice to <%= link_to @user.email, "mailto:#{@user.email}" %> <%= "(#{@user.name})" if @user.name %>.</p>
+<p>&nbsp;</p>
+<p>Cheers,<br />
+The gnomes inside the uSnap.us server</p>

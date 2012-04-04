@@ -10,6 +10,9 @@ Usnapus::Application.routes.draw do
   resources :devices, only: [:create, :update]
 
   resources :events, except: [:delete] do
+    member do
+      get :upgrade
+    end
     resources :photos, except: [:update, :edit] do
       collection do
         get :fullscreen

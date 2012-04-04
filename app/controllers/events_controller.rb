@@ -70,6 +70,19 @@ class EventsController < ApplicationController
       render "new"
     end
   end
+
+  def upgrade
+    unless @event = get_admin_event
+      head :not_found and return
+    end
+    
+    Notifier.upgrade(current_user, @event).deliver
+    flash[:notice] = "You've been upgraded! We'll invoice you soon, in the mean time get snapping!"
+    @event.free = false
+    @event.save!
+    
+    redirect_to event_photos_path(@event)
+  end
   
   private
     def get_admin_event
