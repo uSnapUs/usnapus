@@ -23,7 +23,7 @@
     <div class="span12">
       <h1 class="brand event_name"><%= @event.name %></h1>
       <p>
-        <%= "#{@event.starts.day.ordinalize} #{@event.starts.strftime("%B")}"%>
+        <%= "#{@event.starts.day.ordinalize} #{@event.starts.strftime("%B %Y")}"%>
       </p>
       <div class="buttons upcase bold">
           <%= link_to "#{event_code_path @event}/fullscreen", id: "goto_slideshow" do %>
@@ -42,6 +42,19 @@
   <div class="row">
     <div id="photo_gallery" data-json-url="<%= event_code_path @event, suffix: ".json" %>">
     </div>
+    <% if @photos.empty? %>
+      <div class="center">
+        <h2>
+          <%= link_to "Get the uSnap.us iPhone app from the App Store", "http://itunes.apple.com/us/app/usnap.us/id502448652" %>
+        </h2>
+        <p class="blue">
+          Photos taken with the iPhone app at the time and place of your wedding will appear here.
+        </p>
+        <p class="blue">
+          Give it a try now - open the iPhone app and use the event code <strong><%= @event.code %></strong>.
+        </p>
+      
+    <% end %>
   </div>
 </section>
 
