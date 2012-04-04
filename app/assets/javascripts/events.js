@@ -162,7 +162,7 @@ $(document).ready(function() {
         $(".next").addClass("hidden");
         $("input[type=submit].free").removeClass("hidden");
       }
-       _gaq.push(['_trackEvent', 'SignUpStep', step]);
+       _gaq.push(['_trackEvent', 'SignUpStep', 'go to step '+ step]);
       setNextButton();
     }
     
@@ -216,10 +216,12 @@ $(document).ready(function() {
   }).on("click", "input.free", function(){
     $("#event_free").val(1);
   }).on("submit", function(){
+
     if( $("#accept").length && ($("#accept").attr("checked") != "checked") ){
       $("label[for=accept]").addClass("red");
       return false;
     }
+     _gaq.push(['_trackEvent', 'SignUpStep', 'purchase']);
   });
   
   $("form.event .btn-group.privacy").on("click", "a", function(){
