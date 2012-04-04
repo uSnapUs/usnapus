@@ -59,7 +59,7 @@
                 <ul class="dropdown-menu">
                   <%= content_for(:dropdown_options) %>
                   <li>
-                    <% if event = current_user.events.first %>
+                    <% if (event = current_user.events.first) && (event != @event)  %>
                       <%= link_to event.name, event_code_path(event)  %>
                     <% else %>
                       <%= link_to "Create Event", new_event_path  %>
