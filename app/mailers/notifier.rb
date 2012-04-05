@@ -13,7 +13,7 @@ class Notifier < Devise::Mailer
     @user = user
     @event = event
     @subject = "Yay! Thanks for joining uSnap.us"
-    mail to: named_user(user), subject: @subject
+    mail to: "#{user.name} <#{user.email}>", subject: @subject
   end
   
   def bulk_download_request(user, event)

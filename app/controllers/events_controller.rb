@@ -65,6 +65,11 @@ class EventsController < ApplicationController
       unless @event.free
         flash[:notice] = "You're good to go! We'll invoice you soon"
       end
+      
+      if @event.eql? current_user.events.first
+        Notifier.welcome(current_user, @event).deliver
+      end
+      
       redirect_to event_photos_path @event
     else
       flash[:error] = "Please fix the errors below"

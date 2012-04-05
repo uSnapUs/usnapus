@@ -5,6 +5,7 @@ class EventsControllerTest < ActionController::TestCase
   def setup
     @user = Factory(:user)
     @event = Factory(:event)
+    @stub = stub(:deliver)
   end
   
   test "new and create redirect if not signed in" do
@@ -37,6 +38,17 @@ class EventsControllerTest < ActionController::TestCase
     assert_redirected_to event_photos_path event
     assert attendee
     assert attendee.is_admin?, "Attendee should be an admin"
+  end
+  
+  test "first event sends welcome email" do
+    sign_in @user
+    
+    Notifier.expects(:welcome).once.returns(@stub)
+    post :create, event: @event.attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public)
+  
+    
+    Notifier.expects(:welcome).never
+    post :create, event: @event.attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public)
   end
   
   test "can edit event if admin" do

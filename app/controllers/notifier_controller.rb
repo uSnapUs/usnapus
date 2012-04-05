@@ -5,7 +5,10 @@ class NotifierController < ApplicationController
   
   def welcome
     @user = User.first
-    @event = Event.first
+    @event = Event.last
+    @event.is_public = false
+    @event.free = false
+    @event.save!
   end
   
   def bulk_download_request
