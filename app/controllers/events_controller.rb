@@ -62,6 +62,9 @@ class EventsController < ApplicationController
         at.user = current_user
         at.is_admin = true
       end
+      unless @event.free
+        flash[:notice] = "You're good to go! We'll invoice you soon"
+      end
       redirect_to event_photos_path @event
     else
       flash[:error] = "Please fix the errors below"
