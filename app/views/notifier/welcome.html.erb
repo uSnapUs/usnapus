@@ -1,19 +1,49 @@
-<h2>Woo hoo, you're here!</h2>
-
-<p>Hey <%= @user.name %>,</p>
-
-<p>We're Nick and Owen, and we run <%= link_to "uSnap.us", "http://usnap.us" %>. Thanks for joining with us to make your event awesome! 
+<p align="left" style="font-size:18px;line-height:24px;color:#4b698a;font-weight:bold;margin-top:0px;margin-bottom:18px">
+  Hey <%= @user.name %>, welcome to uSnap.us!
 </p>
-
-<p>If you have any question at all, or want to pass on some feedback, get in touch with us at <%= link_to Notifier::SUPPORT, "mailto:#{Notifier::SUPPORT}" %>.</p>
-
-<p>Here's a quick run down of the features, if you want dive right into it:</p>
-
-<p>Download the app</p>
-<p>Log in by code</p>
-<p>Take Photo, watch it pop up</p>
-
-<p style="text-align:center; width: 100%;">
-  <%= link_to "Open #{@event.name}", new_user_session_url, 
-  style: "-webkit-box-shadow: rgba(255, 255, 255, 0.199219) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.046875) 0px 1px 2px 0px;  background-color: #5BB75B;  background-image: -webkit-linear-gradient(top, #62C462, #51A351);  background-repeat: repeat-x;  border-bottom-color: rgba(0, 0, 0, 0.246094);  border-bottom-left-radius: 5px;  border-bottom-right-radius: 5px;  border-bottom-style: solid;  border-bottom-width: 1px;  border-left-color: rgba(0, 0, 0, 0.0976563);  border-left-style: solid;  border-left-width: 1px;  border-right-color: rgba(0, 0, 0, 0.0976563);  border-right-style: solid;  border-right-width: 1px;  border-top-color: rgba(0, 0, 0, 0.0976563);  border-top-left-radius: 5px;  border-top-right-radius: 5px;  border-top-style: solid;  border-top-width: 1px;  box-shadow: rgba(255, 255, 255, 0.199219) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.046875) 0px 1px 2px 0px;  color: white;  cursor: pointer;  display: block;  float: none;  font-family: arial, sans-serif;  font-size: 150%; padding: 2% 0;  text-align: center;  text-decoration: none;  text-shadow: rgba(0, 0, 0, 0.246094) 0px -1px 0px;width:50%;margin-left:25%" %>
+<p style="margin-bottom:15px;">
+  Thanks for registering to use uSnap.us on your big day. Here are a few pointers to get started.
+</p>
+<p align="left" class="article-title" style="font-size:18px;line-height:24px;color:#4b698a;font-weight:bold;margin-top:0px;margin-bottom:18px;font-family:Helvetica Neue, Arial, Helvetica, Geneva, sans-serif;">
+  1) Get the App
+</p>
+<p style="margin-bottom:15px;">
+  The easiest way to add photos to your event is through our free smartphone app. You and your guests can download it from the Apple AppStore:<br style="line-height:100%;">
+  <%= link_to "http://itunes.apple.com/us/app/usnap.us/id502448652" %>
+</p>
+<p align="left" class="article-title" style="font-size:18px;line-height:24px;color:#4b698a;font-weight:bold;margin-top:0px;margin-bottom:18px;font-family:Helvetica Neue, Arial, Helvetica, Geneva, sans-serif;">
+  2) Log in to your event
+</p>
+<p style="margin-bottom:15px;">
+  When you created your event on the website, you chose a time and location. Unless you're at that location right now, your phone won't know which event you're taking photos for!
+</p>
+<p style="margin-bottom:15px;">
+  In the app log in to the event using your event code, which is <%= @event.code %>.
+</p>
+<p style="margin-bottom:15px;">
+  On the big day your guests will automatically be logged in when they arrive.
+</p>
+<p align="left" class="article-title" style="font-size:18px;line-height:24px;color:#4b698a;font-weight:bold;margin-top:0px;margin-bottom:18px;font-family:Helvetica Neue, Arial, Helvetica, Geneva, sans-serif;">
+  3) You Snap!
+</p>
+<p style="margin-bottom:15px;">
+  You're now ready to take photos, and capture every memory. Watch them appear automatically at <%= link_to "http://unsnap.us/#{@event.code.downcase}" %>. Try out the live stream or the slideshow, too!
+</p>
+<p align="left" class="article-title" style="font-size:18px;line-height:24px;color:#4b698a;font-weight:bold;margin-top:0px;margin-bottom:18px;font-family:Helvetica Neue, Arial, Helvetica, Geneva, sans-serif;">
+  Getting the most from your big day
+</p>
+<p style="margin-bottom:15px;">
+  Guests without iPhones can still be involved by emailing their photos to <%= link_to "#{@event.code.downcase}@usnap.us", "mailto:#{@event.code.downcase}@usnap.us" %>. This includes friends and family who can't make it to your wedding!
+</p>
+<p style="margin-bottom:15px;">
+  Make sure to let guests know you'll be using uSnap.us at your wedding, so they can download the app.
+</p>
+<p style="margin-bottom:15px;">
+  Your guests will be more likely to take photos when they can see them appearing live. Prepare an iPad, screen or projector to present the slideshow on the day. This can inspire some great talking points during the evening.
+</p>
+<p align="left" class="article-title" style="font-size:18px;line-height:24px;color:#4b698a;font-weight:bold;margin-top:0px;margin-bottom:18px;font-family:Helvetica Neue, Arial, Helvetica, Geneva, sans-serif;">
+  Getting the most from us
+</p>
+<p style="margin-bottom:15px;">
+  We're here to help in any way possible. Don't hesitate to get in touch with us if you need.
 </p>

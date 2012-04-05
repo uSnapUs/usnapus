@@ -1,24 +1,118 @@
-<!DOCTYPE html>
-<html lang="en" style="background: #eee;">
-  <head>
-    <meta charset="utf-8">
-    <title><%= @subject %></title>
-  </head>
-  <body style="margin:0;padding:0;background: #eee;">
-    <div style="background: #eee;color: #444;font-family: helvetica, sans-serif;padding:10px;">
-      <div style="margin: 20px 20px 20px 20px;background-color: #fff; border: 1px solid #ddd;">
-        <div style="background:url('http://usnap.us/assets/headerstrip.png') repeat-x">
-          <h1 style="width:100%;text-align:center;margin:0;padding-top:8px">
-            <%= image_tag "http://usnap.us/assets/logo-header.png", alt: "uSnap.us", title: "uSnap.us" %>
-          </h1>
-        </div>
-        <div style="margin:20px">
-          <%= yield %>
-        </div>
-      </div>
-      <p style="text-align:center;font-size:75%;color: #999">
-        Sent from <%= link_to "uSnap.us", "http://uSnap.us", :style => "color:#999" %>
-      </p>
-    </div>
-  </body>
+<html style="background-color:#191d1f;margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;" ><head>
+  <title></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="robots" content="noindex,nofollow"></meta>
+</head>
+<body style="width:100% !important;background-color:#191d1f;margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;font-family:Helvetica Neue, Arial, Helvetica, Geneva, sans-serif;font-size:12px" >
+  
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#191d1f;">
+  <tbody>
+    <tr style="border-collapse:collapse;">
+      <td align="center" bgcolor="#191D1F" style="border-collapse:collapse;">
+        <table width="640" cellpadding="0" cellspacing="0" border="0">
+          <tbody>
+            <tr style="border-collapse:collapse;">
+              <td width="640" height="20" style="border-collapse:collapse;"></td>
+            </tr>
+            <tr style="border-collapse:collapse;">
+              <td id="header" width="640" align="center" bgcolor="#66BD76" style="border-collapse:collapse;">
+                <div align="center" style="text-align:center;">
+                  <%= image_tag "http://usnap.us/assets/headerstrip.png", style: "width:640px;" %>
+                </div>
+              </td>
+            </tr>
+            <tr style="border-collapse:collapse;">
+              <td class="w640" width="640" height="30" bgcolor="#FFFFFF" style="border-collapse:collapse;"></td>
+            </tr>
+            <tr id="simple-content-row" style="border-collapse:collapse;">
+              <td class="w640" width="640" bgcolor="#FFFFFF" style="border-collapse:collapse;">
+                <table class="w640" width="640" cellpadding="0" cellspacing="0" border="0">
+                  <tbody>
+                    <tr style="border-collapse:collapse;">
+                      <td class="w30" width="30" style="border-collapse:collapse;"></td>
+                      <td class="w580" width="580" style="border-collapse:collapse;">
+                        <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
+                          <tbody>
+                            <tr style="border-collapse:collapse;">
+                              <td class="w580" width="580" style="border-collapse:collapse;">
+                                
+                                  <%= yield %>
+                                
+                                  <p style="margin-bottom:15px;">
+                                    &nbsp;
+                                  </p>
+                                  <p style="margin-bottom:15px;">
+                                    Cheers,
+                                  </p>
+                                  <p style="margin-bottom:15px;">
+                                    Nick, Owen, and the uSnap.us team.
+                                  </p>
+                                  <p style="margin-bottom:15px;">
+                                    http://uSnap.us
+                                  </p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr style="border-collapse:collapse;">
+                              <td class="w580" width="580" height="10" style="border-collapse:collapse;"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                      <td class="w30" width="30" style="border-collapse:collapse;"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr style="border-collapse:collapse;">
+              <td class="w640" width="640" height="15" bgcolor="#FFFFFF" style="border-collapse:collapse;"></td>
+            </tr>
+            <tr style="border-collapse:collapse;">
+              <td class="w640" width="640" style="border-collapse:collapse;">
+                <table id="footer" class="w640" width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#272C2F" style="border-radius:0px 0px 6px 6px;-moz-border-radius:0px 0px 6px 6px;-webkit-border-radius:0px 0px 6px 6px;-webkit-font-smoothing:antialiased;background-color:#272c2f;color:#6181a1;">
+                  <tbody>
+                    <tr style="border-collapse:collapse;">
+                      <td class="w30" width="30" style="border-collapse:collapse;"></td>
+                      <td class="w580 h0" width="360" height="30" style="border-collapse:collapse;"></td>
+                      <td class="w0" width="60" style="border-collapse:collapse;"></td>
+                      <td class="w0" width="160" style="border-collapse:collapse;"></td>
+                      <td class="w30" width="30" style="border-collapse:collapse;"></td>
+                    </tr>
+                    <tr style="border-collapse:collapse;">
+                      <td class="w30" width="30" style="border-collapse:collapse;"></td>
+                      <td class="w580" width="360" valign="top" style="border-collapse:collapse;">
+                        <p id="permission-reminder" align="left" class="footer-content-left" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:12px;line-height:15px;color:#6181a1;margin-top:0px;margin-bottom:15px;white-space:pre-wrap;">
+                          <span class="hide">You're receiving this because you asked for uSnap.us updates on our website.</span>
+                        </p>
+                      </td>
+                      <td class="hide w0" width="60" style="border-collapse:collapse;"></td>
+                      <td class="hide w0" width="160" valign="top" style="border-collapse:collapse;">
+                        <p id="street-address" align="right" class="footer-content-right" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:11px;line-height:16px;margin-top:0px;margin-bottom:15px;color:#7998b7;white-space:pre-wrap;">
+                          uSnap.us Limited 36 Sunbrae Drive Silverstream Wellington
+                        </p>
+                      </td>
+                      <td class="w30" width="30" style="border-collapse:collapse;"></td>
+                    </tr>
+                    <tr style="border-collapse:collapse;">
+                      <td class="w30" width="30" style="border-collapse:collapse;"></td>
+                      <td class="w580 h0" width="360" height="15" style="border-collapse:collapse;"></td>
+                      <td class="w0" width="60" style="border-collapse:collapse;"></td>
+                      <td class="w0" width="160" style="border-collapse:collapse;"></td>
+                      <td class="w30" width="30" style="border-collapse:collapse;"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr style="border-collapse:collapse;">
+              <td class="w640" width="640" height="60" style="border-collapse:collapse;"></td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
 </body>
+</html>
