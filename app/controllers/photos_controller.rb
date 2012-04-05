@@ -3,13 +3,23 @@ class PhotosController < ApplicationController
   before_filter :get_event
 
   def index
+    photos = @event.photos.processed
     
-    @photos = @event.photos.processed.order("created_at DESC")
+    @photos = photos.order("created_at DESC")
     if before_id = params[:before]
       @photos = @photos.where("id < ?", before_id)
     end
     if limit = params[:limit]
       @photos = @photos.limit(limit.to_i)
+    end
+    
+    if @event.free
+      @photo_count = photos.count #For a little teaser message
+      if(@photo_count>10)
+        p @photo_count
+        max = photos.limit(10).last.id
+        @photos = @photos.where("id < ?", max)
+      end
     end
     
     @attendee = Attendee.between(current_user, @event) if current_user

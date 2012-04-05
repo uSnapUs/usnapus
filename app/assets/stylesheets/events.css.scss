@@ -1,8 +1,8 @@
+@import "configuration";
+
 form.event{
   
-  #google_map {
-    height: 510px;
-  }
+  
   
   input.large{
     font-size: 120%;
@@ -16,57 +16,16 @@ form.event{
     }
   }
   
-  
-  #float_over_google_map{
-    position: relative;
-    left: 20px;
-    top: 20px;
-
-    input{
-      position: absolute;
-      z-index: 10;
-    }
-  }
-  
-  .privacy{
-    padding-bottom: 8px;
-    
-    &.btn-group {
-      text-align:center;
-      
-      a {
-        float:none;
-        display:inline-block;
-        *display:inline; /* ie7 fix */
-        zoom:1; /* hasLayout ie7 trigger */
-        
-        &:first-child{
-          left: 3px;
-        }
-      }
-    }
-  }
-  
   .datepicker{
     width: 223px;
     margin-left: auto;
     margin-right: auto;
+    
+    &.error{
+      border: 1px solid $red;
+    }
   }
   
-  .event_code {
-    margin-left: auto;
-    margin-right: auto;
-    width: 198px;
-    
-    .add-on{
-      font-size: 12px;
-      color: #333;
-      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    }
-    input{
-      float: left;
-    }
-  }
   
   .continue{
     float: none;
@@ -75,127 +34,207 @@ form.event{
     margin-right: auto;
   }
   
-  .payment{
-    display:none;
-    float: left;
-    text-align: center;
-    
-    p{
-      font-size: 120%;
-      line-height: 120%;
-      
-      a{
-        margin: 0 5px;
-      }
-    }
-    
-    .hero-unit{
-      margin: 0 0 40px 0;
-      padding: 0px;
-      font-size: 80%;
-      .hero_pad {
-        padding: 40px 10px;
-      }
-      
-      .buy{
-        padding: 6px 75px;
-        font-size: 150%;
-        line-height: 150%;
-        margin: 10px 0;
-      }
-      
-    }
-    
-    .pricing{
-      .span12{
-        margin-left: 0;
-      }
-      
-      h3{
-        cursor: pointer;
-        margin: 20px 0;
-        i{
-          margin-top: 3px;
-        }
-      }
-      
-      table{
-        display: none;
-        tbody tr td:nth-child(2){
-          opacity: 0.5;
-        }
-      }
-      
-    }
-  }
-  
-  @media all and (max-width: 480px){
-    #google_map {
-      height: 300px;
-    }
-    
-    .hero-unit h1{
-      font-size: 200%;
-    }
-  }
-  
 }
 
-.grey_border:not(.error){
-  border-color: #333;
-}
 
 .typeahead .dropdown-menu{
   max-width: none;
 }
 
-.date_incrementer{
-  display: none;
+.wizard.container{
   
-  background-color: #777;
-  font-size: 18px;
-  line-height: 18px;
-  color: #fff;
-  font-weight: bold;
-  float: left;
-  text-align: center;
-  position: relative;
-
-  
-  .arrow_wrap{
-  
+  .box{
+    background-color: #fff;
+    text-align: center;
+    color: $med_blue;
     
-    span, a{
-      display: block;
-      padding: 5px 7px;
-      float: left;
+    h2, input[type=text]{
+      color: $dark_blue;
     }
     
-    a.plus, a.minus{
-      color: #fff;
+    input.error{
+      color: $red;
+    }
+    
+    .light_blue{
+      background-color: #EAF3FC;
       
-      &:hover{
-        text-decoration: none;
-        background-color: #444;
-        cursor: pointer;
+      .invitation{
+        padding: 100px 10px;
       }
-      &:active{
-        background-color: #333;
+      
+      .invitation, .map{
+        input{
+          font-weight: 200;
+          background: transparent;
+          border: none;
+          text-align: center;
+          width: 75%;
+          font-size: 175%;
+          height: 250%;
+          box-shadow: none;
+
+          &::-webkit-input-placeholder {
+            color: $dark_blue;
+          }
+          &:-moz-placeholder {
+            color: $dark_blue;
+          }
+        }
+        input.error{
+          &::-webkit-input-placeholder {
+            color: $red;
+          }
+          &:-moz-placeholder {
+            color: $red;
+          }
+        }
+
+        hr{
+          border-bottom: 1px solid #C9DDF2;
+          width: 85%;
+          margin-left: auto;
+          margin-right: auto;
+        }
       }
+      
+      .map{
+        #google_map {
+          height: 299px;
+          opacity: 0.3;
+        }
+        
+        #float_over_google_map{
+          position: absolute;
+          z-index: 10;
+          margin-left: 0;
+          input, hr{
+            position: relative;
+            top: 130px;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+        
+      }
+    
+      .time{
+        padding: 49px 0;
+      }
+      
+      .code{
+        padding: 70px 0;
+        
+        .privacy{
+          padding-bottom: 8px;
+
+          &.btn-group {
+            text-align:center;
+
+            a {
+              float:none;
+              display:inline-block;
+              *display:inline; /* ie7 fix */
+              zoom:1; /* hasLayout ie7 trigger */
+
+              &:first-child{
+                left: 3px;
+              }
+            }
+          }
+        }
+        .valid_chars{
+          display: none;
+        }
+        
+        
+        .event_code {
+          width: 144px;
+          margin-left: auto;
+          margin-right: auto;
+          
+          .add-on{
+            font-size: 12px;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+          }
+          input{
+            float: left;
+          }
+        }
+        
+      }
+      
+      .payment{
+        padding: 50px 0;
+        input[type=submit]{
+          padding: 10px 25px;
+          margin: 10px 0;
+          font-weight: 800;
+          font-size: 110%;
+        }
+        h3{
+          color: $dark_blue;
+          margin: 10px 0;
+        }
+        p{
+          margin: 0 40px;
+        }
+        label{
+          display: inline;
+        }
+      }
+      
+    }
+
+    .top{
+      padding: 20px;
+      
     }
     
-  
-    &:after{
-      content: '';
-      display: inline-block;
-      width: 0;
-      height: 0;
-      border-width: 10px;
-      border-style: solid;
-      border-color: #777 transparent transparent;
-      position: absolute;
-      top: 26px;
-      left: 59px;
+    .bottom{
+      padding: 20px 0;
+      
+      p {
+        margin-bottom: 0;
+        padding: 10px 0;
+      }
+      
+      
+      .steps a {
+        color: #EAF3FC;
+        text-decoration: none;
+        font-size: 200%;
+      }
+      
     }
+    
+    .steps a.active, a.cancel, .steps a:hover{
+      color: $med_blue;
+    }
+    
+    p.pull-right{
+      padding: 0;
+    }
+    
+    .next{
+      min-width: 70px;
+      font-weight: 800;
+      color: #fff;
+    }
+    
+    .next:hover{
+      
+    }
+    
+  }
+}
+
+.lightbox{
+  background-color: #fff;
+  position: absolute;
+  z-index: 10;
+  
+  iframe{
+    margin: 20px;
   }
 }

@@ -129,55 +129,100 @@ $(document).ready(function() {
     
   }
   
-  window.showDateIncrementer = function(){
-    var pos = $(".datepicker .ui-state-hover:first-child").position();
-    $("#date_incrementer").css({position: "absolute", top: pos.top-35, left: pos.left-50}).fadeIn();
-  }
+  var form = $("form.event");
   
-  function setEndDate(offset){
-    var ends = $("#event_ends"),
-    current_ends = new Date(parseInt(ends.val()));
-    current_ends.setDate( current_ends.getDate() + offset);
-    current_ends = end_of_date(current_ends.getTime())
-    ends.val( current_ends.getTime() );
-  }
+  var step_instructions = [
+    {title: "So, what's the occasion?", subtitle: "Just name your event to get started. Try it for free, pay when you're ready."},
+    {title: "Where is X taking place?", subtitle: "Add a location so guests can instantly share their photos."},
+    {title: "What day is X?", subtitle: "Guests will be able to join your event on this day"},
+    {title: "How can guests access X?", subtitle: "These privacy settings keep your memories safe"},
+    {title: "You're almost ready to go!", subtitle: "Just choose when to pay."}
+  ]
   
-  window.end_of_date = function(ms_since_epoch){
-    datetime = new Date();
-    datetime.setTime(ms_since_epoch);
-    datetime.setHours(23);
-    datetime.setMinutes(59);
-    datetime.setSeconds(59);
-    return datetime;
-  }
-  
-  $("#date_incrementer").on("click", "a", function(){
-    var plus = $(this).hasClass("plus"), el;
+  function goToStep(step){
     
-    if(plus){
-      
-      el = $(".datepicker .ui-datepicker-current-day:last + td");
-      
-      if(!el.length){
-        //Try go to the next row
-        var row = $(".datepicker .ui-datepicker-current-day:last").parent().next();
-        if(row.length){
-          el = $(".datepicker .ui-datepicker-current-day:last").parent().next().find("td:first-child");
-        }
+    if(checkPreviousStep(step-1)){
+      form.attr("data-step", step);
+      form.attr("data-max-step", Math.max(step, parseInt(form.attr("data-max-step"))));
+
+      instr = step_instructions[step-1];
+      form.find(".top .title").html(instr.title.replace("X", $("#event_name").val()));
+      form.find(".top .subtitle").html(instr.subtitle);
+
+      $("div.active").removeClass("active").addClass("hidden");
+      $("div[data-step="+step+"]").removeClass("hidden").addClass("active");
+
+      $(".steps a.active").removeClass("active");
+      $(".steps a[data-step="+step+"]").addClass("active");
+
+      if(step == 2){
+        google.maps.event.trigger(map, 'resize');
       }
-      if(el.length){
-        el.addClass("ui-datepicker-current-day").find("a").addClass("ui-state-active");
-        setEndDate(1);
+      else if(step == 5){
+        $(".next").addClass("hidden");
+        $("input[type=submit].free").removeClass("hidden");
       }
-      
-    }else{
-      el = $(".datepicker .ui-datepicker-current-day")
-      if(el.length > 1){
-        el.last().removeClass("ui-datepicker-current-day").find("a").removeClass("ui-state-active");
-        setEndDate(-1);
-      }
+       _gaq.push(['_trackEvent', 'SignUpStep', 'go to step '+ step]);
+      setNextButton();
     }
-  })
+    
+  }
+  
+  function checkPreviousStep(step){
+    switch(step){
+    case 1:
+      if($("#event_name").val().trim() == ""){
+        $("#event_name").addClass("error");
+        return false;
+      }
+      break;
+    case 2:
+      if($("#event_location").val().trim() == ""){
+        $("#event_location").addClass("error");
+        return false;
+      }
+      break;
+    case 3:
+      if($("#event_starts").val().trim() == ""){
+        $("#event_starts").addClass("error");
+        return false;
+      }
+      break;
+    case 4:
+      if(!checkEventCode()){
+        return false;
+      }
+      break;
+    }
+    return true;
+  }
+  
+  form.on("click", "a.next", function(){
+    
+    var next_step = parseInt(form.attr("data-step"))+1;
+    if(next_step <= 5){
+      goToStep(next_step);
+    }
+    return false;
+    
+  }).on("click", ".steps a", function(){
+    var next_step = parseInt($(this).attr("data-step"));
+    var max_step = parseInt(form.attr("data-max-step"));
+    console.log(next_step+" <= "+max_step);
+    if(next_step <= max_step){
+      goToStep(next_step);
+    }
+    return false;
+  }).on("click", "input.free", function(){
+    $("#event_free").val(1);
+  }).on("submit", function(){
+
+    if( $("#accept").length && ($("#accept").attr("checked") != "checked") ){
+      $("label[for=accept]").addClass("red");
+      return false;
+    }
+     _gaq.push(['_trackEvent', 'SignUpStep', 'purchase']);
+  });
   
   $("form.event .btn-group.privacy").on("click", "a", function(){
     var val = $(this).attr("data-val");
@@ -203,61 +248,45 @@ $(document).ready(function() {
     }
   }
   
-  function checkEventFields(){
-    var required_inputs = [$("#event_location"), $("#event_name"), $("#event_code")];
-    
-    $.each(required_inputs, function(i, input){
-      input.removeClass("error");
-      
-      if(input.val().trim() == ""){
-        console.log(input);
-        input.addClass("error");
-      }
-      
-    });
-    
-    if($("form.event input.error").length){
-      return false;
-    }
-    return true;
-  }
-  
-  $("form.event").on("click", ".continue", function(){
-    
-    if(!checkEventFields())
-      return false;
-      
-    $("form.event .details, .ui-autocomplete, #date_incrementer").fadeOut(500, function(){
-      $("form.event .payment .event_name").html($("#event_name").val());
-      $("form.event .payment").fadeIn();
-    });
-    
-  }).on("submit", function(){
-    if(!checkEventFields())
-      return false;
-  });
-  
-  window.showRange = function(starts_msec, ends_msec){
-    var diff = (ends_msec-starts_msec)/60/60/24;
-    //Show multiple selected dates
-    for(i = 1; i < diff; i++){
-      el = $(".datepicker .ui-datepicker-current-day:last + td");
-
-      if(!el.length){
-        //Try go to the next row
-        var row = $(".datepicker .ui-datepicker-current-day:last").parent().next();
-        if(row.length){
-          el = $(".datepicker .ui-datepicker-current-day:last").parent().next().find("td:first-child");
-        }
-      }
-      if(el.length){
-        el.addClass("ui-datepicker-current-day").find("a").addClass("ui-state-active");
-      }
-    }
-  }
   
   $(".show_details").on("click", function(){
     $(".pricing .details").fadeIn();
   })
+  
+  function checkEventCode(){
+    var code = $("#event_code");
+    var vc = $(".valid_chars");
+    
+    if( code.val().match(/^[a-zA-Z0-9\-]+$/) == null){
+      code.addClass("error");
+      vc.fadeIn();
+      return false;
+    }else{
+      code.removeClass("error");
+      vc.fadeOut();
+    }
+    return true;
+  }
+  
+  $("#event_code").on("keyup", function(){
+    var code = $("#event_code").val();
+    if(checkEventCode())
+      $("#event_code_tip").html($("#event_code").val());
+  });
+  
+  //Watch event inputs and enable next button
+  form.on("keyup", "input", function(){
+    setNextButton()
+  });
+  
+  function setNextButton(){
+    if($(".next").length){
+      if($("input:visible").length && !$("input:visible").val().length){
+        $(".next").removeClass("btn-green").addClass(".btn-blue .disabled");
+      }else{
+        $(".next").addClass("btn-green").removeClass(".btn-blue .disabled");
+      }
+    }
+  }
   
 });

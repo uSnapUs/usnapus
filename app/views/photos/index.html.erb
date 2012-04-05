@@ -3,14 +3,16 @@
 
 <% content_for(:dropdown_options) do %>
   <% if @attendee.try(:is_admin) %>
-    <li>
-      <%= link_to "Settings", edit_event_path(@event) %>
-    </li>
+    <% if @event.free %>
+      <li>
+        <%= link_to "Upgrade for $199", upgrade_event_path(@event) %>
+      </li>
+    <% end %>
     <li>
       <%= link_to "Bulk Download", download_event_photos_path(@event), :id => "bulk_download" %>
     </li>
     <li>
-      <%= link_to "Hide Photo Mode", "#", :id => "delete_photo_mode", :class=>"red" %>
+      <%= link_to "Delete Photo Mode", "#", :id => "delete_photo_mode", :class=>"red" %>
     </li>
     <li class="divider"></li>
   <% end %>
@@ -20,7 +22,8 @@
   <div class="row">
     <div class="span12">
       <h1 class="brand event_name"><%= @event.name %></h1>
-      <p class="pretty_time" data-utc-starts="<%= @event.starts %>" data-utc-ends="<%= @event.ends %>">
+      <p>
+        <%= "#{@event.starts.day.ordinalize} #{@event.starts.strftime("%B %Y")}"%>
       </p>
       <div class="buttons upcase bold">
           <%= link_to "#{event_code_path @event}/fullscreen", id: "goto_slideshow" do %>
@@ -38,13 +41,32 @@
 <section class="container gallery">
   <div class="row">
     <div id="photo_gallery" data-json-url="<%= event_code_path @event, suffix: ".json" %>">
+      
+      <% if @event.free %>
+        <div class="photo" id="photo_upgrade">
+          <%= link_to (image_tag "upgrade_photo.jpg"), upgrade_event_path(@event), title: "Upgrade now!" %>
+        </div>
+      <% end %>
     </div>
+    <% if @photos.empty? %>
+      <div id="blank_slate" class="center">
+        <h2>
+          <%= link_to "Get the uSnap.us iPhone app from the App Store", "http://itunes.apple.com/us/app/usnap.us/id502448652" %>
+        </h2>
+        <p class="blue">
+          Photos taken with the iPhone app at the time and place of your wedding will appear here.
+        </p>
+        <p class="blue">
+          Give it a try now - open the iPhone app and use the event code <strong><%= @event.code %></strong>.
+        </p>
+      </div>
+    <% end %>
   </div>
 </section>
 
 <section class="container-fluid">
   <div class="row-fluid gallery_footer">
-    <p class="pull-left">Contribute your own photos. <strong><%= link_to "Get the free app.", "http://itunes.apple.com/us/app/usnap.us/id502448652" %></strong></p>
+    <p class="pull-left">Contribute your own photos with the <strong><%= link_to "free uSnap.us app.", "http://itunes.apple.com/us/app/usnap.us/id502448652" %></strong></p>
     <p class="pull-right"><span class="upcase">With love from</span> <span class="brand">uSnap.us</span></p>
   </div>
 </section>
@@ -61,6 +83,7 @@
   channel.bind('update_photo', function(data) {
     updatePhoto(data);
   });
+  
 </script>
 
 <script type="text/html" id="gallery_photo_template">

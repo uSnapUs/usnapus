@@ -19,7 +19,7 @@ class EventsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index]
   
   def new
-    @event = Event.new
+    @event = Event.new(code: Event.generate_unique_code)
   end
   
   def edit
@@ -49,20 +49,40 @@ class EventsController < ApplicationController
     
   
   def create
-    @event = Event.new(params[:event])
+    @event = Event.new(params[:event].except(:free))
+    
     set_event_time(@event)
+    
+    if params[:event] && (free = params[:event][:free])
+      @event.free = free
+    end
+    
     if @event.save
       @event.attendees.create! do |at|
         at.user = current_user
         at.is_admin = true
       end
-      
-      flash[:notice] = "Here's your event! Start snapping :)"
+      unless @event.free
+        flash[:notice] = "You're good to go! We'll invoice you soon"
+      end
       redirect_to event_photos_path @event
     else
       flash[:error] = "Please fix the errors below"
       render "new"
     end
+  end
+
+  def upgrade
+    unless @event = get_admin_event
+      head :not_found and return
+    end
+    
+    Notifier.upgrade(current_user, @event).deliver
+    flash[:notice] = "Thanks! You've been upgraded, and we'll invoice you soon."
+    @event.free = false
+    @event.save!
+    
+    redirect_to event_photos_path(@event)
   end
   
   private
@@ -73,9 +93,8 @@ class EventsController < ApplicationController
     end
     
     def set_event_time(event)
-      #Time comes through as ms since epoch
-      event.starts = Time.at(params[:event][:starts].to_i/1000)
-      event.ends = Time.at(params[:event][:ends].to_i/1000)
+      event.starts = Time.at(params[:event][:starts].to_i/1000).beginning_of_day + 6.hours
+      event.ends = event.starts + 1.day
     end
     
 end
