@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   
-  caches_page :index
+  caches_page :terms_of_use, :privacy_policy
   
   def index
     @user = User.new

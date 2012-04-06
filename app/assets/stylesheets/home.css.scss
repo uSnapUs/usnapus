@@ -8,19 +8,14 @@ body.home {
   background: #FBFCFF;
 }
 
-.photo_back {
-  color: white;
-  background-color: #bed2e5;
-  background-image: url('photo_bg.jpg');
-  @media (max-width: 768px) {
-    background-image: url('photo_bg_768.jpg');
-  }
+.overlay{
+  position:absolute;
+  z-index: 1;
+  width: 100%;
   
-  background-position: center top;
-  background-repeat: no-repeat;
-  margin-bottom: 40px;
-  
-  .nav{
+  .navbar .nav{
+    margin: 0;
+    
     li > a{
       text-align: center;
       font-weight: 600;
@@ -28,9 +23,8 @@ body.home {
       padding: 10px 15px;
       background-color: #fff;
       background-color: rgba(255,255,255,0.8);
-      float: right;
       text-shadow: none;
-      margin: 0 10px;
+      margin: 0 10px 10px 10px;
       
       -webkit-border-radius: 0 0 3px 3px;
          -moz-border-radius: 0 0 3px 3px;
@@ -42,6 +36,19 @@ body.home {
       }
     }
   }
+}
+
+.photo_back {
+  color: white;
+  background-color: #bed2e5;
+  background-image: url('photo_bg.jpg');
+  @media (max-width: 768px) {
+    background-image: url('photo_bg_768.jpg');
+  }
+  
+  background-position: center top;
+  background-repeat: no-repeat;
+  margin-bottom: 40px;
   
   .logo{
     font-size: 80px;
