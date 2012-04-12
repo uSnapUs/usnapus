@@ -13,8 +13,14 @@ class NotifierController < ApplicationController
   
   def bulk_download_request
     @user = User.first
+    @event = Event.last
+  end
+  
+  def upgrade
+    @user = User.first
     @event = Event.first
   end
+    
   
   
   private

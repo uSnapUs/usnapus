@@ -1,6 +1,7 @@
 Someone wants to give us money!
 
 Send an invoice to <%= @user.email %> <%= "(#{@user.name})" if @user.name %>.
+Their event is called <%= @event.name %> and it has <%= pluralize @event.photos.count, "photo" %>.
 
 Cheers,
 The gnomes inside the uSnap.us server
