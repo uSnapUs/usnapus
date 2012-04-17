@@ -20,6 +20,9 @@
           </li>
         <% else %>
           <li class="span2">
+            <%= link_to "Blog", "http://blog.usnap.us" %>
+          </li>
+          <li class="span2">
             <%= link_to('Login', new_user_session_path)  %>
           </li>
         <% end %>
@@ -186,6 +189,10 @@
 
     <div class="row footer">
       <p class="span12 center">
+        <%= link_to "Blog", "http://blog.usnap.us" %>
+        <%= link_to "About Us", "http://blog.usnap.us/about-us" %>
+        <%= link_to "Press", "http://blog.usnap.us/press" %>
+        <a>|</a>
         <%= link_to "Twitter", "http://twitter.com/usnapus" %>
         <%= link_to "Facebook", "https://www.facebook.com/uSnap.Us" %>
         <a>|</a>
