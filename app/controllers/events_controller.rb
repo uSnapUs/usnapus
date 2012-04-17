@@ -20,6 +20,11 @@ class EventsController < ApplicationController
   
   def new
     @event = Event.new(code: Event.generate_unique_code)
+    @price = if (lp = LandingPage.find_by_path(session[:landing_page]))
+      "#{lp.price/100}"
+    else
+      "199"
+    end
   end
   
   def edit
@@ -55,6 +60,10 @@ class EventsController < ApplicationController
     
     if params[:event] && (free = params[:event][:free])
       @event.free = free
+    end  
+      
+    if (lp = LandingPage.find_by_path(session[:landing_page]))
+      @event.landing_page = lp
     end
     
     if @event.save
@@ -64,6 +73,7 @@ class EventsController < ApplicationController
       end
       unless @event.free
         flash[:notice] = "You're good to go! We'll invoice you soon"
+        Notifier.upgrade(current_user, @event).deliver
       end
       
       if @event.eql? current_user.events.first

@@ -1,5 +1,5 @@
 Usnapus::Application.routes.draw do
-  
+
   mount Resque::Server.new, :at => "/resque"
   
   devise_for :users, :controllers => { :registrations => 'registrations' }
@@ -20,6 +20,8 @@ Usnapus::Application.routes.draw do
       end
     end
   end
+
+  match "welcome/:path", to: "landing_pages#show"
 
   resources :signups, only: [:create]
   

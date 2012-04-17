@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120411081711) do
+ActiveRecord::Schema.define(:version => 20120417114614) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "user_id"
@@ -64,10 +64,11 @@ ActiveRecord::Schema.define(:version => 20120411081711) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "code"
-    t.boolean  "is_public",  :default => true
+    t.boolean  "is_public",       :default => true
     t.string   "s3_token"
     t.string   "location"
     t.boolean  "free"
+    t.integer  "landing_page_id"
   end
 
   add_index "events", ["code"], :name => "index_events_on_code", :unique => true
@@ -85,6 +86,14 @@ ActiveRecord::Schema.define(:version => 20120411081711) do
 
   add_index "inbound_emails", ["event_id"], :name => "index_inbound_emails_on_event_id"
   add_index "inbound_emails", ["user_id"], :name => "index_inbound_emails_on_user_id"
+
+  create_table "landing_pages", :force => true do |t|
+    t.string   "path"
+    t.text     "body_html"
+    t.integer  "price"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "photos", :force => true do |t|
     t.string   "photo"

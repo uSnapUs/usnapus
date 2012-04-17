@@ -51,6 +51,51 @@ class EventsControllerTest < ActionController::TestCase
     post :create, event: @event.attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public)
   end
   
+  test "if landing_page is in session, price is different" do
+    #emulate the session being set on a landing page
+    LandingPage.create do |l|
+      l.price = 49*100
+      l.path = "test"
+    end
+    sign_in @user
+    session["landing_page"] = "test"
+    
+    get :new
+    assert_select "button[type=submit] span.price", "49", "Price should be $49"
+  end
+  
+  test "if landing_page is not in session, price is 199" do
+    sign_in @user
+    get :new
+    assert_select "button[type=submit] span.price", "199", "Price should be $199"
+  end
+  
+  test "landing_page details are set on an event if present" do
+    #emulate the session being set on a landing page
+    lp = LandingPage.create do |l|
+      l.price = 49*100
+      l.path = "test"
+    end
+    sign_in @user
+    session["landing_page"] = "test"
+    
+    post :create, event: @event.attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public)
+    e = Event.last
+    assert_equal lp, e.landing_page
+  end
+  
+  test "can't pass landing_page details as params" do
+    lp = LandingPage.create do |l|
+      l.price = 49*100
+      l.path = "test"
+    end
+    sign_in @user
+    
+    assert_raises ActiveModel::MassAssignmentSecurity::Error do
+      post :create, event: @event.attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public).merge(landing_page_id: lp.id)
+    end
+  end
+  
   test "can edit event if admin" do
     Attendee.create do |at|
       at.event = @event

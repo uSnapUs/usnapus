@@ -1,6 +1,9 @@
 Someone wants to give us money!
 
 Send an invoice to <%= @user.email %> <%= "(#{@user.name})" if @user.name %>.
+<% if @event.landing_page %>
+They came from the landing page at "<%= @event.landing_page.path %>" and should be invoiced for US$<%= @event.landing_page.price/100 %>.
+<% end %>
 Their event is called <%= @event.name %> and it has <%= pluralize @event.photos.count, "photo" %>.
 
 Cheers,

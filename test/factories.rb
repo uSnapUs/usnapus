@@ -40,3 +40,6 @@ Factory.define :inbound_email do |ie|
   ie.message_id {SecureRandom.hex(6)}
   ie.to          {"#{Factory(:event).code.upcase}@usnap.us"}
 end
+
+Factory.define :landing_page do |lp|
+end

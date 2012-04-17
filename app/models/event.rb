@@ -10,6 +10,7 @@ class Event < ActiveRecord::Base
   has_many :photos
   has_many :attendees
   has_many :users, through: :attendees
+  belongs_to :landing_page
   
   before_validation :generate_codes, on: :create
   before_validation :assign_event_code
