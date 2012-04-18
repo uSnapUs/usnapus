@@ -21,7 +21,7 @@ class EventsController < ApplicationController
   def new
     @event = Event.new(code: Event.generate_unique_code)
     @price = if (lp = LandingPage.find_by_path(session[:landing_page]))
-      "#{lp.price/100}"
+      "#{lp.price.to_i/100}"
     else
       "199"
     end
