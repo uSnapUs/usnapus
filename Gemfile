@@ -20,7 +20,6 @@ gem 'jquery-rails'
 gem 'formtastic'
 gem 'formtastic-bootstrap'
 gem 'createsend'
-gem 'activemerchant', :require => 'active_merchant'
 gem 'carrierwave'
 gem 'carrierwave_backgrounder', :git=>"https://github.com/nickmalcolm/carrierwave_backgrounder"
 gem 'rmagick'
@@ -35,6 +34,7 @@ gem "airbrake"
 gem 'resque'
 gem "pusher"
 gem 'postmark-rails'
+gem "postmark-mitt"
 gem "devise"
 gem "geocoder", ">= 1.1.1"
 

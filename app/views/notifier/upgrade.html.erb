@@ -1,0 +1,9 @@
+<p>Someone wants to give us money!</p>
+<p>Send an invoice to <%= link_to @user.email, "mailto:#{@user.email}" %> <%= "(#{@user.name})" if @user.name %>.</p>
+<% if @event.landing_page %>
+  <p>They came from the landing page at "<%= @event.landing_page.path %>" and should be invoiced for US$<%= @event.landing_page.price/100 %></p>
+<% end %>
+<p>Their event is called <%= @event.name %> and it has <%= pluralize @event.photos.count, "photo" %>.</p>
+<p>&nbsp;</p>
+<p>Cheers,<br />
+The gnomes inside the uSnap.us server</p>

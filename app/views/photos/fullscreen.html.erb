@@ -25,7 +25,6 @@
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	
 	<%= stylesheet_link_tag "photoswipe" %>
-	<%= airbrake_javascript_notifier %>
 	<%= javascript_include_tag "fullscreen" %>
 	
 	
@@ -37,7 +36,10 @@
 	
 </head>
 <body>
-<div id="gallery" data-event-url="<%= event_photos_url @event %>"></div>
-
+<div id="gallery" data-event-url="<%= event_code_path(@event, suffix: ".json") %>"></div>
+<div id="no_photos" style="font-family: arial; display: none">
+  <h1>No photos yet...</h1>
+  <p><%= link_to "Take me back to my event", event_code_path(@event) %></p>
+</div>
 </body>
 </html>

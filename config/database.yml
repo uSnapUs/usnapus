@@ -36,6 +36,6 @@ production:
   encoding: utf8
   reconnect: false
   database: usnapus_production
-  pool: 1
+  pool: 5
   username: deploy
   password: finrodomlujawlawm

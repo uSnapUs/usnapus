@@ -11,8 +11,8 @@
     </title>
     
     <meta name="description" content="See your wedding through their eyes. Your guests' photos are delivered online instantly, at your fingertips whenever you want. Watch a live steam as your event unfolds. Perfect for wedding photos.">
-    <meta name="author" content="">
-    <meta name="keywords" content="wedding, photograph, photos, events, wedding ideas, disposable cameras, unique wedding">
+    <meta name="author" content="uSnap.us">
+    <meta name="keywords" content="<%= @title.split(" ").join(", ") if @title %>, wedding, photograph, photos, events, wedding ideas, disposable cameras, unique wedding">
 
 
     <meta property="og:title" content="uSnap.us" />
@@ -22,7 +22,7 @@
     <meta property="og:site_name" content="uSnap.Us" />
     <meta property="fb:admins" content="689651850" />
     <meta property="og:description"
-              content="See your wedding through their eyes. Your guests' photos are delivered online instantly, at your fingertips whenever you want. Watch a live steam as your event unfolds. Perfect for wedding photos."/>
+              content="See your wedding through their eyes. Your guests' photos are delivered online instantly, at your fingertips whenever you want. Watch a live stream as your event unfolds. Perfect for wedding photos."/>
 
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -43,30 +43,59 @@
     <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-retina.png" />
   </head>
 
-  <body class="<%= "home" if request.path.eql? "/" %>">
+  <body class="<%= @body_class %><%= " home" if request.path.eql? "/" %>">
     
     <div class="topbar <%= @topbar_class %>">
       <div class="fill">
         <div class="container">
+          
+          <% if current_user %>
+            <div class="settings pull-right">
+              <div class="btn-group">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                  &nbsp;&nbsp;<i class="icon-cog"></i>&nbsp;&nbsp;
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <%= content_for(:dropdown_options) %>
+                  <li>
+                    <% if (event = current_user.events.first) && (event != @event)  %>
+                      <%= link_to event.name, event_code_path(event)  %>
+                    <% else %>
+                      <%= link_to "Create Event", new_event_path  %>
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to "My Account", edit_user_registration_path %>
+                  </li>
+                  <li>
+                    <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          <% end %>
+          
           <h1 class="brand row">
             <div class="span12">
               <%= link_to (image_tag "logo-header.png", :title => "uSnap.us"), root_path %>
             </div>
           </h1>
+          
         </div>
       </div>
     </div>
     
-  
-    <section class="container">
-      <div class="row" id="alert-area">
-      </div>
-    </section>
+    
+    <% unless request.path.eql? "/" %>
+      <section class="container">
+        <div class="row" id="alert-area">
+        </div>
+      </section>
+    <% end %>
       
     <%= yield %>
     
-    
-    <%= airbrake_javascript_notifier %>
     <%= content_for(:pre_scripts) %>
     <%= javascript_include_tag "application" %>
     <%= content_for(:post_scripts) %>
@@ -78,8 +107,8 @@
         <% if flash[:notice] %>
           showAlert("info", "", "<%= flash[:notice] %>")
         <% end %>
-        <% if flash[:alert] %>
-          showAlert("error", "Oops!", "<%= flash[:alert] %>")
+        <% if err = (flash[:alert] || flash[:error]) %>
+          showAlert("error", "Oops!", "<%= err %>")
         <% end %>
         
       });

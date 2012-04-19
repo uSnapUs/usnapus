@@ -11,9 +11,22 @@ class PhotoTest < ActiveSupport::TestCase
     assert Factory.build(:photo, event_id: 100).invalid?
   end
   
-  test "photo doesn't need to belong to a device" do
-    assert Factory.build(:photo, device_id: nil).valid?
+  test "photo can have a device creator" do
+    assert Factory.build(:photo, creator: Factory(:device)).valid?
   end
+  
+  test "photo can have a user creator" do
+    assert Factory.build(:photo, creator: Factory(:user)).valid?
+  end
+  
+  test "photo can have an inbound email creator" do
+    assert Factory.build(:photo, creator: Factory(:inbound_email)).valid?
+  end
+  
+  test "photo needs an creator" do
+    assert Factory.build(:photo, creator: nil).invalid?
+  end
+    
   
   test "photo is processing by default" do
     assert Factory(:photo).photo_processing

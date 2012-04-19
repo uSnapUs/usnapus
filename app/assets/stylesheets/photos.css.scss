@@ -7,7 +7,7 @@
   text-align: center;
   
   p{
-    color: $light_blue;
+    color: $med_blue;
     font-size: 14px;
   }
   
@@ -20,8 +20,8 @@
       padding: 0 15px;
       margin: 5px 5px;
       line-height: 30px;
-      border: 1px solid $light_blue;
-      color: $light_blue;
+      border: 1px solid $med_blue;
+      color: $med_blue;
       display: inline-block;
       
       &:hover, &:active{
@@ -54,25 +54,28 @@
     margin: 1px;
     float: left;
     
-    &:hover .hide_photo{
-      opacity: 0.75;
-    }
-    
     .hide_photo{
       position: absolute;
       z-index: 1;
-      opacity: 0;
-      -webkit-transition: opacity 0.5s linear;
+      display: none;
       
       .close_button{
         position: relative;
-        top: -5px;
-        left: 145px;
+        top: 13px;
+        left: 139px;
+        font-size: 35px;
+        line-height: 20px;
+        padding: 0 10px;
+        color: #fff;
+        opacity: 0.75;
+        cursor: hover;
+        
+        &:hover{
+          color: #D32F34;
+          text-decoration: none;
+        }  
       }
       
-      &:hover{
-        opacity: 1;
-      }
     }
   }
   @media all and (max-width: 320px){
@@ -92,16 +95,6 @@
   }
 }
 
-.close_button{
-  display: block;
-  width: 44px;
-  height: 44px;
-  margin: 0 auto 0;
-  background-image: url(/assets/icons.png);
-  background-repeat: no-repeat;
-  background-position: 0 0;
-}
-
 .branding_overlay{
   position: absolute;
   top: 20px;
@@ -115,11 +108,11 @@
 
 .gallery_footer{
   background-color: #fff;
-  border-top: 1px solid $light_blue;
+  border-top: 1px solid $med_blue;
   margin-top: 40px;
   padding: 20px 0;
   p{
-    color: $light_blue;
+    color: $med_blue;
     margin: 0;
     
     .brand{

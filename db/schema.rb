@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120311075118) do
+ActiveRecord::Schema.define(:version => 20120417114614) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "user_id"
     t.integer  "event_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "is_admin",   :default => false
   end
 
   add_index "attendees", ["event_id"], :name => "index_attendees_on_event_id"
@@ -63,12 +64,36 @@ ActiveRecord::Schema.define(:version => 20120311075118) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "code"
-    t.boolean  "is_public",  :default => true
+    t.boolean  "is_public",       :default => true
     t.string   "s3_token"
     t.string   "location"
+    t.boolean  "free"
+    t.integer  "landing_page_id"
   end
 
   add_index "events", ["code"], :name => "index_events_on_code", :unique => true
+
+  create_table "inbound_emails", :force => true do |t|
+    t.string   "from"
+    t.string   "to"
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.string   "message_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "inbound_emails", ["event_id"], :name => "index_inbound_emails_on_event_id"
+  add_index "inbound_emails", ["user_id"], :name => "index_inbound_emails_on_user_id"
+
+  create_table "landing_pages", :force => true do |t|
+    t.string   "path"
+    t.text     "body_html"
+    t.integer  "price"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "photos", :force => true do |t|
     t.string   "photo"
@@ -79,6 +104,8 @@ ActiveRecord::Schema.define(:version => 20120311075118) do
     t.string   "creator_type"
     t.integer  "creator_id"
   end
+
+  add_index "photos", ["event_id"], :name => "index_photos_on_event_id"
 
   create_table "signups", :force => true do |t|
     t.datetime "event_date"
@@ -104,6 +131,7 @@ ActiveRecord::Schema.define(:version => 20120311075118) do
     t.string   "authentication_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

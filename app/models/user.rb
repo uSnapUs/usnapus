@@ -5,6 +5,14 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :validatable, 
          :token_authenticatable, :recoverable, :trackable
          
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  has_many :attendees
+  has_many :events, through: :attendees
+  has_many :photos, as: :creator
+  
+  attr_accessible :email, :password, :remember_me, :name
+  
+  def going_to? event
+    attendees.where(:event_id => event.id).any?
+  end
+  
 end

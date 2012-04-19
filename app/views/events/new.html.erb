@@ -1,127 +1,145 @@
-<section class="container">
-  
-  <%= form_for @event, html: {class: "event"} do |f| %>
-  
-    <div class="row details">
-      <h1 class="span12 bottom_pad">
-        Your event details
-      </h1>
+<% @title = "Create an Event"
+@body_class = "blue"%>
+
+<!-- Google Website Optimizer Tracking Script -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['gwo._setAccount', 'UA-59005-2']);
+  _gaq.push(['gwo._trackPageview', '/0830794402/goal']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- End of Google Website Optimizer Tracking Script -->
+
+<section class="wizard container">
+  <div class="row">
+    <%= form_for @event, html: {class: "span6 offset3 box box_shadow event", data: {step: "1", max_step: "1"}} do |f| %>
+      <div class="top">
+        <h2 class="title">So, what's the occasion?</h2>
+        <p class="subtitle">Just name your event to get started. Try it for free, pay when you're ready.</p>
+      </div>
       
-      <div class="span6 bottom_pad">
-        <div id="float_over_google_map">
-          <%= f.text_field :location, "placeholder" => "Add the location of your event", :class=>"large grey_border", :tabindex => 1 %>
-          <%= f.hidden_field :latitude %>
-          <%= f.hidden_field :longitude %>
+      
+      <div class="light_blue">
+        
+        <div class="invitation active" data-step="1">
+          <span class="invite bold upcase">An invitation to</span>
+          <%= f.text_field :name, "placeholder" => "Name your special occasion", :class=>"large brand" %>
+          <hr />
         </div>
-        <div id="google_map">
+        
+        <div class="map hidden" data-step="2">
+          <div id="float_over_google_map" class="span6">
+            <%= f.text_field :location, "placeholder" => "Find an address", :class=>"span4 large brand", :tabindex => 1 %>
+            <hr />
+            <%= f.hidden_field :latitude %>
+            <%= f.hidden_field :longitude %>
+          </div>
+          <div id="google_map">
+          </div>
         </div>
-      </div>
-      <div class="offset1 span5 bottom_pad">
-        <%= f.text_field :name, "placeholder" => "Give your event a name", :class=>"span5 large grey_border", :tabindex => 2 %>
-      </div>
-      <div class="">
-        <div class="span5 offset1 bottom_pad">
+        
+        <div class="time hidden" data-step="3">
           <div class="datepicker" data-input="#event_starts"></div>
           <%= f.hidden_field :starts %>
           <%= f.hidden_field :ends %>
         </div>
-      
-        <div class="span5 offset1 btn-group privacy bottom_pad">
-          <a class="btn active" data-val="public" href="#">Public</a>
-          <a class="btn" data-val="private" href="#">Private</a>
-        </div>
-        <%= f.hidden_field :is_public %>
         
-        <div class="span5 offset1 explanation center bottom_pad">
-          <p>
-            <i class="icon-question-sign"></i>
-            <span class="public">Public: Any one with the link can view photos</span>
-            <span class="private hidden">Private: Guests need to log in to see photos</span>
-          </p>
-        </div>
-      </div>
-      <div class="span5 offset1">
-        <a class="btn btn-success btn-large continue">Continue</a>
-      </div>
-    </div>
-    
-    <div class="row payment">
-      <div class="span12">
-        <div class="hero-unit">
-          <h1 class="event_name bottom_pad">Nick and Chelsea's Wedding
-          </h1>
+        <div class="code hidden" data-step="4">
           
-          <p class="options">
-            <a class="btn btn-success btn-large buy">Buy Now</a><br />
-            or <a class="free">try it for free</a>
+          <%= f.hidden_field :is_public %>
+
+          
+          
+          <div class="btn-group privacy">
+            <a class="btn active" data-val="public" href="#">Public</a>
+            <a class="btn" data-val="private" href="#">Private</a>
+          </div>
+          
+
+          <div class="explanation center bottom_pad">
+            <div class="public">
+              <p>
+                <i class="icon-eye-open"></i>
+                Public: Any one can view photos at usnap.us/<span id="event_code_tip"><%= @event.code %></span>
+              </p>
+            </div>
+            <div class="private hidden">
+              <p>
+                <i class="icon-lock"></i>
+                Private: Guests need to log in to see photos
+              </p>
+            </div>
+          </div>
+          
+          <div class="event_code input-prepend">
+            <span class="add-on">@</span>
+            <%= f.text_field :code, :class => "input-small", value: @event.code %>
+          </div>
+          
+          <div class="explanation center ">
+            <p>
+              <i class="icon-map-marker"></i>
+              Use this code to snap photos at other locations
+            </p>
+          </div>
+          <div class="explanation center red valid_chars">
+            <p>
+              <i class="icon-exclamation-sign"></i>
+              Sorry, you can only use letters, numbers and dashes.
+            </p>
+          </div>
+          
+        </div>
+        
+        <div class="payment hidden" data-step="5">
+          <div class="check_me">
+            <p>
+              <%= check_box_tag "accept" %>
+              <label for="accept">&nbsp;&nbsp;I agree to the <%= link_to "Terms of Use", terms_of_use_path, target: "blank" %> and I've read the <%= link_to "Privacy Policy", privacy_policy_path, target: "blank" %>.</label></p>
+          </div>
+          <div class="">
+            <%= content_tag :button, type: :submit, class: "btn btn-large btn-green round" do %>
+              Purchase now for US$<span class="price"><%= @price %></span>
+            <% end %>
+          </div>
+          <h3>Or try it for free with a few limitations</h3>
+          <p>
+            Only the first 10 photos will be visible, and they'll be removed 30 days after they're shared.
+          </p>
+          <p>
+            You can purchase at any time to show all shared photos, and they'll never be removed.
           </p>
         </div>
-      
-        <div class="pricing">
-          <h3 class="show_details">See pricing details <i class="icon-chevron-down"></i></h3>
         
-          <table class="details table table-striped">
-            <thead>
-              <tr>
-                <td></td>
-                <td>Free</td>
-                <td>$99</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Live Photocast</td>
-                <td>First 10 photos only</td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Slideshow</td>
-                <td>First 10 photos only</td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Free iPhone app</td>
-                <td><i class="icon-ok"></i></td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Unlimited Guests</td>
-                <td><i class="icon-ok"></i></td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Unlimited Photos</td>
-                <td><i class="icon-ok"></i></td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Photo Sharing</td>
-                <td>Only you can view photos</td>
-                <td>Public or Private sharing</td>
-              </tr>
-              <tr>
-                <td>Custom Domain</td>
-                <td></td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-              <tr>
-                <td>Web page Hosting</td>
-                <td>30 Days</td>
-                <td>1 year</td>
-              </tr>
-              <tr>
-                <td>Bulk Photo Download</td>
-                <td></td>
-                <td><i class="icon-ok"></i></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </div>
-    <div>
-  <% end %>
-    
+      
+      
+      
+      <div class="bottom row">
+        <p class="span2">
+          <%= link_to "Cancel", "#", class: "cancel" %>
+        </p>
+        <p class="steps span2">
+          <%= link_to raw("&bull;"), "#", class: "active", data: {step: 1} %>
+          <%= link_to raw("&bull;"), "#", data: {step: 2} %>
+          <%= link_to raw("&bull;"), "#", data: {step: 3} %>
+          <%= link_to raw("&bull;"), "#", data: {step: 4} %>
+          <%= link_to raw("&bull;"), "#", data: {step: 5} %>
+        </p>
+        <p class="pull-right span2">
+          <%= link_to "Next", "", class: "disabled btn btn-large btn-blue round next" %>
+          <%= f.hidden_field :free %>
+          <%= f.submit "Try it for free", class: "btn btn-large btn-blue round hidden free" %>
+        </p>
+      </div>
+    <% end %>
+  </div>
 </section>
+
 
 <% content_for(:post_scripts) do %>
   <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
@@ -129,12 +147,11 @@
   <%= stylesheet_link_tag "jquery-ui-1.8.18" %>
 <% end %>
 <% content_for(:jquery) do %>
+  var six_am_in_ms = 6*60*60*1000;
+  
   $(".datepicker").datepicker({
-		changeMonth: true,
-		changeYear: true,
-		showOtherMonths: true,
-		selectOtherMonths: true,
 		minDate: 0,
-		altField: "#event_starts, #event_ends"
+		altField: "#event_starts",
+		dateFormat: "@",
 	});
 <% end %>

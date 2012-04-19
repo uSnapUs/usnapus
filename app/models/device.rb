@@ -1,6 +1,6 @@
 class Device < ActiveRecord::Base
   
-  has_many :photos
+  has_many :photos, as: :creator
   
   validates :guid, presence: {allow_blank: false}
   validates :name, presence: {allow_blank: false}

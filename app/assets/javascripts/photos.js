@@ -24,6 +24,10 @@ $(document).ready(function() {
   
   //Always stick the newest photo at the front
   window.prependPhoto = function(data){
+    
+    //Hide the blank slate message if it's there
+    if($("#blank_slate").length) $("#blank_slate").remove();
+    
     var photo = photoToUsableJSON(data), html = Mustache.to_html($("#gallery_photo_template").html(), photo);
     
     $("#photo_gallery").prepend(html);
@@ -54,7 +58,6 @@ $(document).ready(function() {
   
   window.appendPhoto = function(data){
     var photo = photoToUsableJSON(data), html = Mustache.to_html($("#gallery_photo_template").html(), photo);
-    
     $("#photo_gallery").append(html);
     $(".photo:hidden").fadeIn();
   }
@@ -73,7 +76,7 @@ $(document).ready(function() {
   //Load photos to the bottom of the screen
   window.loadToBottom = function(){
     
-    var at_the_bottom = ($("html").height() - $(window).innerHeight() - $(window).scrollTop()) <= 0,
+    var at_the_bottom = ($("html").height() - $(window).innerHeight() - $(window).scrollTop()) <= 60,
     last_photo = $(".photo:last"),
     last_photo_pos = last_photo.length ? $(".photo:last").position().top : 0,
     room_for_more = last_photo_pos < $(window).innerHeight();
@@ -91,6 +94,8 @@ $(document).ready(function() {
     }
   }
   
+  var scrollTimer;
+  
   if($("#photo_gallery").length > 0){
     //Load photos asynchronously on page load
     loadGalleryPhotos({limit: 4}, function(data){
@@ -99,17 +104,33 @@ $(document).ready(function() {
     
     //If the window scrolls to the bottom, load some more photos
     $(document).scroll(function(){
-      loadToBottom();
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout( function(){
+        loadToBottom();
+      }, 200)
     });
   }
   
   //The live photo cast
   $("#show_latest_photos").on("click", function(){
-    prepareFullscreenImage( $(".photo a:first img").attr("data-"+imageTypeForScreen()+"-src") );
+    if($(".photo").length){
+      prepareFullscreenImage( $(".photo a:eq(1) img").attr("data-"+imageTypeForScreen()+"-src") );
+    }else{
+      showAlert("info", "Sorry,", "you don't have any photos to show!");
+    }
+      
+  });
+  
+  //The live photo cast
+  $("#goto_slideshow").on("click", function(){
+    if($(".photo").length == 0){
+      showAlert("info", "Sorry,", "you don't have any photos to show!");
+      return false
+    }
   });
   
   //Show a photo fullscreen
-  $("#photo_gallery").on("click", ".photo a:not(.hide_photo)", function(){
+  $("#photo_gallery").on("click", ".photo:not(#photo_upgrade) a:not(.hide_photo)", function(){
     prepareFullscreenImage( $(this).find("img").attr("data-"+imageTypeForScreen()+"-src") );
     //This isn't the live photo cast, though
     $("#fullscreen_photo").addClass("dont_update").css({"background-color": "rgba(0,0,0,0.75)"});
@@ -193,54 +214,26 @@ $(document).ready(function() {
       });
   }
   
-  window.twentyfour_to_twelve_hour = function(date){
-    var tf_h = date.getHours(),
-    tw_h = tf_h%12,
-    pm = (tf_h/12 >= 1);
-    
-    //Show both 0000 today and the next day as 12am today, event though that's wrong
-    tw_str = (tw_h == 0 ? 12 : tw_h);
-    
-    return ""+tw_str+(pm ? "pm" : "am");
-  }
+  $("#bulk_download").on("click", function(){
+    $.get($(this).attr("href"), null, null, "script");
+    showAlert("info", "", "We've summoned our elves! They'll email you a download link soon :)");
+    return false;
+  });
   
-  function numberToOrdinal(n) {
-     var s=["th","st","nd","rd"],
-         v=n%100;
-     return n+(s[(v-20)%10]||s[v]||s[0]);
-  }
-  
-  if($(".pretty_time").length){
+  $("#delete_photo_mode").on("click", function(e){
+    $(".hide_photo").show();
     
-    var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-    
-    var time_p = $(".pretty_time"),
-    starts = new Date(time_p.attr("data-utc-starts")),
-    ends = new Date(time_p.attr("data-utc-ends")),
-    time_string = "";
-    
-    if(isNaN(starts.getTime()) || isNaN(ends.getTime())){
-      return false;
-    }
-    
-    //If the event is multiday, show the dates, otherwise show times
-    //If the event ends at midnight, treat that as 'the same day'
-    if(starts.getDate() == (new Date(ends-1)).getDate()){
+    $(".hide_photo").on("click", "a", function(e){
       
-      // Xam - Ypm, Zth of M
-      var starts_string = twentyfour_to_twelve_hour(starts),
-      ends_string = twentyfour_to_twelve_hour(ends),
-      date_string = numberToOrdinal(starts.getDate())+" "+months[starts.getMonth()];
+      var photo = $(this).parents(".photo");
       
-      time_string = starts_string+" - "+ends_string+", "+date_string;
+      $.post($(this).attr("href"), {_method: "delete"}, null, "script");
       
-    }else{
-      //Xth - Yth M
-      time_string = numberToOrdinal(starts.getDate())+" - "+numberToOrdinal(ends.getDate())+" "+months[starts.getMonth()];
-    }
-    
-    time_p.html(time_string);
-    
-  }
+      photo.fadeOut(500, function(){$(this).remove()});
+      
+      e.preventDefault();
+      e.stopPropagation();
+    });
+  });
   
 });
