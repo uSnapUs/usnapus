@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120417114614) do
+ActiveRecord::Schema.define(:version => 20120419055430) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "user_id"
@@ -41,8 +41,13 @@ ActiveRecord::Schema.define(:version => 20120417114614) do
     t.string   "message"
     t.string   "authorization"
     t.integer  "amount"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+    t.string   "currency"
+    t.string   "transaction_identifier"
+    t.string   "merchant_session"
+    t.string   "error_code"
+    t.boolean  "declined"
   end
 
   add_index "charge_attempts", ["billing_detail_id"], :name => "index_charge_attempts_on_billing_detail_id"

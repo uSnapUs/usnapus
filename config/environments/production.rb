@@ -59,4 +59,8 @@ Usnapus::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  
+  config.after_initialize do
+    BillingDetail.gateway = BillingGateway.new(608972, 'SECURIT-E')
+  end
 end

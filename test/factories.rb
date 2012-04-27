@@ -42,33 +42,17 @@ Factory.define :inbound_email do |ie|
 end
 
 Factory.define :landing_page do |lp|
-  d.guid "ABC123"
-  d.name "Nick's iPhone"
-end
-
-Factory.define :user do |u|
-  u.email { Faker::Internet.email }
-  u.password "abc123"
+  lp.guid "ABC123"
+  lp.name "Nick's iPhone"
 end
 
 Factory.define :billing_detail do |bd|
   bd.association :user
   bd.card_name { Faker::Name.name }
-  bd.card_type { ["Visa", "MasterCard"].sample }
+  bd.card_type "Visa"
   bd.month { (Date.today + 1.month).month }
   bd.year { Date.today.year + 1 }
-  bd.number "4111111111111111"
+  bd.number "4987654321098769"
   bd.verification_value "123"
-  bd.after_create { |b| b.number = nil; b.verification_code = nil }
-end
-
-Factory.define :valid_paypal_billing_detail, parent: :billing_detail do |bd|
-  bd.card_type "Visa"
-  bd.number "4265251060983807"
-  bd.month "4"
-  bd.year "2017"
-end
-
-Factory.define :invalid_paypal_billing_detail, parent: :valid_paypal_billing_detail do |bd|
-  bd.number "4704295276906093"
+  bd.after_create { |b| b.number = nil; b.verification_value = nil }
 end

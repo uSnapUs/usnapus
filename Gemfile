@@ -16,6 +16,8 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'activemerchant', :require => 'active_merchant'
+
 gem 'jquery-rails'
 gem 'formtastic'
 gem 'formtastic-bootstrap'
@@ -37,6 +39,7 @@ gem 'postmark-rails'
 gem "postmark-mitt"
 gem "devise"
 gem "geocoder", ">= 1.1.1"
+gem 'simple_uuid'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

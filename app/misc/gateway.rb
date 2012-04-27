@@ -1,51 +1,66 @@
 require 'active_merchant'
-
+require 'simple_uuid'
 class Gateway
+  class Response < Struct.new(:success, :message, :error_code, :transaction_identifier, :merchant_session)
+    def declined? #Was the error with their account. i.e. not the transaction/network
+      error_code.to_i < 10
+    end
+  end
 
-  @gateway = if Rails.env.production?
-              ActiveMerchant::Billing::PaypalExpressGateway.new(
-                login: "",
-                password: "",
-                signature: ""
-              )
-            else
-              #Use PayPal's Sandbox Gateway
-              ActiveMerchant::Billing::Base.mode=:test
-
-              ActiveMerchant::Billing::PaypalExpressGateway.new(
-                login: "usnap_1331415667_biz@gmail.com",
-                password: "1331415688",
-                signature: "AmU.GqEl-6sug4FmTn1FYVx-a3K9Am10IpED7XxLzRgHR3iikWYpIJwV"
-              )
-            end
+  def initialize(paystation_id, gateway_id)
+    @gateway = ActiveMerchant::Billing::PaystationGateway.new(:paystation_id=>paystation_id, :gateway_id=>gateway_id)
+  end
   
-  def self.charge(billing_detail, ip)
-    amount = 99*100 # USD$99 in cents
-    charge_attempt = ChargeAttempt.new do |ca|
-      ca.billing_detail = billing_detail
-      ca.amount = amount
-    end
+  # ActiveMerchant accepts all amounts as Integer values in cents
+  def charge(billing_detail, amount, currency)
+    response = @gateway.purchase(
+        amount.to_i, 
+        billing_detail.to_credit_card, 
+        :currency=>currency, 
+        :order_id=>unique_request_id, 
+        :description=>"..."
+      )
     
-    credit_card = billing_detail.to_credit_card
+    Rails.logger.info(response.inspect)
     
-    if credit_card.valid?
-      response = @gateway.purchase(amount, credit_card, ip:  ip)
-      y response
-      charge_attempt.authorization = response.authorization
+    Response.new(
+        response.success?, 
+        response.message, 
+        response.params["ec"], 
+        response.params["ti"], 
+        response.params["merchant_session"]
+      )
+  end
+  
+  
+  def unique_request_id
+    SimpleUUID::UUID.new.to_guid
+  end
+  
+  class TestImplementation
+    
+    #
+    # The test implementation mimics the responses based on the cents part of the amount, 
+    # just as a PayStation account in test mode does, but skips actually talking to PayStation
+    #
+    def charge(billing_details, amount, currency)
+      transaction_id = "000939494-01"
+      merchant_session = SimpleUUID::UUID.new.to_guid
       
-      if response.success?
-        charge_attempt.success = true
-      else
-        charge_attempt.success = false
-        charge_attempt.message = response.message
+      cents = amount%100
+      case cents
+      when 00
+        return Response.new(true, nil, "0", transaction_id, merchant_session)
+      when 51
+        return Response.new(false, "Insufficient funds", "5", transaction_id, merchant_session)
+      when 12  
+        return Response.new(false, "Transaction type not supported", "8", transaction_id, merchant_session)
+      when 54
+        return Response.new(false, "Expired card", "4", transaction_id, merchant_session)
+      when 91
+        return Response.new(false, "Error communicating with bank", "6", transaction_id, merchant_session)
       end
-    else
-      charge_attempt.success = false
-      charge_attempt.message = "Credit card is not valid: #{credit_card.errors.full_messages.join('. ')}"
     end
-    
-    charge_attempt.save!
-    charge_attempt
   end
   
 end

@@ -1,4 +1,7 @@
 class BillingDetail < ActiveRecord::Base
+  
+  cattr_accessor :gateway
+  self.gateway = Gateway::TestImplementation.new #Gateway.new(608972, "SECURIT-E") #TODO: Build test implementation for when this goes live
 
   belongs_to :user
   has_many :charge_attempts
@@ -26,8 +29,18 @@ class BillingDetail < ActiveRecord::Base
     )
   end
   
-  def charge(ip)
-    Gateway.charge(self, ip) unless ip.blank?
+  def charge(amount, currency)
+    response = self.gateway.charge(self, amount, currency)
+    self.charge_attempts.create do |ca|
+      ca.success = response.success
+      ca.message = response.message
+      ca.error_code = response.error_code
+      ca.transaction_identifier = response.transaction_identifier
+      ca.declined = response.declined?
+      ca.merchant_session = response.merchant_session
+      ca.amount = amount
+      ca.currency = currency
+    end
   end
   
   private
