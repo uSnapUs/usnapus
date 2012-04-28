@@ -52,12 +52,32 @@ form.event{
       color: $dark_blue;
     }
     
+    label{
+      color: $med_blue;
+    }
+    
     input.error{
       color: $red;
     }
     
     .light_blue{
       background-color: #EAF3FC;
+      
+      .billing {
+        padding: 20px 20px;
+        float: none;
+        text-align: left;
+        input{
+          float: left;
+        }
+        
+        input[type=submit]{
+          padding: 50px 25px;
+          margin: 10px 0;
+          font-weight: 800;
+          font-size: 110%;
+        }
+      }
       
       .invitation{
         padding: 100px 10px;
