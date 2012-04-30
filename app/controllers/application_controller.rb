@@ -22,4 +22,11 @@ class ApplicationController < ActionController::Base
     current_user || current_device
   end
   
+  def ssl_required
+    if Rails.env.production? && !request.ssl?
+      flash.keep
+      redirect_to "https://usnap.us#{request.fullpath}"
+    end
+  end
+  
 end

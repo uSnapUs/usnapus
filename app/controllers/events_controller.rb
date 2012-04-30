@@ -16,7 +16,7 @@ class EventsController < ApplicationController
     end
   end
   
-  before_filter :authenticate_user!, :except => [:index]
+  before_filter :authenticate_user!, :except => [:index, :billing_test]
   
   def new
     @event = Event.new(code: Event.generate_unique_code)
@@ -25,6 +25,11 @@ class EventsController < ApplicationController
     else
       "199"
     end
+  end
+  
+  before_filter :ssl_required, :only=>:billing_test
+  def billing_test
+    @event = Event.new(code: Event.generate_unique_code)
   end
   
   def edit
