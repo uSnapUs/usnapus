@@ -22,6 +22,7 @@ Usnapus::Application.routes.draw do
   end
 
   match "welcome/:path", to: "landing_pages#show"
+  match "this_is_a_test/billing", to: "events#billing_test"
 
   resources :signups, only: [:create]
   

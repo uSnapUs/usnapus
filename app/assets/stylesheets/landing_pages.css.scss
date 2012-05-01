@@ -1,3 +1,7 @@
-// Place all the styles related to the LandingPages controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.landing_page .photo_back{
+  background-color: #1C2228;
+  background-image: url('bg-header.jpg');
+  background-position: center top;
+  background-repeat: no-repeat;
+  margin-bottom: 40px;
+}

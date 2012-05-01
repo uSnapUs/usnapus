@@ -1,2 +1,170 @@
 <% @topbar_class = "hidden" %>
-<%= raw @landing_page.body_html %>
+<div class="landing_page">
+  <div class="photo_back">
+
+    <section class="container">
+      <div class="row" id="alert-area">
+      </div>
+    </section>
+
+    <div class="container center shadow">
+  
+      <div class="row">
+        <h1 class="span12 logo brand">uSnap.us</h1>
+      </div>
+  
+      <div class="row">
+        <p class="span12 subtitle">
+          Let your guests capture your wedding &amp; see it unfold live.
+        </p>
+      </div>
+  
+      <div class="row signup">
+        <div class="span12">
+          <div class="">
+            <%= form_for @user, url: registration_path(@user), html: {class: "background small round form-horizontal"} do |f| %>
+              <%= f.text_field :name, placeholder: "Your Name" %>
+              <%= f.email_field :email, placeholder: "Your Email" %>
+              <%= f.password_field :password, placeholder: "Your Password" %>
+              <%= f.submit "Create your event now", class: "btn btn-green" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row items">
+        <div class="span4">
+          <div class="dot">
+            <%= image_tag "item_dot.png", :title => "create an event" %>
+          </div>
+
+          <h2 class="brand">
+            Create an event
+          </h2>
+
+          <p>
+            Sign up to add your event,
+            invite guests to get the App.
+          </p>
+        </div>
+
+        <div class="span4">
+          <div class="dot">
+            <%= image_tag "item_dot.png", :title => "guests snap pics" %>
+          </div>
+
+          <h2 class="brand">
+            Guests snap pics
+          </h2>
+
+          <p>
+            Their photos are instantly
+            shared with you.
+          </p>
+        </div>
+
+        <div class="span4">
+          <div class="dot">
+            <%= image_tag "item_dot.png", :title => "see it unfold live" %>
+          </div>
+
+          <h2 class="brand">
+            See it unfold live
+          </h2>
+
+          <p>
+            Watch photos appear in real time,
+            revisit them whenever you like.
+          </p>
+        </div>
+    
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="row panel">
+      <div class="span6">
+        <%= image_tag "phones.jpg", :title => "Download the uSnap.us smartphone app" %>
+      </div>
+
+      <div class="span5">
+        <h2 class="brand">Pics from all your guests</h2>
+        <p>
+          Using the free app, pics snapped by your guests are instantly shared with you the moment they're taken.
+        </p>
+        <p>
+          Guests can also email in photos to a special email address. This is great for those on other smart phones or with digital cameras.
+        </p>
+
+        <h2 class="brand">Just point and shoot</h2>
+        <p>
+          Guests don't need to create accounts or login, their phone simply uses its location to place them at your event. Just open the app and start snapping.
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span12">
+        <hr class="no_bottom_padding" />
+      </div>
+    </div>
+
+    <div class="row panel">
+      <div class="span5">
+        <h2 class="brand">Share it live</h2>
+        <p>
+          Share the live stream with family and friends that can't make
+          it on the day, or play a live slideshow at the event.
+        </p>
+  
+        <h2 class="brand">Keep the memories forever</h2>
+        <p>
+          Revisit everyones pics after the day, share them with others. Publish them to
+          Facebook, create prints, make a book - it's simple when everyone's pics are together.
+        </p>
+      </div>
+
+      <div class="offset1 span6">
+        <%= image_tag "gallery.jpg", :title => "See all your photos in one location" %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span12">
+        <hr class="no_bottom_padding" />
+      </div>
+    </div>
+
+    <div class="row last panel">
+      <div class="span12 center">
+        <p class="bottom_pad">
+          <%= link_to "Create your event for free", "#", class: "btn btn-green round" %>
+        </p>
+        <p>
+          Try it for free and the first 10 photos will be visible. We'll keep them for 30 days.
+        </p>
+        <p>Purchase at any time for <span class="brand">US$199</span> to see all your photos, and they'll never be removed.
+        </p>
+      </div>
+    </div>
+
+
+    <div class="row footer">
+      <p class="span12 center">
+        <%= link_to "Blog", "http://blog.usnap.us" %>
+        <%= link_to "About Us", "http://blog.usnap.us/about-us" %>
+        <%= link_to "Press", "http://blog.usnap.us/press" %>
+        <a>|</a>
+        <%= link_to "Twitter", "http://twitter.com/usnapus" %>
+        <%= link_to "Facebook", "https://www.facebook.com/uSnap.Us" %>
+        <a>|</a>
+        <%= link_to "Terms of Use", terms_of_use_path %>
+        <%= link_to "Privacy Policy", privacy_policy_path %>
+      </p>
+    </div>
+  </div>
+</div>
