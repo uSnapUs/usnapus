@@ -9,7 +9,7 @@ class NotifierTest < ActionMailer::TestCase
     email = Notifier.bulk_download_request(user, event).deliver
     assert !ActionMailer::Base.deliveries.empty?
     
-    assert_equal ["team@usnap.us"], email.to
+    assert_equal ["nick@usnap.us"], email.to
     assert_equal "Bulk download request for NICKS", email.subject
     
     assert_match /Nick Malcolm/, email.encoded

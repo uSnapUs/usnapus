@@ -1,10 +1,10 @@
 class Notifier < Devise::Mailer
   default_url_options[:host] = "usnap.us"
   
-  SUPPORT = if Rails.env.development?
-              "nick@usnap.us"
-            else
+  SUPPORT = if Rails.env.production?
               "team@usnap.us"
+            else
+              "nick@usnap.us"
             end
             
   default :from => SUPPORT
