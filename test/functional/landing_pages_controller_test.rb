@@ -13,7 +13,6 @@ class LandingPagesControllerTest < ActionController::TestCase
   test "should show landing_page" do
     get :show, path: @path
     assert_response :success
-    assert_select "h1.test_header", 1
     assert_equal @path, session["landing_page"]
   end
   

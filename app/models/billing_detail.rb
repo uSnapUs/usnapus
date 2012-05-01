@@ -1,7 +1,7 @@
 class BillingDetail < ActiveRecord::Base
   
   cattr_accessor :gateway
-  self.gateway = Gateway::TestImplementation.new #Gateway.new(608972, "SECURIT-E") #TODO: Build test implementation for when this goes live
+  self.gateway = Gateway::TestImplementation.new
 
   belongs_to :user
   has_many :charge_attempts
