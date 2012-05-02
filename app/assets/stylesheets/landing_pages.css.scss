@@ -3,5 +3,60 @@
   background-image: url('bg-header.jpg');
   background-position: center top;
   background-repeat: no-repeat;
-  margin-bottom: 40px;
+  margin-bottom: 0px;
+  padding-bottom:120px;
+  padding-top:100px;
+  
+}
+.landing_page{
+	.panel h2{
+  	font-size:36px;
+  }
+}
+.logo.tight{
+	margin-bottom:40px;
+}
+.panel h2.no_margin_top{
+	margin-top:0px;
+}
+.panel h3{
+	font-size:18px;
+	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+	color:#38536f;
+}
+.signup form.blue{
+	background-color:#ecf3fa;
+}
+span.blue{
+	color:#38536f;
+	padding:5px;
+}
+span.currency{
+	font-size:14px;
+}
+div.light_blue{
+	border-top:1px solid #dfeaf5;
+	border-bottom:1px solid #dfeaf5;;
+	background-color:#edf3fa
+}
+div.features{
+	padding-top:50px;
+	padding-bottom:50px;
+	.dot{
+		margin-bottom:20px;
+	}
+}
+p.quote.first{
+	margin-top:50px;
+}
+p.quote{
+	font-size:20px;
+	margin-top:10px;
+	margin-bottom:5px;
+}
+p.attrib{
+	font-size:14px;
+}
+.dark_blue{
+	background-color:#1c2228;
 }
