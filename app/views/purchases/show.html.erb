@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Event:</b>
+  <%= @purchase.event_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @purchase.user_id %>
+</p>
+
+<p>
+  <b>Charge attempt:</b>
+  <%= @purchase.charge_attempt_id %>
+</p>
+
+<p>
+  <b>Currency:</b>
+  <%= @purchase.currency %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%= @purchase.amount %>
+</p>
+
+
+<%= link_to 'Edit', edit_purchase_path(@purchase) %> |
+<%= link_to 'Back', purchases_path %>

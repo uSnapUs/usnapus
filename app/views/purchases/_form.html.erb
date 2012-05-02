@@ -1,0 +1,13 @@
+<%= semantic_form_for @purchase do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :event_id %>
+    <%= f.input :user_id %>
+    <%= f.input :charge_attempt_id %>
+    <%= f.input :currency %>
+    <%= f.input :amount %>
+  <% end %>
+
+  <%= f.buttons do %>
+    <%= f.commit_button %>
+  <% end %>
+<% end %>

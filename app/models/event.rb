@@ -10,6 +10,7 @@ class Event < ActiveRecord::Base
   has_many :photos
   has_many :attendees
   has_many :users, through: :attendees
+  has_one :purchase
   belongs_to :landing_page
   
   before_validation :generate_codes, on: :create
@@ -49,6 +50,10 @@ class Event < ActiveRecord::Base
     else
       Event.generate_unique_code 
     end
+  end
+  
+  def purchased?
+    self.purchase.present?
   end
   
   private
