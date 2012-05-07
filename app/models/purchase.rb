@@ -16,6 +16,10 @@ class Purchase < ActiveRecord::Base
     billing_detail.charge(self.amount, self.currency)
   end
   
+  def success?
+    charge_attempt.try(:success)
+  end
+  
   def description
     "#{event.title} for #{currency}$#{amount/100}.#{amount%100}"
   end

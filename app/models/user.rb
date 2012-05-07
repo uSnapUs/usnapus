@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   
   has_many :billing_details
+  has_many :purchases
   
   devise :database_authenticatable, :registerable, :validatable, 
          :token_authenticatable, :recoverable, :trackable
@@ -17,7 +18,7 @@ class User < ActiveRecord::Base
   
   def purchase(event, billing_detail, amount, currency)
     
-    purchase = Purchase.new do |p|
+    purchase = self.purchases.new do |p|
       p.event = event
       p.amount = amount
       p.currency = currency

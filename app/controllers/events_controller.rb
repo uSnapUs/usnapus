@@ -1,6 +1,10 @@
 class EventsController < ApplicationController
-  # GET /events
-  # GET /events.json
+  
+  
+  before_filter :authenticate_user!, except: [:index, :billing_test]
+  before_filter :get_current_price, only: [:new]
+  before_filter :ssl_required, only: :billing_test
+  
   def index
     
     @events = []
@@ -16,18 +20,10 @@ class EventsController < ApplicationController
     end
   end
   
-  before_filter :authenticate_user!, :except => [:index, :billing_test]
-  
   def new
     @event = Event.new(code: Event.generate_unique_code)
-    @price = if (lp = LandingPage.find_by_path(session[:landing_page]))
-      "#{lp.price.to_i/100}"
-    else
-      "199"
-    end
   end
   
-  before_filter :ssl_required, :only=>:billing_test
   def billing_test
     @event = Event.new(code: Event.generate_unique_code)
   end
@@ -57,38 +53,46 @@ class EventsController < ApplicationController
     
   end
     
-  
   def create
-    @event = Event.new(params[:event].except(:free))
+    if params[:event]
+      @event = Event.new(params[:event].except(:free))
     
-    set_event_time(@event)
+      set_event_time(@event)
     
-    if params[:event] && (free = params[:event][:free])
-      @event.free = free
-    end  
+      if params[:event] && (free = params[:event][:free])
+        @event.free = free
+      end  
       
-    if (lp = LandingPage.find_by_path(session[:landing_page]))
-      @event.landing_page = lp
-    end
+      if (lp = LandingPage.find_by_path(session[:landing_page]))
+        @event.landing_page = lp
+      end
     
-    if @event.save
-      @event.attendees.create! do |at|
-        at.user = current_user
-        at.is_admin = true
-      end
-      unless @event.free
-        flash[:notice] = "You're good to go! We'll invoice you soon"
-        Notifier.upgrade(current_user, @event).deliver
-      end
+      if @event.save
+        @event.attendees.create! do |at|
+          at.user = current_user
+          at.is_admin = true
+        end
+        unless @event.free
+          flash[:notice] = "You're good to go! We'll invoice you soon"
+          Notifier.upgrade(current_user, @event).deliver
+        end
       
-      if @event.eql? current_user.events.first
-        Notifier.welcome(current_user, @event).deliver
+        if @event.eql? current_user.events.first
+          Notifier.welcome(current_user, @event).deliver
+        end
+        
+        if params[:pay_now]
+          redirect_to new_event_purchase_path @event
+        else
+          redirect_to event_photos_path @event
+        end
+      else
+        p @event.errors
+        flash[:error] = "Please fix the errors below"
+        render "new"
       end
-      
-      redirect_to event_photos_path @event
     else
-      flash[:error] = "Please fix the errors below"
-      render "new"
+      redirect_to new_event_path
     end
   end
 

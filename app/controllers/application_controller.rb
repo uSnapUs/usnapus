@@ -23,9 +23,17 @@ class ApplicationController < ActionController::Base
   end
   
   def ssl_required
-    if Rails.env.production? && !request.ssl?
+    if !request.ssl?
       flash.keep
-      redirect_to "https://usnap.us#{request.fullpath}"
+      redirect_to "https://#{request.host}#{request.fullpath}"
+    end
+  end
+  
+  def get_current_price
+    @price = if (lp = LandingPage.find_by_path(session[:landing_page]))
+      lp.price
+    else
+      19900
     end
   end
   

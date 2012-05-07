@@ -19,7 +19,10 @@ Usnapus::Application.routes.draw do
         get :download
       end
     end
+    resources :purchases, only: [:new, :create]
   end
+  
+  
 
   match "welcome/:path", to: "landing_pages#show"
   match "this_is_a_test/billing", to: "events#billing_test"

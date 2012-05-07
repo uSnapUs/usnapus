@@ -1,5 +1,68 @@
-<h1>New purchase</h1>
+<% @title = "Create an Event"
+@body_class = "blue"%>
 
-<%= render 'form' %>
-
-<%= link_to 'Back', purchases_path %>
+<section class="wizard container">
+  <div class="row">
+    <%= form_for @billing_detail, url: event_purchases_path, html: {class: "span6 offset3 box form-horizontal box_shadow event", data: {step: "1", max_step: "1"}} do |f| %>
+      <div class="top">
+        <h2 clas
+        s="title">Checkout</h2>
+        <p class="subtitle">Enter your billing details into the secure form below to complete your purchase.</p>
+        <p class="subtitle">You will be charged <span id="price"><%= pretty_price @price %></span>.</p>
+      </div>
+      
+      
+      <div class="light_blue">
+        
+        <div class="billing active" data-step="0">
+          
+          <div class="control-group">
+            <label for="number">Card Type</label>
+            <div class="controls">
+              <%= f.select :card_type, options_for_select(["Visa", "Mastercard"]), class: "span2" %>
+            </div>
+          </div>
+          
+          <div class="control-group">
+            <label for="number">Card Number</label>
+            <div class="controls">
+              <%= f.text_field :number %>
+            </div>
+          </div>
+          
+          <div class="control-group">
+            <label for="number">Card Holder Name</label>
+            <div class="controls">
+              <%= f.text_field :card_name %>
+            </div>
+          </div>
+          
+          <div class="control-group">
+            <label for="number">Expiry Date</label>
+            <div class="controls">
+              <%= f.select :month, options_for_select(("01".."12")), class: "span1" %>
+              <%= f.select :year, options_for_select(Date.today.year..Date.today.year + 7), class: "span1" %> 
+            </div>
+          </div>
+          
+          <div class="control-group">
+            <label for="number">3 Digit Security Code</label>
+            <div class="controls">
+              <%= f.text_field :verification_value, class: "span1" %><i class="icon-question-sign" style="padding: 10px 0 0 4px" title="Look for three numbers on the back of your credit card."></i>
+            </div>
+          </div>
+          
+          <div class="" style="width:100%;padding-top:20px">
+            <p style='color:#999;padding: 10px 0 0 0;float:left'>
+              All purchases are subject to our <%= link_to "Terms of Use", terms_of_use_path, _target: "blank" %>
+            </p>
+            <%= content_tag :button, type: :submit, class: "btn btn-large btn-green", style: "float:right" do %>
+              Buy Now
+            <% end %>
+          </div>
+          <br /><br />
+        </div>
+      </div>  
+    <% end %>
+  </div>
+</section>

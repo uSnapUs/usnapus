@@ -8,4 +8,8 @@ module ApplicationHelper
     "/#{event.code}#{options[:suffix]}"
   end
   
+  def pretty_price(amount_in_cents, currency = "USD")
+    "#{currency}$#{amount_in_cents.to_i/100}"
+  end
+  
 end

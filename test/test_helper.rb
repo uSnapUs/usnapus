@@ -6,7 +6,8 @@ require 'mocha'
 class ActiveSupport::TestCase
   
   fixtures :all
-
+  TEST_PASSWORD = "testtest"
+  
   # Add more helper methods to be used by all tests here...
   
 end

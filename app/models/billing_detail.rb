@@ -25,7 +25,7 @@ class BillingDetail < ActiveRecord::Base
       first_name: first_name,
       last_name: last_name,
       verification_value: verification_value,
-      type: card_type.downcase
+      type: card_type.try(:downcase)
     )
   end
   
