@@ -26,7 +26,7 @@ class PurchaseFlowsTest < ActionDispatch::IntegrationTest
       event = Event.last
     
       assert_equal "/events/#{event.to_param}/purchases/new", path
-      assert https?
+      #assert https?
     
       post_via_redirect "/events/#{event.to_param}/purchases", billing_detail: {
           card_type: "Visa",
@@ -37,21 +37,21 @@ class PurchaseFlowsTest < ActionDispatch::IntegrationTest
           verification_value: "123"
         } 
       
-      assert https?
+      #assert https?
       assert_equal "/events/#{event.to_param}/photos", path  
     end
   end
   
-  test "redirects to HTTPS" do
-    event = Factory(:event)
-    Factory(:attendee, event: event, user: @user)
-    
-    session_for @user do
-      get_via_redirect "/events/#{event.to_param}/purchases/new"
-      assert_equal "/events/#{event.to_param}/purchases/new", path, "Should be the same page, just HTTPS"
-      assert https?
-    end
-  end
+  # test "redirects to HTTPS" do
+  #     event = Factory(:event)
+  #     Factory(:attendee, event: event, user: @user)
+  #     
+  #     session_for @user do
+  #       get_via_redirect "/events/#{event.to_param}/purchases/new"
+  #       assert_equal "/events/#{event.to_param}/purchases/new", path, "Should be the same page, just HTTPS"
+  #       assert https?
+  #     end
+  #   end
   
   
   private 

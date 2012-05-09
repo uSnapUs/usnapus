@@ -5,8 +5,12 @@ class PurchasesController < ApplicationController
   before_filter :ssl_required
   
   def new
-    @billing_detail = BillingDetail.new do |b|
-      b.user = current_user
+    if current_user.events.find_by_id(params[:event_id])
+      @billing_detail = BillingDetail.new do |b|
+        b.user = current_user
+      end
+    else
+      raise ActiveRecord::RecordNotFound
     end
   end
   
@@ -25,7 +29,7 @@ class PurchasesController < ApplicationController
       end
       
       unless @billing_detail.save
-        flash[:error] = "Whoops, you'll have to fix some things below:"
+        flash.now[:error] = "You'll have to fix some things below:"
         render "new"
       else
         purchase = current_user.purchase(@event, @billing_detail, @price, "USD")
@@ -35,13 +39,13 @@ class PurchasesController < ApplicationController
           redirect_to event_photos_path(@event)
         else
           if purchase.errors[:credit_card]
-            flash[:error] = "Sorry, you have insufficient funds on this card"
+            flash.now[:error] = "You have insufficient funds on this card"
             render :new and return
           elsif purchase.errors[:event_id]
             flash[:error] = "This event has already been purchased"
             redirect_to event_photos_path(@event)
           else
-            flash[:error] = "There was an error! You haven't been charged."
+            flash.now[:error] = "There was an error! You haven't been charged."
             render :new and return
           end
         end

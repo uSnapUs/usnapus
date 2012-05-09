@@ -253,6 +253,7 @@ DEPENDENCIES
   mocha
   mysql2 (= 0.3.10)
   newrelic_rpm
+  nokogiri
   postmark-mitt
   postmark-rails
   pusher

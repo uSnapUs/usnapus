@@ -19,7 +19,7 @@
           <div class="control-group">
             <label for="number">Card Type</label>
             <div class="controls">
-              <%= f.select :card_type, options_for_select(["Visa", "Mastercard"]), class: "span2" %>
+              <%= f.select :card_type, options_for_select([["Visa", "visa"], ["Mastercard", "master"]]), class: "span2" %>
             </div>
           </div>
           

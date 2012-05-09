@@ -3,7 +3,7 @@
 
 <% content_for(:dropdown_options) do %>
   <% if @attendee.try(:is_admin) %>
-    <% if @event.free %>
+    <% unless @event.purchased? %>
       <li>
         <%= link_to "Upgrade for $199", upgrade_event_path(@event) %>
       </li>
@@ -42,7 +42,7 @@
   <div class="row">
     <div id="photo_gallery" data-json-url="<%= event_code_path @event, suffix: ".json" %>">
       
-      <% if @event.free %>
+      <% unless @event.purchased? %>
         <div class="photo" id="photo_upgrade">
           <%= link_to (image_tag "upgrade_photo.jpg"), upgrade_event_path(@event), title: "Upgrade now!" %>
         </div>

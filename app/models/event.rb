@@ -53,7 +53,7 @@ class Event < ActiveRecord::Base
   end
   
   def purchased?
-    self.purchase.present?
+    self.purchase.present? || !self.free
   end
   
   private

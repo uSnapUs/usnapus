@@ -1,3 +1,5 @@
+require 'bootstrap_errors'
+
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
@@ -23,7 +25,7 @@ class ApplicationController < ActionController::Base
   end
   
   def ssl_required
-    if !request.ssl?
+    if !request.ssl? && Rails.env.production?
       flash.keep
       redirect_to "https://#{request.host}#{request.fullpath}"
     end

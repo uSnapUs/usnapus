@@ -42,7 +42,7 @@ class PurchasesControllerTest < ActionController::TestCase
         end
       end
     end
-    assert_redirected_to event_path(@event)
+    assert_redirected_to event_photos_path(@event)
     
     ca = ChargeAttempt.last
     assert ca.success?
@@ -101,7 +101,7 @@ class PurchasesControllerTest < ActionController::TestCase
       end
     end
     assert_template :new
-    assert_equal "Sorry, you have insufficient funds on this card", flash[:error]
+    assert_equal "You have insufficient funds on this card", flash[:error]
     
   end
   

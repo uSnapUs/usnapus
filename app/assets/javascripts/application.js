@@ -14,6 +14,7 @@
 //= require home
 //= require photos
 //= require signups
+//= require purchases
 
 $(document).ready(function() {
   $('input, textarea').placeholder();

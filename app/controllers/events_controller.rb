@@ -81,13 +81,13 @@ class EventsController < ApplicationController
           Notifier.welcome(current_user, @event).deliver
         end
         
+        #For testing
         if params[:pay_now]
           redirect_to new_event_purchase_path @event
         else
           redirect_to event_photos_path @event
         end
       else
-        p @event.errors
         flash[:error] = "Please fix the errors below"
         render "new"
       end

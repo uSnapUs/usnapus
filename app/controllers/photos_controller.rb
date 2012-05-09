@@ -13,7 +13,7 @@ class PhotosController < ApplicationController
       @photos = @photos.limit(limit.to_i)
     end
     
-    if @event.free
+    unless @event.purchased?
       @photo_count = photos.count #For a little teaser message
       if(@photo_count>10)
         p @photo_count

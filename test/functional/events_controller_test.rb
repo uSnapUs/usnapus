@@ -61,13 +61,13 @@ class EventsControllerTest < ActionController::TestCase
     session["landing_page"] = "test"
     
     get :new
-    assert_select "button[type=submit] span.price", "49", "Price should be $49"
+    assert_select "button[type=submit] span#price", "USD$49", "Price should be $49"
   end
   
   test "if landing_page is not in session, price is 199" do
     sign_in @user
     get :new
-    assert_select "button[type=submit] span.price", "199", "Price should be $199"
+    assert_select "button[type=submit] span#price", "USD$199"
   end
   
   test "landing_page details are set on an event if present" do
