@@ -58,10 +58,9 @@ class EventsController < ApplicationController
       @event = Event.new(params[:event].except(:free))
     
       set_event_time(@event)
-    
-      if params[:event] && (free = params[:event][:free])
-        @event.free = free
-      end  
+      #always free on create, have to put in billing to make it not free
+      @event.free=true
+      
       
       if (lp = LandingPage.find_by_path(session[:landing_page]))
         @event.landing_page = lp
@@ -81,11 +80,15 @@ class EventsController < ApplicationController
           Notifier.welcome(current_user, @event).deliver
         end
         
-        #For testing
-        if params[:pay_now]
-          redirect_to new_event_purchase_path @event
+        if params[:event] && (free = params[:event][:free])
+          if free=="1"            
+             redirect_to event_photos_path @event
+          else
+
+            redirect_to new_event_purchase_path @event
+          end
         else
-          redirect_to event_photos_path @event
+            redirect_to new_event_purchase_path @event
         end
       else
         flash[:error] = "Please fix the errors below"
@@ -101,12 +104,8 @@ class EventsController < ApplicationController
       head :not_found and return
     end
     
-    Notifier.upgrade(current_user, @event).deliver
-    flash[:notice] = "Thanks! You've been upgraded, and we'll invoice you soon."
-    @event.free = false
-    @event.save!
-    
-    redirect_to event_photos_path(@event)
+   
+    redirect_to new_event_purchase_path @event
   end
   
   private

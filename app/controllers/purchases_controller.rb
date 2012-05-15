@@ -36,6 +36,9 @@ class PurchasesController < ApplicationController
         
         if purchase.success?
           flash[:notice] = "Thanks! Your purchase was successful, here's your event:"
+          Notifier.upgrade(current_user, @event).deliver
+          @event.free=false
+          @event.save!
           redirect_to event_photos_path(@event)
         else
           if purchase.errors[:credit_card]
