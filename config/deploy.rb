@@ -4,7 +4,7 @@ $:.unshift(File.expand_path('./lib', ENV['rvm_path'])) # Add RVM's lib directory
 require "rvm/capistrano"                  # Load RVM's capistrano plugin.
 
 
-set :rvm_bin_path, "$HOME/bin"
+set :rvm_bin_path, "/usr/local/rvm/bin"
 set :application, "usnapus"
 
 set :user, "deploy"
