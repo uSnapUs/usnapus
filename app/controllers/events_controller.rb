@@ -80,15 +80,10 @@ class EventsController < ApplicationController
           Notifier.welcome(current_user, @event).deliver
         end
         
-        if params[:event] && (free = params[:event][:free])
-          if free=="1"            
-             redirect_to event_photos_path @event
-          else
-
-            redirect_to new_event_purchase_path @event
-          end
+        if params[:event] && params[:event][:free].try(:eql?, "1")
+          redirect_to event_photos_path @event
         else
-            redirect_to new_event_purchase_path @event
+          redirect_to new_event_purchase_path @event
         end
       else
         flash[:error] = "Please fix the errors below"

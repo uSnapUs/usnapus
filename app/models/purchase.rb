@@ -16,8 +16,8 @@ class Purchase < ActiveRecord::Base
     billing_detail.charge(self.amount, self.currency)
   end
   
-  def success?
-    charge_attempt.try(:success)
+  def was_successful?
+    charge_attempt.try(:success) && !charge_attempt.try(:declined)
   end
   
   def description

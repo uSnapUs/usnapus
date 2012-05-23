@@ -104,7 +104,7 @@
               <label for="accept">&nbsp;&nbsp;I agree to the <%= link_to "Terms of Use", terms_of_use_path, target: "blank" %> and I've read the <%= link_to "Privacy Policy", privacy_policy_path, target: "blank" %>.</label></p>
           </div>
           <div class="">
-            <%= content_tag :button, type: :submit, class: "btn btn-large btn-green round" do %>
+            <%= content_tag :button, type: :submit, class: "btn btn-large btn-green round purchase" do %>
               Purchase now for <span id="price"><%= pretty_price @price %></span>
             <% end %>
           </div>
@@ -134,7 +134,7 @@
         </p>
         <p class="pull-right span2">
           <%= link_to "Next", "", class: "disabled btn btn-large btn-blue round next" %>
-          <%= f.hidden_field :free %>
+          <%= f.hidden_field :free, value: "1" %>
           <%= f.submit "Try it for free", class: "btn btn-large btn-blue round hidden free" %>
         </p>
       </div>

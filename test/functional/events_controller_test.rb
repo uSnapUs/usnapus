@@ -29,15 +29,29 @@ class EventsControllerTest < ActionController::TestCase
     
     assert_difference "Attendee.count" do
       assert_difference "Event.count" do
-        post :create, event: @event.attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public)
+        post :create, event: @event.attributes.slice(
+          :location, :name, 
+          :latitude, :longitude, 
+          :starts, :ends, :code, 
+          :is_public).merge({free: "1"})
       end
     end
     
     event = Event.last
     attendee = Attendee.between(@user, event)
-    assert_redirected_to event_photos_path event
+    assert_redirected_to event_photos_path(event), "Free events should be taken straight to photos page"
     assert attendee
     assert attendee.is_admin?, "Attendee should be an admin"
+  end
+  
+  test "post redirects to purchase page if free is nil" do
+    sign_in @user
+    post :create, event: @event.attributes.slice(
+      :location, :name, 
+      :latitude, :longitude, 
+      :starts, :ends, :code, 
+      :is_public)
+    assert_redirected_to new_event_purchase_path(Event.last), "Paid events should be taken to payment page"
   end
   
   test "first event sends welcome email" do
@@ -64,10 +78,10 @@ class EventsControllerTest < ActionController::TestCase
     assert_select "button[type=submit] span#price", "USD$49", "Price should be $49"
   end
   
-  test "if landing_page is not in session, price is 199" do
+  test "if landing_page is not in session, price is 99" do
     sign_in @user
     get :new
-    assert_select "button[type=submit] span#price", "USD$199"
+    assert_select "button[type=submit] span#price", "USD$99"
   end
   
   test "landing_page details are set on an event if present" do

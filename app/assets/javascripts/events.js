@@ -213,10 +213,14 @@ $(document).ready(function() {
       goToStep(next_step);
     }
     return false;
-  }).on("click", "input.free", function(){
-    $("#event_free").val(1);
-  }).on("submit", function(){
-
+  }).on("click", "button.purchase", function(){
+    $("#event_free").val("0");
+  }).on("submit", function(e, i){
+    console.log(e);
+    console.log(i);
+    console.log($("#event_free").val());
+    //return false;
+    
     if( $("#accept").length && ($("#accept").attr("checked") != "checked") ){
       $("label[for=accept]").addClass("red");
       return false;

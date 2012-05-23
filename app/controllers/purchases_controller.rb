@@ -34,7 +34,7 @@ class PurchasesController < ApplicationController
       else
         purchase = current_user.purchase(@event, @billing_detail, @price, "USD")
         
-        if purchase.success?
+        if purchase.was_successful?
           flash[:notice] = "Thanks! Your purchase was successful, here's your event:"
           Notifier.upgrade(current_user, @event).deliver
           @event.free=false

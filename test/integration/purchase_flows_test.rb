@@ -14,13 +14,14 @@ class PurchaseFlowsTest < ActionDispatch::IntegrationTest
       assert_response :success
       
       assert_difference "Event.count" do
-        post_via_redirect "/events", pay_now: true, event: {
+        post_via_redirect "/events", event: {
           location: "42 Muritai Street",
           name: "Nick's Event",
           starts: 5.days.ago,
           ends: 5.days.ago,
           code: "nicks-cool-event",
-          is_public: true
+          is_public: true,
+          free: "0"
         }
       end
       event = Event.last
