@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     @price = if (lp = LandingPage.find_by_path(session[:landing_page]))
       lp.price
     else
-      19900
+      9900
     end
   end
   
