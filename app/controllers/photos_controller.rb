@@ -2,6 +2,7 @@ class PhotosController < ApplicationController
   
   before_filter :get_event
 
+  before_filter :get_current_price
   def index
     photos = @event.photos.processed
     

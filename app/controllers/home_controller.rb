@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
   
   caches_page :terms_of_use, :privacy_policy
+  before_filter :get_current_price
   
   def index
     @user = User.new
