@@ -1,4 +1,5 @@
 Factory.define :event do |e|
+  e.free true
 end
 
 Factory.define :current_event, parent: :event do |ce|
@@ -55,4 +56,11 @@ Factory.define :billing_detail do |bd|
   bd.number "4987654321098769"
   bd.verification_value "123"
   bd.after_create { |b| b.number = nil; b.verification_value = nil }
+end
+
+Factory.define :purchase do |pr|
+  pr.association :user
+  pr.association :event
+  pr.amount 123
+  pr.currency Purchase::CURRENCIES.sample
 end

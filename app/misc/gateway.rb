@@ -3,7 +3,7 @@ require 'simple_uuid'
 class Gateway
   class Response < Struct.new(:success, :message, :error_code, :transaction_identifier, :merchant_session)
     def declined? #Was the error with their account. i.e. not the transaction/network
-      error_code.to_i < 10
+      error_code.to_i < 10 && error_code.to_i > 0
     end
   end
 

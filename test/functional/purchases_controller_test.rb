@@ -30,7 +30,7 @@ class PurchasesControllerTest < ActionController::TestCase
       assert_select "select#billing_detail_year"
       assert_select "input#billing_detail_verification_value"
     end
-    assert_select "#price", "USD$199"
+    assert_select "#price", "USD$99"
   end
   
   test "can purchase an event" do
@@ -52,7 +52,7 @@ class PurchasesControllerTest < ActionController::TestCase
     assert_equal @user, pr.user
     assert_equal @event, pr.event
     assert_equal ca, pr.charge_attempt
-    assert_equal 19900, pr.charge_attempt.amount
+    assert_equal 9900, pr.charge_attempt.amount
   end
   
   test "invalid billing details returns to new page" do

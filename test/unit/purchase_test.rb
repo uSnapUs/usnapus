@@ -32,7 +32,7 @@ class PurchaseTest < ActiveSupport::TestCase
   test "when a purchase fails due to card it creates a charge attempt and purchase with card errors" do
     assert_difference "ChargeAttempt.count" do
       purchase = @user.purchase(@event, @billing_detail, 9951, "NZD")
-      assert_equal ["Insufficient funds"], purchase.errors[:credit_card]
+      assert_equal ["Insufficient funds"], purchase.errors[:charge_attempt_id]
       assert !purchase.persisted?
     end
     assert !@event.purchased?
@@ -44,12 +44,19 @@ class PurchaseTest < ActiveSupport::TestCase
     end
   end
   
+  test "no duplicates" do
+    purchase = Factory(:purchase)
+    assert purchase.valid?
+    purchase2  = Factory.build(:purchase, event: purchase.event)
+    assert purchase2.invalid?
+  end
+  
   test "can't purchase an event twice by the same user" do
     @user.purchase(@event, @billing_detail, 9900, "NZD")
     
     assert_no_difference "ChargeAttempt.count" do
       purchase = @user.purchase(@event, @billing_detail, 9900, "NZD")
-      assert purchase.invalid?
+      assert purchase.invalid?, "Duplicate urchase should be invalid"
       assert_equal ["has already been purchased"], purchase.errors[:event_id]
     end
   end

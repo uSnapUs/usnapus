@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
     end
     
     if purchase.valid?
+      
       charge_attempt = purchase.capture(billing_detail)
       if charge_attempt.success? && !charge_attempt.declined?
         #Successful payment
