@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120502053515) do
+ActiveRecord::Schema.define(:version => 20120527110810) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "user_id"
@@ -111,6 +111,13 @@ ActiveRecord::Schema.define(:version => 20120502053515) do
   end
 
   add_index "photos", ["event_id"], :name => "index_photos_on_event_id"
+
+  create_table "pricing_tiers", :force => true do |t|
+    t.integer  "price_nzd"
+    t.integer  "price_usd"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "purchases", :force => true do |t|
     t.integer  "event_id"

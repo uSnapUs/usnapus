@@ -64,3 +64,8 @@ Factory.define :purchase do |pr|
   pr.amount 123
   pr.currency Purchase::CURRENCIES.sample
 end
+
+Factory.define :pricing_tier do |pt|
+  pt.price_nzd {rand(1000)}
+  pt.price_usd {rand(1000)}
+end
