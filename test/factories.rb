@@ -44,7 +44,7 @@ end
 
 Factory.define :landing_page do |lp|
   lp.path "test"
-  lp.price 9900
+  lp.association :pricing_tier
 end
 
 Factory.define :billing_detail do |bd|
