@@ -7,5 +7,14 @@ $("form#new_billing_detail").on("submit", function(){
     return false
   }
   
+  $("form#new_billing_detail").submit(function(){
+    var button = $("button[type=submit]");
+    if(button.hasClass("disabled")){
+      return false;
+    }else{
+      button.addClass("disabled").html("Processing...");
+    }
+  })
+  
    _gaq.push(['_trackEvent', 'Purchase', 'submit']);
 });
