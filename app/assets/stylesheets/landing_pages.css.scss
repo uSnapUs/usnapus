@@ -1,3 +1,4 @@
+@import "configuration";
 .landing_page .photo_back{
   background-color: #1C2228;
   background-image: url('bg-header.jpg');
@@ -8,10 +9,34 @@
   padding-top:100px;
   
 }
+
+  .no_margin_top{
+	margin-top:0px !important;
+}
+.no_margin_bottom{
+	margin-bottom:0px;
+}
 .landing_page{
 	.panel h2{
   	font-size:36px;
   }
+h3.brand{
+	font-family: "bello-pro", arial, sans-serif;
+	font-size:26px;
+	margin-top:30px;
+}
+.dot{
+	margin-top:20px;
+	height:105px;
+}
+p{
+	line-height:160%;
+	font-size:16px;
+	margin-top:6px;
+}
+.no_bottom_padding{
+     border-bottom-color: rgba(223, 234, 245, 1);
+}
 }
 .logo.tight{
 	margin-bottom:40px;
@@ -26,9 +51,20 @@
 }
 .signup form.blue{
 	background-color:#ecf3fa;
+	input.text{
+	color:$dark_blue;
+	border-color:#c9daeb;
+		 &::-webkit-input-placeholder {
+             color: #a7c1dc;
+              }
+         &:-moz-placeholder {
+              color: #a7c1dc;
+           }
+	}
 }
 span.blue{
 	color:#38536f;
+	background-color:#ecf3fa	;
 	padding:5px;
 }
 span.currency{
@@ -59,4 +95,13 @@ p.attrib{
 }
 .dark_blue{
 	background-color:#1c2228;
+}
+.footer p{
+	font-size:14px;
+	margin-bottom:25px;
+	color:#dfeaf5;
+	a{
+
+	color:#abc4dd;
+	}
 }
