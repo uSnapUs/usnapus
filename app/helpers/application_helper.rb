@@ -12,4 +12,8 @@ module ApplicationHelper
     "#{currency}$#{amount_in_cents.to_i/100}"
   end
   
+  def pretty_current_price
+    pretty_price current_price, current_currency
+  end
+  
 end

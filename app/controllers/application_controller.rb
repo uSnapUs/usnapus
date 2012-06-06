@@ -31,12 +31,19 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def get_current_price
-    @price = if (lp = LandingPage.find_by_path(session[:landing_page]))
-      lp.price
-    else
-      9900
-    end
+  def current_pricing_tier
+    @_current_pricing_tier = (PricingTier.find_by_id(session[:pricing_tier_id]) || PricingTier::DEFAULT_PRICING_TIER)
+  end  
+  helper_method :current_pricing_tier
+  
+  def current_price
+    @_current_price = current_pricing_tier.price_usd
   end
+  helper_method :current_price
+  
+  def current_currency
+    @_current_currency = "USD"
+  end
+  helper_method :current_currency
   
 end

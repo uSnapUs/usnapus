@@ -4,7 +4,8 @@ class PurchasesControllerTest < ActionController::TestCase
   
   setup do
     @user = Factory(:user)
-    @event = Factory(:current_event, is_public: true)
+    @pricing_tier = PricingTier::DEFAULT_PRICING_TIER
+    @event = Factory(:current_event, pricing_tier: @pricing_tier, is_public: true)
     @attendee = Factory(:attendee, user: @user, event: @event, is_admin: true)
     
     @billing_attrs = {
@@ -52,7 +53,7 @@ class PurchasesControllerTest < ActionController::TestCase
     assert_equal @user, pr.user
     assert_equal @event, pr.event
     assert_equal ca, pr.charge_attempt
-    assert_equal 9900, pr.charge_attempt.amount
+    assert_equal @pricing_tier.price_usd, pr.charge_attempt.amount
   end
   
   test "invalid billing details returns to new page" do
@@ -82,16 +83,18 @@ class PurchasesControllerTest < ActionController::TestCase
   test "landing page price shows on new page" do
     #imitate landing on homepage with a different price
     # 51c causes insufficient funds in Rails.env.test. See purchase_test.rb
-    lp = Factory(:landing_page, price: 9951)
-    session[:landing_page] = lp.path
+    pt = Factory(:pricing_tier, price_usd: 9951)
+    @event.pricing_tier = pt
+    @event.save
     
     get :new, event_id: @event.to_param
     assert_select "#price", "USD$99"
   end
   
   test "transaction failure returns to new page" do
-    lp = Factory(:landing_page, price: 9951)
-    session[:landing_page] = lp.path
+    pt = Factory(:pricing_tier, price_usd: 9951)
+    @event.pricing_tier = pt
+    @event.save
     
     assert_difference "BillingDetail.count" do
       assert_no_difference "Purchase.count" do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120527114631) do
+ActiveRecord::Schema.define(:version => 20120530085824) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "user_id"
@@ -74,6 +74,8 @@ ActiveRecord::Schema.define(:version => 20120527114631) do
     t.string   "location"
     t.boolean  "free"
     t.integer  "landing_page_id"
+    t.integer  "pricing_tier_id"
+    t.string   "currency"
   end
 
   add_index "events", ["code"], :name => "index_events_on_code", :unique => true

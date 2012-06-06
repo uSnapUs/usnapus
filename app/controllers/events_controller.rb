@@ -3,7 +3,6 @@ class EventsController < ApplicationController
   
   before_filter :authenticate_user!, except: [:index, :billing_test]
   before_filter :ssl_required, only: :billing_test
-  before_filter :get_current_price
   
   def index
     
@@ -56,15 +55,12 @@ class EventsController < ApplicationController
   def create
     if params[:event]
       @event = Event.new(params[:event].except(:free))
-    
+      
       set_event_time(@event)
       #always free on create, have to put in billing to make it not free
       @event.free=true
-      
-      
-      if (lp = LandingPage.find_by_path(session[:landing_page]))
-        @event.landing_page = lp
-      end
+      @event.currency = current_currency
+      @event.pricing_tier = current_pricing_tier
     
       if @event.save
         @event.attendees.create! do |at|

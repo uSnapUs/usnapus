@@ -11,13 +11,16 @@ class Event < ActiveRecord::Base
   has_many :attendees
   has_many :users, through: :attendees
   has_one :purchase
-  belongs_to :landing_page
+  belongs_to :pricing_tier
   
   before_validation :generate_codes, on: :create
   before_validation :assign_event_code
+  before_validation :assign_default_pricing_tier, on: :create
   
+  validates :pricing_tier, presence: true
   validates :s3_token, presence: {allow_blank: false}, uniqueness: true
   validates :code, format: { with: /\A[A-Z0-9\-]+\Z/}, uniqueness: true
+  validates_inclusion_of :currency, in: PricingTier::CURRENCIES
   validates_exclusion_of :code, in: CODE_BLACKLIST, message: "%{value} is already taken"
   
   attr_accessible :location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public
@@ -82,6 +85,12 @@ class Event < ActiveRecord::Base
       # to figure out the lat and long ourselves.
       if latitude.nil? && longitude.nil?
         self.geocode
+      end
+    end
+    
+    def assign_default_pricing_tier
+      if self.pricing_tier_id.nil?
+        self.pricing_tier_id = PricingTier::DEFAULT_PRICING_TIER.id
       end
     end
   

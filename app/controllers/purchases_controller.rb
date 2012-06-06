@@ -1,7 +1,6 @@
 class PurchasesController < ApplicationController
   
   before_filter :authenticate_user!
-  before_filter :get_current_price
   before_filter :ssl_required
   
   def new
@@ -32,7 +31,8 @@ class PurchasesController < ApplicationController
         flash.now[:error] = "You'll have to fix some things below:"
         render "new"
       else
-        purchase = current_user.purchase(@event, @billing_detail, @price, "USD")
+        
+        purchase = current_user.purchase(@event, @billing_detail, @event.pricing_tier.price_in_currency(@event.currency), @event.currency)
         
         if purchase.was_successful?
           flash[:notice] = "Thanks! Your purchase was successful, here's your event:"

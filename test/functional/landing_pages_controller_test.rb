@@ -5,7 +5,7 @@ class LandingPagesControllerTest < ActionController::TestCase
     @path = "test"
     @landing_page = LandingPage.create do |l|
       l.path = @path
-      l.price = 49*100  # $49 in cents
+      l.pricing_tier = PricingTier::DEFAULT_PRICING_TIER
       l.body_html = "<h1 class=\"test_header\">Test</h1>"
     end
   end
@@ -13,7 +13,8 @@ class LandingPagesControllerTest < ActionController::TestCase
   test "should show landing_page" do
     get :show, path: @path
     assert_response :success
-    assert_equal @path, session["landing_page"]
+    assert_equal PricingTier::DEFAULT_PRICING_TIER.id, session[:pricing_tier_id]
+    assert_select "span.price", "USD$99"
   end
   
 end

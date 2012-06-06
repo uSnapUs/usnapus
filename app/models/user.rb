@@ -17,7 +17,6 @@ class User < ActiveRecord::Base
   end
   
   def purchase(event, billing_detail, amount, currency)
-    
     purchase = self.purchases.new do |p|
       p.event = event
       p.amount = amount

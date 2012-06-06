@@ -20,11 +20,11 @@ class NotifierTest < ActionMailer::TestCase
   end
   
   test "landing page invoice" do
-    lp = Factory :landing_page, path: "test", price: 4900
+    pt = Factory(:pricing_tier, price_usd: 4900)
     user = Factory :user, email: "nick@usnap.us", name: "Nick Malcolm"
-    event = Factory :event, name: "Nick's Party", code: "nicks", free: false, landing_page: lp
+    event = Factory :event, name: "Nick's Party", code: "nicks", free: false, pricing_tier: pt
     email = Notifier.upgrade(user, event).deliver
-    assert_match "They came from the landing page at \"test\" and should be invoiced for US$49", email.encoded
+    assert_match "They should be invoiced for USD$49.0", email.encoded
   end
   
 end

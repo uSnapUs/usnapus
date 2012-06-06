@@ -1,8 +1,7 @@
 class PhotosController < ApplicationController
   
   before_filter :get_event
-
-  before_filter :get_current_price
+  
   def index
     photos = @event.photos.processed
     
@@ -17,7 +16,6 @@ class PhotosController < ApplicationController
     unless @event.purchased?
       @photo_count = photos.count #For a little teaser message
       if(@photo_count>10)
-        p @photo_count
         max = photos.limit(10).last.id
         @photos = @photos.where("id < ?", max)
       end
