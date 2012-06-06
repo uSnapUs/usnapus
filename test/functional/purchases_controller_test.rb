@@ -34,6 +34,12 @@ class PurchasesControllerTest < ActionController::TestCase
     assert_select "#price", "USD$99"
   end
   
+  test "billing form currency can be changed by session" do
+    session[:currency] = "NZD"
+    get :new
+    assert_select "span.price", "NZD$129"
+  end
+  
   test "can purchase an event" do
     
     assert_difference "BillingDetail.count" do
@@ -78,6 +84,17 @@ class PurchasesControllerTest < ActionController::TestCase
     assert_equal [["is required"]], bd.errors[:month]
     assert_equal [["is required"]], bd.errors[:year]
     assert_equal [["cannot be empty"]], bd.errors[:last_name]
+  end
+  
+  test "can purchase an event in NZD" do
+    @event.currency = "NZD"
+    @event.save!
+    
+    post :create, event_id: @event.to_param, billing_detail: @billing_attrs
+    
+    ca = ChargeAttempt.last
+    assert_equal "NZD", pr.charge_attempt.currency
+    assert_equal @pricing_tier.price_nzd, pr.charge_attempt.amount
   end
   
   test "landing page price shows on new page" do

@@ -24,6 +24,13 @@ class EventsControllerTest < ActionController::TestCase
     assert_select "input#event_code"
   end
   
+  test "currency can be changed by session" do
+    session[:currency] = "NZD"
+    sign_in @user
+    get :new
+    assert_select "span#price", "NZD$129"
+  end
+  
   test "can post new event if signed in" do
     sign_in @user
     
@@ -53,6 +60,21 @@ class EventsControllerTest < ActionController::TestCase
       :starts, :ends, :code, 
       :is_public)
     assert_redirected_to new_event_purchase_path(Event.last), "Paid events should be taken to payment page"
+  end
+  
+  
+  test "create sets currency to nzd if current_currency = nzd" do
+    sign_in @user
+    session[:currency] = "NZD"
+    
+    post :create, event: @event.attributes.slice(
+      :location, :name, 
+      :latitude, :longitude, 
+      :starts, :ends, :code, 
+      :is_public)
+      
+    event = Event.last
+    assert_equal "NZD", event.currency
   end
   
   test "first event sends welcome email" do

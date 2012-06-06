@@ -293,4 +293,24 @@ $(document).ready(function() {
     }
   }
   
+  $(".change_currency").on("click", function(){
+    var currency = $(this).attr("data-new-currency");
+    $.ajax(
+      $(this).attr('href'),
+      {
+        type: "POST",
+        dataType: "script",
+        data: { 
+          _method: 'put',
+          currency: $(this).attr("data-new-currency")
+        },
+        success: function(data){
+          $("span.price").html(currency+"$"+(parseInt(data)/100));
+        }
+      }
+      
+    );
+    return false;
+  })
+  
 });

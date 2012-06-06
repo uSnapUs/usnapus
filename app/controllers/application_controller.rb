@@ -37,12 +37,13 @@ class ApplicationController < ActionController::Base
   helper_method :current_pricing_tier
   
   def current_price
-    @_current_price = current_pricing_tier.price_usd
+    @_current_price = current_pricing_tier.price_in_currency(current_currency)
   end
   helper_method :current_price
   
   def current_currency
-    @_current_currency = "USD"
+    session[:currency] ||= request.location.country.eql?("New Zealand") ? "NZD" : "USD"
+    @_current_currency = session[:currency]
   end
   helper_method :current_currency
   

@@ -4,12 +4,17 @@ class PurchasesController < ApplicationController
   before_filter :ssl_required
   
   def new
-    if current_user.events.find_by_id(params[:event_id])
-      @billing_detail = BillingDetail.new do |b|
-        b.user = current_user
+    if (@event = current_user.events.find_by_id(params[:event_id])) && !@event.purchased?
+      if current_user.events.find_by_id(params[:event_id])
+        @billing_detail = BillingDetail.new do |b|
+          b.user = current_user
+        end
+      else
+        raise ActiveRecord::RecordNotFound
       end
     else
-      raise ActiveRecord::RecordNotFound
+      flash[:notice] = "No need to pay twice :)"
+      redirect_to event_photos_path(@event)
     end
   end
   
@@ -31,6 +36,8 @@ class PurchasesController < ApplicationController
         flash.now[:error] = "You'll have to fix some things below:"
         render "new"
       else
+        @event.currency = current_currency
+        @event.save!
         
         purchase = current_user.purchase(@event, @billing_detail, @event.pricing_tier.price_in_currency(@event.currency), @event.currency)
         
@@ -41,12 +48,12 @@ class PurchasesController < ApplicationController
           @event.save!
           redirect_to event_photos_path(@event)
         else
-          if purchase.errors[:credit_card]
+          if purchase.errors[:event_id]
+            flash[:error] = "This event has already been purchased"
+            redirect_to event_photos_path(@event) and return
+          elsif purchase.errors[:credit_card]
             flash.now[:error] = "You have insufficient funds on this card"
             render :new and return
-          elsif purchase.errors[:event_id]
-            flash[:error] = "This event has already been purchased"
-            redirect_to event_photos_path(@event)
           else
             flash.now[:error] = "There was an error! You haven't been charged."
             render :new and return

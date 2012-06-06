@@ -10,10 +10,6 @@ class ActiveSupport::TestCase
   
   # Add more helper methods to be used by all tests here...
   
-  setup do
-    Geocoder::Configuration.timeout = 0
-  end
-  
 end
 class ActionController::TestCase
   include Devise::TestHelpers
