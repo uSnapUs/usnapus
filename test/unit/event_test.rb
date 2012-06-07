@@ -48,4 +48,13 @@ class EventTest < ActiveSupport::TestCase
     end
   end
   
+  test "pricing tier default is set by default" do
+    assert_equal PricingTier::DEFAULT_PRICING_TIER, Factory(:event).pricing_tier
+  end
+  
+  test "pricing tier is not default if set" do
+    pt = Factory(:pricing_tier)
+    assert_equal pt, Factory(:event, pricing_tier: pt).pricing_tier
+  end
+  
 end

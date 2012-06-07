@@ -20,9 +20,9 @@ class PurchaseFlowsTest < ActionDispatch::IntegrationTest
           starts: 5.days.ago,
           ends: 5.days.ago,
           code: "nicks-cool-event",
-          is_public: true,
-          free: "0"
-        }
+          is_public: true
+        },
+        redirect_to_purchase: true
       end
       event = Event.last
     

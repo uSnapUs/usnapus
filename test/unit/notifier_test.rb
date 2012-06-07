@@ -2,6 +2,18 @@ require 'test_helper'
 
 class NotifierTest < ActionMailer::TestCase
   
+  test "welcome email" do
+    user = Factory :user, email: "test@usnap.us", name: "Nick Malcolm"
+    event = Factory :event, name: "Nick's Party", code: "nicks"
+    
+    email = Notifier.welcome(user, event).deliver
+    assert !ActionMailer::Base.deliveries.empty?
+    
+    assert_equal ["test@usnap.us"], email.to
+    assert_equal ["nick@usnap.us"], email.bcc
+    assert_equal "Yay! Thanks for joining uSnap.us", email.subject
+  end
+  
   test "bulk download request" do
     user = Factory :user, email: "nick@usnap.us", name: "Nick Malcolm"
     event = Factory :event, name: "Nick's Party", code: "nicks"
@@ -20,11 +32,11 @@ class NotifierTest < ActionMailer::TestCase
   end
   
   test "landing page invoice" do
-    lp = Factory :landing_page, path: "test", price: 4900
+    pt = Factory(:pricing_tier, price_usd: 4900)
     user = Factory :user, email: "nick@usnap.us", name: "Nick Malcolm"
-    event = Factory :event, name: "Nick's Party", code: "nicks", free: false, landing_page: lp
+    event = Factory :event, name: "Nick's Party", code: "nicks", free: false, pricing_tier: pt
     email = Notifier.upgrade(user, event).deliver
-    assert_match "They came from the landing page at \"test\" and should be invoiced for US$49", email.encoded
+    assert_match "They should be invoiced for USD$49.0", email.encoded
   end
   
 end

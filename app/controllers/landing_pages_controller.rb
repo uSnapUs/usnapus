@@ -4,8 +4,7 @@ class LandingPagesController < ApplicationController
     @user = User.new
     @landing_page = LandingPage.find_by_path(params[:path])
     if @landing_page
-      session["landing_page"] = @landing_page.path
-      @price = @landing_page.price
+      session[:pricing_tier_id] = @landing_page.pricing_tier_id
     else
       redirect_to root_path
     end

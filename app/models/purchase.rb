@@ -1,11 +1,9 @@
 class Purchase < ActiveRecord::Base
   
-  CURRENCIES = %w(USD NZD)
-  
   belongs_to :user
   belongs_to :event
   belongs_to :charge_attempt
-  validates_inclusion_of :currency, in: CURRENCIES
+  validates_inclusion_of :currency, in: PricingTier::CURRENCIES
   validates_uniqueness_of :event_id, message: "has already been purchased"
   
   def gst_applies?

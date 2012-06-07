@@ -14,12 +14,12 @@
     </div>
   </div>
   <div class="container">
-    <div class="row panel">
-      <div class="span4 offset4 center">
+    <div class="row panel no_margin_bottom" style="margin-top:70px;">
+      <div class="span4 offset4 center" >
         <h2 class="center offset4 span4 brand no_margin_top">Don't miss a moment</h2>
       </div>
     </div>
-    <div class="row panel">
+    <div class="row panel no_margin_top no_margin_bottom" style="">
       <div class="span4 center">
         <h3>Get Unique Perspectives</h3>
         <p>Every angle, every moment, every memory from your day.</p>
@@ -38,26 +38,26 @@
         <hr class="no_bottom_padding">
       </div>
     </div>
-   <div class="row panel">
+   <div class="row panel no_margin_bottom">
       <div class="span4 offset4 center">
         <h2 class="center offset4 span4 brand no_margin_top">Try it for free</h2>
       </div>
     </div>
-    <div class="row panel center">
+    <div class="row panel center no_margin_top no_margin_bottom">
       <div class="span10 offset1">
-        <p>
-          It’s just  <span class="blue bold">$<%= ((@price/100)%100) %><span class="currency">USD</span></span>  for your event when you’re ready to pay - no matter how many guests you have.
+        <p style="font-size:18px" class=" no_margin_top">
+          It’s just  <span class="price blue bold"><%= pretty_current_price %></span>  for your event when you’re ready to pay - no matter how many guests you have.
         </p>
       </div>
     </div>
   
-    <div class="row signup center">
+    <div class="row signup center" style="margin-top:10px;margin-bottom:50px;">
       <div class="span12">
         <div class="">
           <%= form_for @user, url: registration_path(@user), html: {class: "background small round form-horizontal blue"} do |f| %>
-            <%= f.text_field :name, placeholder: "Your Name" %>
-            <%= f.email_field :email, placeholder: "Your Email" %>
-            <%= f.password_field :password, placeholder: "Your Password" %>
+            <%= f.text_field :name, placeholder: "Your Name" , class:"text" %>
+            <%= f.email_field :email, placeholder: "Your Email", class:"text" %>
+            <%= f.password_field :password, placeholder: "Your Password", class:"text" %>
             <%= f.submit "Get started for free", class: "btn btn-green round" %>
           <% end %>
         </div>
@@ -67,14 +67,14 @@
   
   <div class="light_blue">
     <div class="container">
-      <div class="row center panel">
+      <div class="row center panel" style="margin-bottom:20px">
         <div class="span4">
           <div class="dot">
             <%= image_tag "explain-icon.png", :title => "create an event" %>
           </div>
-          <h2 class="brand no_margin_top">
+          <h3 class="brand">
             Create an event
-          </h2>
+          </h3>
           <p>
             Sign up to add your event, invite guests to get the App. 
           </p>
@@ -83,9 +83,9 @@
           <div class="dot">
             <%= image_tag "explain-phone.png", :title => "guests snap pics" %>
           </div>
-          <h2 class="brand no_margin_top">
+          <h3 class="brand">
             Guests snap pics
-          </h2>
+          </h3>
           <p>
             Their photos are instantly shared with you &amp; added to the album.
           </p>
@@ -94,9 +94,9 @@
           <div class="dot">
             <%= image_tag "explain-grid.png", :title => "see it unfold live" %>
           </div>
-          <h2 class="brand no_margin_top">
+          <h3 class="brand">
             Share the love
-          </h2>
+          </h3>
           <p>
             Share the album or a live slideshow, create something special.
           </p>
@@ -105,8 +105,8 @@
     </div>
   </div>
   <div class="container">
-    <div class="row last panel">
-       <div class="span8">
+    <div class="row last panel no_margin_bottom" style="margin-top:80px">
+       <div class="span8" style="line-height:0px">
         <%= image_tag "app_screens.png", :title => "Download the uSnap.us smartphone app" %>
       </div>
 
@@ -132,17 +132,17 @@
       </div>
       <div class="row">
         <div class="span12">
-          <hr class="no_bottom_padding">
+          <hr class="no_bottom_padding" style="margin-top:0px">
         </div>
       </div>
     </div>
-    <div class="row footer">
+    <div class="row footer" style="margin-top:10px">
       <p class="span12 center">
         <%= link_to "Blog", "http://blog.usnap.us" %>
         <%= link_to "About Us", "http://blog.usnap.us/about-us" %>
-        <%= link_to "Press", "http://blog.usnap.us/press" %> <a>|</a>
+        <%= link_to "Press", "http://blog.usnap.us/press" %> <span>|</span>
         <%= link_to "Twitter", "http://twitter.com/usnapus" %>
-        <%= link_to "Facebook", "https://www.facebook.com/uSnap.Us" %> <a>|</a>
+        <%= link_to "Facebook", "https://www.facebook.com/uSnap.Us" %> <span>|</span>
         <%= link_to "Terms of Use", terms_of_use_path %>
         <%= link_to "Privacy Policy", privacy_policy_path %>
       </p>

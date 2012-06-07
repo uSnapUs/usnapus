@@ -18,7 +18,10 @@ class NotifierController < ApplicationController
   
   def upgrade
     @user = User.first
-    @event = Event.first
+    @event = Event.new do |e|
+      e.pricing_tier = PricingTier::DEFAULT_PRICING_TIER
+      e.currency = "USD"
+    end
   end
     
   

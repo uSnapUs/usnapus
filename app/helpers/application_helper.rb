@@ -12,4 +12,13 @@ module ApplicationHelper
     "#{currency}$#{amount_in_cents.to_i/100}"
   end
   
+  def pretty_current_price
+    pretty_price current_price, current_currency
+  end
+  
+  def change_currency_link
+    opposite_currency = current_currency.eql?("USD") ? "NZD" : "USD"
+    link_to "Wrong currency? Change to #{opposite_currency}", change_currency_path, data: {new_currency: opposite_currency}, class: "change_currency"
+  end
+  
 end

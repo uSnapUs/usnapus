@@ -24,6 +24,13 @@ class EventsControllerTest < ActionController::TestCase
     assert_select "input#event_code"
   end
   
+  test "currency can be changed by session" do
+    session[:currency] = "NZD"
+    sign_in @user
+    get :new
+    assert_select "span#price", "NZD$129"
+  end
+  
   test "can post new event if signed in" do
     sign_in @user
     
@@ -33,80 +40,91 @@ class EventsControllerTest < ActionController::TestCase
           :location, :name, 
           :latitude, :longitude, 
           :starts, :ends, :code, 
-          :is_public).merge({free: "1"})
+          :is_public)
       end
     end
     
     event = Event.last
     attendee = Attendee.between(@user, event)
+    assert event.free, "We don't use the free attribute anymore"
     assert_redirected_to event_photos_path(event), "Free events should be taken straight to photos page"
     assert attendee
     assert attendee.is_admin?, "Attendee should be an admin"
+    assert_equal PricingTier::DEFAULT_PRICING_TIER, event.pricing_tier, "Event should have default pricing tier"
   end
   
-  test "post redirects to purchase page if free is nil" do
+  test "post redirects to purchase page if redirect_to is set" do
     sign_in @user
     post :create, event: @event.attributes.slice(
       :location, :name, 
       :latitude, :longitude, 
       :starts, :ends, :code, 
-      :is_public)
+      :is_public), redirect_to_purchase: true
     assert_redirected_to new_event_purchase_path(Event.last), "Paid events should be taken to payment page"
   end
   
-  test "first event sends welcome email" do
+  
+  test "create sets currency to nzd if current_currency = nzd" do
+    sign_in @user
+    session[:currency] = "NZD"
+    
+    post :create, event: @event.attributes.slice(
+      :location, :name, 
+      :latitude, :longitude, 
+      :starts, :ends, :code, 
+      :is_public)
+      
+    event = Event.last
+    assert_equal "NZD", event.currency
+  end
+  
+  test "each event sends welcome email" do
     sign_in @user
     
     Notifier.expects(:welcome).once.returns(@stub)
     post :create, event: @event.attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public)
   
     
-    Notifier.expects(:welcome).never
-    post :create, event: @event.attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public)
+    Notifier.expects(:welcome).once.returns(@stub)
+    post :create, event: Factory.build(:event).attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public)
   end
   
-  test "if landing_page is in session, price is different" do
+  test "if pricing_tier is in session, price is different" do
     #emulate the session being set on a landing page
-    LandingPage.create do |l|
-      l.price = 49*100
-      l.path = "test"
-    end
+    pt = Factory(:pricing_tier, price_usd: 4900)
     sign_in @user
-    session["landing_page"] = "test"
+    session["pricing_tier_id"] = pt.id
     
     get :new
     assert_select "button[type=submit] span#price", "USD$49", "Price should be $49"
   end
   
-  test "if landing_page is not in session, price is 99" do
+  test "if pricing_tier is not in session, price is 99" do
     sign_in @user
     get :new
     assert_select "button[type=submit] span#price", "USD$99"
   end
   
-  test "landing_page details are set on an event if present" do
+  test "pricing_tier details are set on an event if present" do
     #emulate the session being set on a landing page
-    lp = LandingPage.create do |l|
-      l.price = 49*100
-      l.path = "test"
-    end
+    pt = Factory(:pricing_tier, price_usd: 4900)
     sign_in @user
-    session["landing_page"] = "test"
+    session["pricing_tier_id"] = pt.id
     
     post :create, event: @event.attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public)
     e = Event.last
-    assert_equal lp, e.landing_page
+    assert_equal pt, e.pricing_tier
   end
   
-  test "can't pass landing_page details as params" do
-    lp = LandingPage.create do |l|
-      l.price = 49*100
-      l.path = "test"
-    end
+  test "can't pass pricing_tier_id as params" do
+    pt = Factory(:pricing_tier, price_usd: 4900)
     sign_in @user
     
     assert_raises ActiveModel::MassAssignmentSecurity::Error do
-      post :create, event: @event.attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public).merge(landing_page_id: lp.id)
+      post :create, event: @event.attributes.slice(
+        :location, :name, :latitude, 
+        :longitude, :starts, :ends, 
+        :code, :is_public).merge(pricing_tier_id: pt.id)
     end
   end
   

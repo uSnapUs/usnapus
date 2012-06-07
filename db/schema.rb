@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120502053515) do
+ActiveRecord::Schema.define(:version => 20120530085824) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "user_id"
@@ -74,6 +74,8 @@ ActiveRecord::Schema.define(:version => 20120502053515) do
     t.string   "location"
     t.boolean  "free"
     t.integer  "landing_page_id"
+    t.integer  "pricing_tier_id"
+    t.string   "currency"
   end
 
   add_index "events", ["code"], :name => "index_events_on_code", :unique => true
@@ -95,9 +97,9 @@ ActiveRecord::Schema.define(:version => 20120502053515) do
   create_table "landing_pages", :force => true do |t|
     t.string   "path"
     t.text     "body_html"
-    t.integer  "price"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "pricing_tier_id"
   end
 
   create_table "photos", :force => true do |t|
@@ -111,6 +113,13 @@ ActiveRecord::Schema.define(:version => 20120502053515) do
   end
 
   add_index "photos", ["event_id"], :name => "index_photos_on_event_id"
+
+  create_table "pricing_tiers", :force => true do |t|
+    t.integer  "price_nzd"
+    t.integer  "price_usd"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "purchases", :force => true do |t|
     t.integer  "event_id"

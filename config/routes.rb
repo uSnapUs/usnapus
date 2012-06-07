@@ -5,6 +5,7 @@ Usnapus::Application.routes.draw do
   devise_for :users, :controllers => { :registrations => 'registrations' }
   
   root to: "home#index"
+  put "change_currency", to: "home#change_currency"
   get "geocode_search", to: "home#geocode_search"
   
   resources :devices, only: [:create, :update]

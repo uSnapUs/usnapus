@@ -105,7 +105,7 @@
           </div>
           <div class="">
             <%= content_tag :button, type: :submit, class: "btn btn-large btn-green round purchase" do %>
-              Purchase now for <span id="price"><%= pretty_price @price %></span>
+              Purchase now for <span id="price"><%= pretty_current_price %></span>
             <% end %>
           </div>
           <h3>Or try it for free with a few limitations</h3>
@@ -134,7 +134,6 @@
         </p>
         <p class="pull-right span2">
           <%= link_to "Next", "", class: "disabled btn btn-large btn-blue round next" %>
-          <%= f.hidden_field :free, value: "1" %>
           <%= f.submit "Try it for free", class: "btn btn-large btn-blue round hidden free" %>
         </p>
       </div>

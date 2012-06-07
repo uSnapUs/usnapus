@@ -1,5 +1,7 @@
 Factory.define :event do |e|
   e.free true
+  e.currency "USD"
+  # default PricingTier associated when pricing_tier is nil
 end
 
 Factory.define :current_event, parent: :event do |ce|
@@ -44,7 +46,7 @@ end
 
 Factory.define :landing_page do |lp|
   lp.path "test"
-  lp.price 9900
+  lp.association :pricing_tier
 end
 
 Factory.define :billing_detail do |bd|
@@ -62,5 +64,10 @@ Factory.define :purchase do |pr|
   pr.association :user
   pr.association :event
   pr.amount 123
-  pr.currency Purchase::CURRENCIES.sample
+  pr.currency {PricingTier::CURRENCIES.sample}
+end
+
+Factory.define :pricing_tier do |pt|
+  pt.price_nzd {rand(10)*100}
+  pt.price_usd {rand(10)*100}
 end

@@ -214,13 +214,8 @@ $(document).ready(function() {
     }
     return false;
   }).on("click", "button.purchase", function(){
-    $("#event_free").val("0");
+    form.append("<input name=\"redirect_to_purchase\" value=true />");
   }).on("submit", function(e, i){
-    console.log(e);
-    console.log(i);
-    console.log($("#event_free").val());
-    //return false;
-    
     if( $("#accept").length && ($("#accept").attr("checked") != "checked") ){
       $("label[for=accept]").addClass("red");
       return false;
@@ -292,5 +287,25 @@ $(document).ready(function() {
       }
     }
   }
+  
+  $(".change_currency").on("click", function(){
+    var currency = $(this).attr("data-new-currency");
+    $.ajax(
+      $(this).attr('href'),
+      {
+        type: "POST",
+        dataType: "script",
+        data: { 
+          _method: 'put',
+          currency: $(this).attr("data-new-currency")
+        },
+        success: function(data){
+          $("span.price").html(currency+"$"+(parseInt(data)/100));
+        }
+      }
+      
+    );
+    return false;
+  })
   
 });

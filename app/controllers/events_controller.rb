@@ -3,7 +3,6 @@ class EventsController < ApplicationController
   
   before_filter :authenticate_user!, except: [:index, :billing_test]
   before_filter :ssl_required, only: :billing_test
-  before_filter :get_current_price
   
   def index
     
@@ -56,34 +55,25 @@ class EventsController < ApplicationController
   def create
     if params[:event]
       @event = Event.new(params[:event].except(:free))
-    
+      
       set_event_time(@event)
       #always free on create, have to put in billing to make it not free
       @event.free=true
-      
-      
-      if (lp = LandingPage.find_by_path(session[:landing_page]))
-        @event.landing_page = lp
-      end
+      @event.currency = current_currency
+      @event.pricing_tier = current_pricing_tier
     
       if @event.save
         @event.attendees.create! do |at|
           at.user = current_user
           at.is_admin = true
         end
-        unless @event.free
-          flash[:notice] = "You're good to go! We'll invoice you soon"
-          Notifier.upgrade(current_user, @event).deliver
-        end
       
-        if @event.eql? current_user.events.first
-          Notifier.welcome(current_user, @event).deliver
-        end
+        Notifier.welcome(current_user, @event).deliver
         
-        if params[:event] && params[:event][:free].try(:eql?, "1")
-          redirect_to event_photos_path @event
-        else
+        if params[:redirect_to_purchase]
           redirect_to new_event_purchase_path @event
+        else  
+          redirect_to event_photos_path @event
         end
       else
         flash[:error] = "Please fix the errors below"
