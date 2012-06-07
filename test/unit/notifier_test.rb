@@ -2,6 +2,18 @@ require 'test_helper'
 
 class NotifierTest < ActionMailer::TestCase
   
+  test "welcome email" do
+    user = Factory :user, email: "test@usnap.us", name: "Nick Malcolm"
+    event = Factory :event, name: "Nick's Party", code: "nicks"
+    
+    email = Notifier.welcome(user, event).deliver
+    assert !ActionMailer::Base.deliveries.empty?
+    
+    assert_equal ["test@usnap.us"], email.to
+    assert_equal ["nick@usnap.us"], email.bcc
+    assert_equal "Yay! Thanks for joining uSnap.us", email.subject
+  end
+  
   test "bulk download request" do
     user = Factory :user, email: "nick@usnap.us", name: "Nick Malcolm"
     event = Factory :event, name: "Nick's Party", code: "nicks"

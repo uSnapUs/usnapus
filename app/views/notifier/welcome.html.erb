@@ -37,12 +37,6 @@
   <%= image_tag "http://usnap.us/assets/gallery.jpg", style: "float:left;padding-right:10px;width:200px", alt: "Watch the photos appear on uSnap.us"%>
 </p>
 
-<% unless @event.purchased? %>
-<p style="margin-bottom:15px;font-size: 90%;color: #444;">
-  We know you'll love trying uSnap.us for free, but for the best experience we recommend you <%= link_to "upgrade!", event_photos_url(@event) %>
-</p>
-<% end %>
-
 <p style="margin-bottom:15px;font-size: 90%;color: #444;">
   Guests without iPhones can still be involved by emailing their photos to <%= link_to "#{@event.code.downcase}@usnap.us", "mailto:#{@event.code.downcase}@usnap.us" %>. This includes friends and family who can't make it to your wedding!
 </p>
@@ -58,8 +52,3 @@
 <p style="margin-bottom:15px;font-size: 90%;color: #444;">
   We're here to help in any way possible. Don't hesitate to get in touch with us if you need.
 </p>
-<% if @event.purchased? %>
-<p style="margin-bottom:15px;font-size: 90%;color: #444;">
-  We're thrilled you chose the paid plan; we know you'll get the best uSnap.us experience now. We'll be in touch soon with an invoice and payment options.
-</p>
-<% end %>

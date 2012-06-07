@@ -40,25 +40,26 @@ class EventsControllerTest < ActionController::TestCase
           :location, :name, 
           :latitude, :longitude, 
           :starts, :ends, :code, 
-          :is_public).merge({free: "1"})
+          :is_public)
       end
     end
     
     event = Event.last
     attendee = Attendee.between(@user, event)
+    assert event.free, "We don't use the free attribute anymore"
     assert_redirected_to event_photos_path(event), "Free events should be taken straight to photos page"
     assert attendee
     assert attendee.is_admin?, "Attendee should be an admin"
     assert_equal PricingTier::DEFAULT_PRICING_TIER, event.pricing_tier, "Event should have default pricing tier"
   end
   
-  test "post redirects to purchase page if free is nil" do
+  test "post redirects to purchase page if redirect_to is set" do
     sign_in @user
     post :create, event: @event.attributes.slice(
       :location, :name, 
       :latitude, :longitude, 
       :starts, :ends, :code, 
-      :is_public)
+      :is_public), redirect_to_purchase: true
     assert_redirected_to new_event_purchase_path(Event.last), "Paid events should be taken to payment page"
   end
   
@@ -77,15 +78,15 @@ class EventsControllerTest < ActionController::TestCase
     assert_equal "NZD", event.currency
   end
   
-  test "first event sends welcome email" do
+  test "each event sends welcome email" do
     sign_in @user
     
     Notifier.expects(:welcome).once.returns(@stub)
     post :create, event: @event.attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public)
   
     
-    Notifier.expects(:welcome).never
-    post :create, event: @event.attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public)
+    Notifier.expects(:welcome).once.returns(@stub)
+    post :create, event: Factory.build(:event).attributes.slice(:location, :name, :latitude, :longitude, :starts, :ends, :code, :is_public)
   end
   
   test "if pricing_tier is in session, price is different" do
