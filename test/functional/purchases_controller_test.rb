@@ -31,12 +31,12 @@ class PurchasesControllerTest < ActionController::TestCase
       assert_select "select#billing_detail_year"
       assert_select "input#billing_detail_verification_value"
     end
-    assert_select "#price", "USD$99"
+    assert_select "span.price", "USD$99"
   end
   
   test "billing form currency can be changed by session" do
     session[:currency] = "NZD"
-    get :new
+    get :new, event_id: @event.to_param
     assert_select "span.price", "NZD$129"
   end
   
@@ -87,14 +87,14 @@ class PurchasesControllerTest < ActionController::TestCase
   end
   
   test "can purchase an event in NZD" do
-    @event.currency = "NZD"
-    @event.save!
+    session[:currency] = "NZD"
     
     post :create, event_id: @event.to_param, billing_detail: @billing_attrs
     
     ca = ChargeAttempt.last
-    assert_equal "NZD", pr.charge_attempt.currency
-    assert_equal @pricing_tier.price_nzd, pr.charge_attempt.amount
+    assert_equal "NZD", @event.reload.currency, "Event's currency should be set to NZD"
+    assert_equal "NZD", ca.currency
+    assert_equal @pricing_tier.price_nzd, ca.amount
   end
   
   test "landing page price shows on new page" do
@@ -105,10 +105,10 @@ class PurchasesControllerTest < ActionController::TestCase
     @event.save
     
     get :new, event_id: @event.to_param
-    assert_select "#price", "USD$99"
+    assert_select ".price", "USD$99"
   end
   
-  test "transaction failure returns to new page" do
+  test "insufficient funds returns to new page" do
     pt = Factory(:pricing_tier, price_usd: 9951)
     @event.pricing_tier = pt
     @event.save
@@ -120,9 +120,19 @@ class PurchasesControllerTest < ActionController::TestCase
         end
       end
     end
+    assert_response :success
     assert_template :new
-    assert_equal "You have insufficient funds on this card", flash[:error]
+    assert_equal "We couldn't charge your credit card: Insufficient funds. Need help? Email team@usnap.us", flash[:error]
+  end
+  
+  test "wrong currency returns to new page" do
+    pt = Factory(:pricing_tier, price_usd: 9912)
+    @event.pricing_tier = pt
+    @event.save
     
+    post :create, event_id: @event.to_param, billing_detail: @billing_attrs
+    assert_template :new
+    assert_equal "We couldn't charge your credit card: Transaction type not supported. Need help? Email team@usnap.us", flash[:error]
   end
   
 end

@@ -48,20 +48,15 @@ class PurchasesController < ApplicationController
           @event.save!
           redirect_to event_photos_path(@event)
         else
-          if purchase.errors[:event_id]
+          if purchase.errors[:event_id].any?
             flash[:error] = "This event has already been purchased"
-            redirect_to event_photos_path(@event) and return
-          elsif purchase.errors[:credit_card]
-            err = "You have insufficient funds on this card"
-            #Try and be a bit more helpful
-            if current_currency.eql? "USD"
-              err += ". If you're using a credit card from NZ, try switching to NZD below."
-            end
-            flash.now[:error] = err
-            render :new and return
+            redirect_to event_photos_path(@event)
+          elsif purchase.errors[:charge_attempt_id].any?
+            flash.now[:error] = "We couldn't charge your credit card: #{purchase.errors[:charge_attempt_id].to_sentence}. Need help? Email team@usnap.us"
+            render "new"
           else
             flash.now[:error] = "There was an error! You haven't been charged."
-            render :new and return
+            render "new"
           end
         end
             
