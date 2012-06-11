@@ -7,8 +7,6 @@
       <li>
         <%= link_to "Upgrade for #{pretty_price @event.pricing_tier.price_in_currency(current_currency), current_currency}", new_event_purchase_path(@event), class: "upgrade" %>
       </li>
-    <% else %>
-      POOP
     <% end %>
     <li>
       <%= link_to "Bulk Download", download_event_photos_path(@event), :id => "bulk_download" %>
