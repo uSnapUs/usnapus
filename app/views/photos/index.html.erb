@@ -5,8 +5,10 @@
   <% if @attendee.try(:is_admin) %>
     <% unless @event.purchased? %>
       <li>
-        <%= link_to "Upgrade for #{pretty_price @event.price_in_currency(current_currency), current_currency}", upgrade_event_path(@event) %>
+        <%= link_to "Upgrade for #{pretty_price @event.pricing_tier.price_in_currency(current_currency), current_currency}", new_event_purchase_path(@event), class: "upgrade" %>
       </li>
+    <% else %>
+      POOP
     <% end %>
     <li>
       <%= link_to "Bulk Download", download_event_photos_path(@event), :id => "bulk_download" %>
@@ -44,7 +46,7 @@
       
       <% unless @event.purchased? %>
         <div class="photo" id="photo_upgrade">
-          <%= link_to (image_tag "upgrade_photo.jpg"), upgrade_event_path(@event), title: "Upgrade now!" %>
+          <%= link_to (image_tag "upgrade_photo.jpg"), new_event_purchase_path(@event), title: "Upgrade now!" %>
         </div>
       <% end %>
     </div>

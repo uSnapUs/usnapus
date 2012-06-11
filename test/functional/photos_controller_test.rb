@@ -23,14 +23,6 @@ class PhotosControllerTest < ActionController::TestCase
     assert_select ".settings li a[href=#{destroy_user_session_path}]"
   end
 
-  test "can view settings button if admin" do
-    @attendee.is_admin = true
-    @attendee.save!
-    
-    get :index, event_id: @event.to_param
-    assert_select ".settings li a[href=#{destroy_user_session_path}]"
-  end
-
   test "can get private event by id" do
     @event.update_attributes is_public: false
     get :index, event_id: @event.to_param
@@ -114,12 +106,36 @@ class PhotosControllerTest < ActionController::TestCase
     assert_response :success
     assert_nil Photo.find_by_id(photo_id)
   end
+  
+  test "non-admin shouldn't be able to request photo download" do
+    assert_no_difference "ActionMailer::Base.deliveries.count" do
+      xhr :get, :download, event_id: @event.to_param
+      assert_response :not_found
+    end
+  end
+  
+end
+class EventAdminPhotosControllerTest < ActionController::TestCase  
+  tests PhotosController
+  
+  setup do
+    @user = Factory(:user)
+    @event = Factory(:current_event, is_public: true)
+    @attendee = Factory(:attendee, user: @user, event: @event)
+    @photo = Factory(:processed_photo, event: @event)
+    
+    sign_in @user
+    @attendee.is_admin = true
+    @attendee.save!
+  end
+
+  test "can view settings button if admin" do
+    get :index, event_id: @event.to_param
+    assert_select ".settings li a[href=#{destroy_user_session_path}]"
+  end
    
   test "should be able to delete another creator's photo if admin" do
     photo_id = @photo.id
-    
-    @attendee.is_admin = true
-    @attendee.save!
     
     assert_difference 'Photo.count', -1 do
       xhr :delete, :destroy, event_id: @event.to_param, id: photo_id, format: "json"
@@ -130,22 +146,17 @@ class PhotosControllerTest < ActionController::TestCase
   end
   
   test "admin should be able to request photo download" do
-    @attendee.is_admin = true
-    @attendee.save!
-    
     assert_difference "ActionMailer::Base.deliveries.count" do
       xhr :get, :download, event_id: @event.to_param
       assert_response :success
     end
   end
   
-  test "non-admin shouldn't be able to request photo download" do
-    assert_no_difference "ActionMailer::Base.deliveries.count" do
-      xhr :get, :download, event_id: @event.to_param
-      assert_response :not_found
-    end
+  test "non-purchased events should have upgrade link" do
+    get :index, event_id: @event.to_param
+    assert_select "a.upgrade[href=#{new_event_purchase_path(@event)}]", "Upgrade for USD$99"
   end
-  
+
 end
 class NotSignedInPhotosControllerTest < ActionController::TestCase
   tests PhotosController

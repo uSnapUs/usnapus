@@ -83,15 +83,6 @@ class EventsController < ApplicationController
       redirect_to new_event_path
     end
   end
-
-  def upgrade
-    unless @event = get_admin_event
-      head :not_found and return
-    end
-    
-   
-    redirect_to new_event_purchase_path @event
-  end
   
   private
     def get_admin_event
