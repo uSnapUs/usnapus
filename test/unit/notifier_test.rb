@@ -36,7 +36,7 @@ class NotifierTest < ActionMailer::TestCase
     user = Factory :user, email: "nick@usnap.us", name: "Nick Malcolm"
     event = Factory :event, name: "Nick's Party", code: "nicks", free: false, pricing_tier: pt
     email = Notifier.upgrade(user, event).deliver
-    assert_match "They should be invoiced for USD$49.0", email.encoded
+    assert_match "nick@usnap.us (Nick Malcolm) paid USD$49.0", email.encoded
   end
   
 end

@@ -8,7 +8,7 @@
         <h2 clas
         s="title">Checkout</h2>
         <p class="subtitle">Enter your billing details into the secure form below to complete your purchase.</p>
-        <p class="subtitle">You will be charged <span class="price"><%= pretty_price @event.price_in_currency(current_currency), current_currency %></span>*.</p>
+        <p class="subtitle">You will be charged <span class="price"><%= pretty_price @event.pricing_tier.price_in_currency(current_currency), current_currency %></span>*.</p>
       </div>
       
       
