@@ -306,6 +306,19 @@ $(document).ready(function() {
       
     );
     return false;
-  })
+  });
+  
+  $.each($(".time_replace"), function(){
+    var time_in_seconds = parseInt($(this).html());
+    var date = new Date(time_in_seconds*1000);
+    var day = date.getDate();
+    //Ordinalize
+    var s=["th","st","nd","rd"],v=day%100;
+    var day_string = day+(s[(v-20)%10]||s[v]||s[0]);
+    var monthNames = [ "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December" ];
+    
+    $(this).html(day_string+" "+monthNames[date.getMonth()]+" "+date.getFullYear()).show();
+  });
   
 });
