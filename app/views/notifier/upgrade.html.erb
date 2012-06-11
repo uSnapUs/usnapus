@@ -1,6 +1,5 @@
-<p>Someone wants to give us money!</p>
-<p>Send an invoice to <%= link_to @user.email, "mailto:#{@user.email}" %> <%= "(#{@user.name})" if @user.name %>.</p>
-<p>They should be invoiced for <%= "#{@event.currency}$#{@event.pricing_tier.price_in_currency(@event.currency)/"100".to_d}" %></p>
+<p>Someone gave us money!</p>
+<p><%= link_to @user.email, "mailto:#{@user.email}" %> <%= "(#{@user.name})" if @user.name %> paid <%= "#{@event.currency}$#{@event.pricing_tier.price_in_currency(@event.currency)/"100".to_d}" %></p>
 <p>Their event is called <%= @event.name %> and it has <%= pluralize @event.photos.count, "photo" %>.</p>
 <p>&nbsp;</p>
 <p>Cheers,<br />
