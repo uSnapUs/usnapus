@@ -214,7 +214,7 @@ $(document).ready(function() {
     }
     return false;
   }).on("click", "button.purchase", function(){
-    form.append("<input name=\"redirect_to_purchase\" value=true />");
+    form.append("<input name=\"redirect_to_purchase\" value=true type=\"hidden\"/>");
   }).on("submit", function(e, i){
     if( $("#accept").length && ($("#accept").attr("checked") != "checked") ){
       $("label[for=accept]").addClass("red");

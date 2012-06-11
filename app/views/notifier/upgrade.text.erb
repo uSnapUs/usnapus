@@ -1,7 +1,6 @@
-Someone wants to give us money!
+Someone gave us money!
 
-Send an invoice to <%= @user.email %> <%= "(#{@user.name})" if @user.name %>.
-They should be invoiced for <%= "#{@event.currency}$#{@event.pricing_tier.price_in_currency(@event.currency)/"100".to_d}" %>.
+<%= @user.email %> <%= "(#{@user.name})" if @user.name %> paid <%= "#{@event.currency}$#{@event.pricing_tier.price_in_currency(@event.currency)/"100".to_d}" %>.
 Their event is called <%= @event.name %> and it has <%= pluralize @event.photos.count, "photo" %>.
 
 Cheers,

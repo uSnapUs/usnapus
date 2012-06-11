@@ -20,7 +20,7 @@ class BillingDetail < ActiveRecord::Base
     
     ActiveMerchant::Billing::CreditCard.new(
       number: number.try { |n| n.gsub(/\D/, '') },
-      month: month,
+      month: month.to_i,
       year: year,
       first_name: first_name,
       last_name: last_name,

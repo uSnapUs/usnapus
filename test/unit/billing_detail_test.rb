@@ -95,4 +95,15 @@ class BillingDetailTest < ActiveSupport::TestCase
     assert_equal "Visa ending in 8769", bd.description
   end
   
+  test "billing detail doesn't barf on 08 or 09" do
+    # See http://blog.para9.com/post/366096411/printf-and-octal-values
+    %w(08, 09).each do |string_month|
+      bd = Factory(:billing_detail, month: string_month)
+      cc = bd.to_credit_card
+      assert_nothing_raised do
+        sprintf("%.2i", cc.month)
+      end
+    end
+  end
+  
 end
