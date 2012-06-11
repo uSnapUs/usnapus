@@ -5,7 +5,7 @@
   <% if @attendee.try(:is_admin) %>
     <% unless @event.purchased? %>
       <li>
-        <%= link_to "Upgrade for #{pretty_current_price}", upgrade_event_path(@event) %>
+        <%= link_to "Upgrade for #{pretty_price @event.price_in_currency(current_currency), current_currency}", upgrade_event_path(@event) %>
       </li>
     <% end %>
     <li>
