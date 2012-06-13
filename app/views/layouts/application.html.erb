@@ -2,6 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    
+    <% if @landing_page %>
+      <%= raw(@landing_page.body_html) %>
+    <% end %>
+    
     <title>
       <% if @title %>
         <%= "#{@title} | uSnap.us - See your wedding through their eyes."%>
