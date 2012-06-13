@@ -92,8 +92,8 @@ class EventsController < ApplicationController
     end
     
     def set_event_time(event)
-      event.starts = Time.at(params[:event][:starts].to_i/1000).beginning_of_day + 6.hours
-      event.ends = event.starts + 1.day
+      event.starts = Time.at(params[:event][:starts].to_i/1000) + 5.hours # 5am til
+      event.ends = event.starts + 1.day # 5am
     end
     
 end
