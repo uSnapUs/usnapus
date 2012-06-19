@@ -24,6 +24,9 @@ class NotifierController < ApplicationController
     end
   end
     
+  def reset_password_instructions
+    @resource = User.first
+  end
   
   
   private

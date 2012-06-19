@@ -39,4 +39,11 @@ class NotifierTest < ActionMailer::TestCase
     assert_match "nick@usnap.us (Nick Malcolm) paid USD$49.0", email.encoded
   end
   
+  test "forgot password" do
+    user = Factory :user, email: "nick@usnap.us", name: "Nick Malcolm"
+    email = Notifier.reset_password_instructions(user).deliver
+    assert_equal ["nick@usnap.us"], email.to
+    assert_match /Change my password/, email.encoded
+  end
+  
 end
