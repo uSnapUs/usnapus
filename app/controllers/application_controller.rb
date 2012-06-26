@@ -42,7 +42,11 @@ class ApplicationController < ActionController::Base
   helper_method :current_price
   
   def current_currency
-    session[:currency] ||= request.location.country.eql?("New Zealand") ? "NZD" : "USD"
+    curr = "USD"
+    if location = request.location
+      curr = "NZD" if location.country.eql?("New Zealand")
+    end
+    session[:currency] ||= curr
     @_current_currency = session[:currency]
   end
   helper_method :current_currency
