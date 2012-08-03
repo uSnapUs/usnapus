@@ -24,8 +24,8 @@ class InboundEmailTest < ActiveSupport::TestCase
     
   test "can be creator of a photo" do
     ie = Factory(:inbound_email)
-    photo = Factory(:photo, creator: Factory(:inbound_email))
-    assert_equal [photo], ie.photos
+    photo = Factory(:photo, creator: ie)
+    assert_equal [photo], ie.reload.photos
   end
   
 end
