@@ -17,11 +17,13 @@ class InboundEmailsController < ApplicationController
 
 
       email.attachments.each do |attachment|
-        if %w(image/jpeg image/png).include? attachment.content_type
+        if %w(image/jpeg image/pjpeg image/png).include? attachment.content_type
           
           ext = ""
           case attachment.content_type
           when "image/jpeg"
+            ext = "jpg"
+          when "image/pjpeg"
             ext = "jpg"
           when "image/png"
             ext = "png"
