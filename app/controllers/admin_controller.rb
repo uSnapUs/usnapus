@@ -7,7 +7,7 @@ class AdminController < ApplicationController
   	@feed = {
   		'emails_last_7_days'=>emails_last_7_days,
       'photos_in_last_7_days'=>photos_in_last_7_days,
-      'attachments_last_7_days'=>attachments_last_7_days
+      'attachments_last_7_days'=>attachments_last_7_days{"emails_last_7_days":0,"photos_in_last_7_days":0,"attachments_last_7_days":0}
   	}
   	render :json => @feed.as_json
   end
