@@ -22,6 +22,10 @@ class InboundEmailTest < ActiveSupport::TestCase
     assert Factory.build(:inbound_email, message_id: ie.message_id).invalid?
   end
     
-  
+  test "can be creator of a photo" do
+    ie = Factory(:inbound_email)
+    photo = Factory(:photo, creator: Factory(:inbound_email))
+    assert_equal [photo], ie.photos
+  end
   
 end

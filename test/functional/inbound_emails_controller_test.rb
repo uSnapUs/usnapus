@@ -11,6 +11,26 @@ class InboundEmailsControllerTest < ActionController::TestCase
   end
 
   test "can upload photos" do
-    #Have to figure out how to test...
+    
+    response = Postmark::Mitt.new(File.new("test/fixtures/files/png_email.json").read)
+    Postmark::Mitt.expects(:new).returns(response)
+    
+    assert_difference ["InboundEmail.count", "Photo.count"] do
+      post :create, token: "8eec23eae3465a1078ba541367f4dadd"
+      assert_response :success
+    end
+    photo = Photo.last
+    email = InboundEmail.last
+    
+    assert_equal email, photo.creator
+    assert_equal @event, photo.event
+    assert_equal @event, email.event
+    
+    assert_equal "awesome@usnap.us", email.to
+    assert_equal "nickmalcolm@gmail.com", email.from
+    assert_equal "1668649f-f109-4254-a6d6-c6ffb81d8ebb", email.message_id
+    assert_equal [photo], email.photos
+    
+    assert_equal [photo], @event.photos
   end
 end

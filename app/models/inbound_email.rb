@@ -2,7 +2,7 @@ class InboundEmail < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :event
-  has_many :photos
+  has_many :photos, as: :creator
   
   validates :to, presence: {allow_blank: nil}
   validates :message_id, presence: {allow_blank: nil}, uniqueness: true

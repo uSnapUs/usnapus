@@ -1,7 +1,7 @@
 class Photo < ActiveRecord::Base
 
   mount_uploader :photo, PhotoUploader
-  process_in_background :photo
+  process_in_background :photo unless Rails.env.test?
   
   belongs_to :event
   belongs_to :creator, polymorphic: true

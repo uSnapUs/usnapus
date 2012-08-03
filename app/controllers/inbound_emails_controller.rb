@@ -4,7 +4,6 @@ class InboundEmailsController < ApplicationController
   
   def create
     email = Postmark::Mitt.new(request.body.read)
-    
     inbound_email = InboundEmail.create do |ie|
       ie.from = email.from
       ie.name = email.from_name
