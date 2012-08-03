@@ -9,9 +9,13 @@ class InboundEmailsController < ApplicationController
       ie.name = email.from_name
       ie.to = email.to
       ie.message_id = email.message_id
+      ie.attachment_count = email.attachments.length
     end
     
     if inbound_email.try(:has_event?)
+      
+
+
       email.attachments.each do |attachment|
         if %w(image/jpeg image/png).include? attachment.content_type
           

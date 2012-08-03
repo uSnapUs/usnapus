@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120530085824) do
+ActiveRecord::Schema.define(:version => 20120803093523) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "user_id"
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(:version => 20120530085824) do
   create_table "devices", :force => true do |t|
     t.string   "guid"
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "email"
   end
 
@@ -66,8 +66,8 @@ ActiveRecord::Schema.define(:version => 20120530085824) do
     t.string   "name"
     t.datetime "starts"
     t.datetime "ends"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.string   "code"
     t.boolean  "is_public",       :default => true
     t.string   "s3_token"
@@ -87,8 +87,9 @@ ActiveRecord::Schema.define(:version => 20120530085824) do
     t.integer  "user_id"
     t.integer  "event_id"
     t.string   "message_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "attachment_count"
   end
 
   add_index "inbound_emails", ["event_id"], :name => "index_inbound_emails_on_event_id"
@@ -105,8 +106,8 @@ ActiveRecord::Schema.define(:version => 20120530085824) do
   create_table "photos", :force => true do |t|
     t.string   "photo"
     t.integer  "event_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.boolean  "photo_processing", :default => true
     t.string   "creator_type"
     t.integer  "creator_id"
@@ -134,8 +135,8 @@ ActiveRecord::Schema.define(:version => 20120530085824) do
   create_table "signups", :force => true do |t|
     t.datetime "event_date"
     t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -153,8 +154,8 @@ ActiveRecord::Schema.define(:version => 20120530085824) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "authentication_token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
     t.string   "name"
   end
 

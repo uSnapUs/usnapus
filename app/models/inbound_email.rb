@@ -9,7 +9,7 @@ class InboundEmail < ActiveRecord::Base
   
   before_validation :assign_event, on: :create
   
-  attr_accessible :to, :from, :name
+  attr_accessible :to, :from, :name, :attachment_count
   
   def has_event?
     !Event.find_by_id(self.event_id).nil?
