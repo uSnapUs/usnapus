@@ -66,7 +66,7 @@ class AdminController < ApplicationController
       when "photo"
         table = "photos"
       when "event"
-        table = "event"
+        table = "events"
     end
     
     query = "SELECT COUNT(1) as count, #{grouping} as date  FROM #{table} WHERE created_at > '#{limit}' GROUP BY #{grouping}"
