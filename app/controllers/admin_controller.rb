@@ -3,7 +3,9 @@ class AdminController < ApplicationController
   def stats
     render :json=> stats_obj(params[:type],params[:period])
   end
- 
+  def stats_geckoboard
+    render :json=> to_geco(stats_obj(params[:type],params[:period]))
+  end
   private
     def verify_password
      authenticate_or_request_with_http_basic do |user, password|
@@ -11,6 +13,24 @@ class AdminController < ApplicationController
       end
     end
   private
+
+  def to_geco(stats)
+    geco_stats = {
+      :item=>Array.new,
+      :settings=>{
+        :axisx=>Array.new,
+        :axisy=>["Min","Max"],
+        :colour=>"70D4A0"
+      }
+    }
+    
+    stats.each do |stat|
+      geco_stats[:settings][:axisx]<<stat[0]
+      geco_stats[:item]<<stat[1]
+    end
+    return geco_stats
+  end
+
   def stats_obj(type,period)
     limit = 1.day.ago.utc.to_s
     grouping = "DATE(created_at)"

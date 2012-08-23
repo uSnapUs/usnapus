@@ -2,6 +2,8 @@ Usnapus::Application.routes.draw do
 
   get "admin/stats/:type/:period", to: "admin#stats"
   
+  get "admin/geckoboard/:type/:period", to: "admin#stats_geckoboard"
+
   mount Resque::Server.new, :at => "/resque"
   
   devise_for :users, :controllers => { :registrations => 'registrations' }
