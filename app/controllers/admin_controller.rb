@@ -31,7 +31,7 @@ class AdminController < ApplicationController
       geco_stats[:settings][:axisx]<<stat[0]
       geco_stats[:item]<<stat[1]
     end
-    
+
     geco_stats[:settings][:axisy]<<min
     geco_stats[:settings][:axisy]<<max
     return geco_stats
@@ -59,7 +59,16 @@ class AdminController < ApplicationController
         grouping = "HOUR(created_at)" 
         data_hash= day_hash
     end
-    table = type.downcase+"s"
+    table = "users"
+    case (type.downcase)
+      when "user"
+        table = "users"
+      when "photo"
+        table = "photos"
+      when "event"
+        table = "event"
+    end
+    
     query = "SELECT COUNT(1) as count, #{grouping} as date  FROM #{table} WHERE created_at > '#{limit}' GROUP BY #{grouping}"
 
     ActiveRecord::Base.connection.execute("#{query}").each(:as => :hash) do |row|
