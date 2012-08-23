@@ -31,8 +31,9 @@ class AdminController < ApplicationController
       geco_stats[:settings][:axisx]<<stat[0]
       geco_stats[:item]<<stat[1]
     end
-    geco_stats[:settings][:axisy]<<max
+    
     geco_stats[:settings][:axisy]<<min
+    geco_stats[:settings][:axisy]<<max
     return geco_stats
   end
 
