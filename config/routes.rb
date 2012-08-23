@@ -1,7 +1,7 @@
 Usnapus::Application.routes.draw do
 
-  get "admin/stats"
-  get "admin/feed"
+  get "admin/stats/:type/:period", to: "admin#stats"
+  
   mount Resque::Server.new, :at => "/resque"
   
   devise_for :users, :controllers => { :registrations => 'registrations' }

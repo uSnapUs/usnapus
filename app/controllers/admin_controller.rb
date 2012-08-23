@@ -1,16 +1,9 @@
 class AdminController < ApplicationController
   before_filter :verify_password
   def stats
-
+    render :json=> stats_obj(params[:type],params[:period])
   end
-  def feed
-  	@feed = {
-  		'emails_last_7_days'=>emails_last_7_days,
-      'photos_in_last_7_days'=>photos_in_last_7_days,
-      'attachments_last_7_days'=>attachments_last_7_days
-  	}
-  	render :json => @feed.as_json
-  end
+ 
   private
     def verify_password
      authenticate_or_request_with_http_basic do |user, password|
@@ -18,13 +11,78 @@ class AdminController < ApplicationController
       end
     end
   private
-  def emails_last_7_days
-      return InboundEmail.count({:conditions => ["created_at >= ?",1.month.ago.utc.to_s]})
+  def stats_obj(type,period)
+    limit = 1.day.ago.utc.to_s
+    grouping = "DATE(created_at)"
+    data_hash={};
+    case(period.downcase)
+      when "year"
+        limit = 1.year.ago.utc.to_date.to_s
+        data_hash = year_hash
+        grouping = "DATE_FORMAT(created_at,'%Y-%m')"
+      when "month"
+        limit = 1.month.ago.utc.to_date.to_s
+        data_hash = month_hash
+        grouping = "DATE(created_at)"
+      when "week"
+        limit = (1.week.ago.utc.to_date).to_s
+        data_hash = week_hash
+        grouping = "DAYNAME(created_at)" 
+      when "day"
+        limit = (24.hours.ago.utc+1.hour).to_s
+        grouping = "HOUR(created_at)" 
+        data_hash= day_hash
+    end
+    table = type.downcase+"s"
+    query = "SELECT COUNT(1) as count, #{grouping} as date  FROM #{table} WHERE created_at > '#{limit}' GROUP BY #{grouping}"
+
+    ActiveRecord::Base.connection.execute("#{query}").each(:as => :hash) do |row|
+       data_hash[row["date"].downcase]=row["count"]
+    end
+    return data_hash
   end
-  def photos_in_last_7_days
-    return Photo.count({:conditions => ["created_at >= ? AND creator_type = ?",1.month.ago.utc.to_s,"InboundEmail"]})
+
+  def year_hash
+    data = {}
+    currDate = 1.year.ago.utc.to_date
+    while(currDate<=DateTime.now.utc.to_date) do
+      data[currDate.strftime("%Y-%m")]=0
+      currDate+=1.month
+    end
+    return data
   end
-	def attachments_last_7_days
-		return InboundEmail.sum(:attachment_count,{:conditions => ["created_at >= ?",1.month.ago.utc.to_s]})
-	end
+  def month_hash
+    data = {}
+    currDate = 1.month.ago.utc.to_date
+    while(currDate<=DateTime.now.utc.to_date) do
+      data[currDate.strftime]=0
+      currDate+=1
+    end
+    return data
+  end
+  def week_hash
+    data = {}
+    currDate = 1.week.ago.utc.to_date+1
+    while(currDate<=DateTime.now.utc.to_date) do
+      data[currDate.strftime("%A").downcase]=0
+      currDate+=1
+    end
+    return data
+  end
+  def day_hash
+    data = {}
+    curr_hour = 1.day.ago.utc.hour+1
+    if(curr_hour==24)
+       curr_hour=0
+    end
+    begin 
+      data[curr_hour]=0
+      curr_hour+=1
+      if(curr_hour==24)
+        curr_hour=0
+      end
+    end until curr_hour===DateTime.now.utc.hour
+    data[curr_hour]=0
+    return data
+  end
 end
