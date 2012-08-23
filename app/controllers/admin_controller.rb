@@ -20,15 +20,19 @@ class AdminController < ApplicationController
       :item=>Array.new,
       :settings=>{
         :axisx=>Array.new,
-        :axisy=>["Min","Max"],
+        :axisy=>Array.new,
         :colour=>"70D4A0"
       }
     }
-    
+    max =0;
+    min=0
     stats.each do |stat|
+      max = stat[1] if (stat[1]>max)
       geco_stats[:settings][:axisx]<<stat[0]
       geco_stats[:item]<<stat[1]
     end
+    geco_stats[:settings][:axisy]<<max
+    geco_stats[:settings][:axisy]<<min
     return geco_stats
   end
 
@@ -58,7 +62,7 @@ class AdminController < ApplicationController
     query = "SELECT COUNT(1) as count, #{grouping} as date  FROM #{table} WHERE created_at > '#{limit}' GROUP BY #{grouping}"
 
     ActiveRecord::Base.connection.execute("#{query}").each(:as => :hash) do |row|
-       data_hash[row["date"].downcase]=row["count"]
+       data_hash[row["date"].to_s.downcase]=row["count"]
     end
     return data_hash
   end

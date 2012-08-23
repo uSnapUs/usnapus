@@ -18,7 +18,7 @@ set :use_sudo, false
 set :rails_env, "production"
 set :branch,    "production"
 set :normalize_asset_timestamps, false
-set :rvm_type, :user 
+set :rvm_type, :system 
 
 role :web, domain
 role :app, domain
