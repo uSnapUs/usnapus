@@ -2,7 +2,8 @@
   "Subject": "Test",
   "HtmlBody": "<br clear=\"all\"><span style=\"font-family:Arial\">\n<div style=\"font-weight:bold;font-size:16px;width:400px;color:rgb(125,125,125)\"><font style=\"color:rgb(0,0,0)\" size=\"2\"><span style=\"font-weight:normal\">Nick Malcolm</span></font></div><div style=\"font-weight:bold;font-size:16px;width:400px;color:rgb(125,125,125)\">\n\n<font style=\"color:rgb(0,0,0)\" size=\"2\"><span style=\"font-weight:normal\"><br></span></font></div><div style=\"font-weight:bold;font-size:16px;width:400px;color:rgb(125,125,125)\"><font style=\"color:rgb(0,0,0)\" size=\"2\"><span style=\"font-weight:normal\">w: <a href=\"http://itsnickmalcolm.com/\" target=\"_blank\">http://itsnickmalcolm.com</a><br>\n\ntw: </span><a href=\"http://twitter.com/nickmalcolm\" target=\"_blank\"><span style=\"font-weight:normal\">@nickmalcolm</span></a><br></font> </div></span>\n<br>\n",
   "MailboxHash": "",
-  "From": "nickmalcolm@gmail.com",
+  "From": "\"Nick Malcolm\" <nickmalcolm@gmail.com>",
+  "FromFull": {"Email": "nickmalcolm@gmail.com", "Name": "Nick Malcolm"},
   "Tag": "",
   "MessageID": "1668649f-f109-4254-a6d6-c6ffb81d8ebb",
   "Attachments": [
@@ -13,7 +14,8 @@
       "ContentType": "image/png"
     }
   ],
-  "To": "awesome@usnap.us",
+  "To": "\"Bob Awesome\" <awesome@usnap.us>",
+  "ToFull": [{"Email": "awesome@usnap.us", "Name": "Bob Awesome"}],
   "TextBody": "Nick Malcolm\n\nw: http://itsnickmalcolm.com\ntw: @nickmalcolm <http://twitter.com/nickmalcolm>\n",
   "Headers": [
     {

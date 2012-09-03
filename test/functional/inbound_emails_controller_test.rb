@@ -28,6 +28,7 @@ class InboundEmailsControllerTest < ActionController::TestCase
     
     assert_equal "awesome@usnap.us", email.to
     assert_equal "nickmalcolm@gmail.com", email.from
+    assert_equal "Nick Malcolm", email.name
     assert_equal "1668649f-f109-4254-a6d6-c6ffb81d8ebb", email.message_id
     assert_equal 1, email.attachment_count
     assert_equal [photo], email.photos
