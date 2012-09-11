@@ -25,7 +25,7 @@ Usnapus::Application.routes.draw do
   end
   
   
-
+  match "weddingshow", to: "landing_pages#show", :defaults=>{:path=>'weddingshow'}
   match "welcome/:path", to: "landing_pages#show"
   match "this_is_a_test/billing", to: "events#billing_test"
 
