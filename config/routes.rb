@@ -1,14 +1,10 @@
 Usnapus::Application.routes.draw do
 
-  get "admin/stats/:type/:period", to: "admin#stats"
-  
-  get "admin/geckoboard/:type/:period", to: "admin#stats_geckoboard"
-
   mount Resque::Server.new, :at => "/resque"
   
   devise_for :users, :controllers => { :registrations => 'registrations' }
   
-  root to: "home#index"
+  root :to=> redirect("http://blog.usnap.us/")
   put "change_currency", to: "home#change_currency"
   get "geocode_search", to: "home#geocode_search"
   
@@ -24,10 +20,11 @@ Usnapus::Application.routes.draw do
     resources :purchases, only: [:new, :create]
   end
   
-  
-  match "weddingshow", to: "landing_pages#show", :defaults=>{:path=>'weddingshow'}
-  match "welcome/:path", to: "landing_pages#show"
-  match "this_is_a_test/billing", to: "events#billing_test"
+
+
+
+  match "weddingshow"=> redirect("http://blog.usnap.us/")
+  match "welcome/:path"=> redirect("http://blog.usnap.us/")
 
   resources :signups, only: [:create]
   
