@@ -20,7 +20,7 @@ class EventsController < ApplicationController
   end
   
   def new
-   redirect_to("http://blog.usnap.us/post/123456/final")
+   redirect_to("http://blog.usnap.us/post/32311407686/final")
   end
   
   def billing_test
@@ -53,7 +53,7 @@ class EventsController < ApplicationController
   end
     
   def create
-    redirect_to("http://blog.usnap.us/post/123456/final")
+    redirect_to("http://blog.usnap.us/post/32311407686/final")
   end
   
   private

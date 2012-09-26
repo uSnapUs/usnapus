@@ -4,7 +4,7 @@ Usnapus::Application.routes.draw do
   
   devise_for :users, :controllers => { :registrations => 'registrations' }
   
-  root :to=> redirect("http://blog.usnap.us/post/123456/final")
+  root :to=> redirect("http://blog.usnap.us/post/32311407686/final")
   put "change_currency", to: "home#change_currency"
   get "geocode_search", to: "home#geocode_search"
   
@@ -22,8 +22,8 @@ Usnapus::Application.routes.draw do
 
 
 
-  match "weddingshow"=> redirect("http://blog.usnap.us/post/123456/final")
-  match "welcome/:path"=> redirect("http://blog.usnap.us/post/123456/final")
+  match "weddingshow"=> redirect("http://blog.usnap.us/post/32311407686/final")
+  match "welcome/:path"=> redirect("http://blog.usnap.us/post/32311407686/final")
 
   resources :signups, only: [:create]
   
