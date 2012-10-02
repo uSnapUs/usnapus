@@ -20,7 +20,7 @@ class EventsController < ApplicationController
   end
   
   def new
-   redirect_to("http://blog.usnap.us/post/123456/final")
+   redirect_to("http://blog.usnap.us/")
   end
   
   def billing_test
@@ -53,7 +53,35 @@ class EventsController < ApplicationController
   end
     
   def create
-    redirect_to("http://blog.usnap.us/post/123456/final")
+    if params[:event]
+      @event = Event.new(params[:event].except(:free))
+      
+      set_event_time(@event)
+      #always free on create, have to put in billing to make it not free
+      @event.free=true
+      @event.currency = current_currency
+      @event.pricing_tier = current_pricing_tier
+    
+      if @event.save
+        @event.attendees.create! do |at|
+          at.user = current_user
+          at.is_admin = true
+        end
+      
+        Notifier.welcome(current_user, @event).deliver
+        
+        if params[:redirect_to_purchase]
+          redirect_to new_event_purchase_path @event
+        else  
+          redirect_to event_photos_path @event
+        end
+      else
+        flash[:error] = "Please fix the errors below"
+        render "new"
+      end
+    else
+      redirect_to new_event_path
+    end
   end
   
   private
