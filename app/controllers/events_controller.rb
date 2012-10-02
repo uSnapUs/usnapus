@@ -20,7 +20,7 @@ class EventsController < ApplicationController
   end
   
   def new
-   redirect_to("http://blog.usnap.us/")
+    @event = Event.new(code: Event.generate_unique_code)
   end
   
   def billing_test
