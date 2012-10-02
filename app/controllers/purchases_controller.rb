@@ -1,5 +1,7 @@
 class PurchasesController < ApplicationController
   
+  before_filter :redirect_to_blog, except: [:new]
+
   before_filter :authenticate_user!
   before_filter :ssl_required
   

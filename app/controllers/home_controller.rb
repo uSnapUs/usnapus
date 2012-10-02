@@ -2,6 +2,8 @@ class HomeController < ApplicationController
   
   caches_page :terms_of_use, :privacy_policy
   
+  before_filter :redirect_to_blog, only: [:index]
+
   def index
     @user = User.new
   end

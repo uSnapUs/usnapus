@@ -1,5 +1,7 @@
 class LandingPagesController < ApplicationController
 
+  before_filter :redirect_to_blog
+
   def show
     @user = User.new
     @landing_page = LandingPage.find_by_path(params[:path])

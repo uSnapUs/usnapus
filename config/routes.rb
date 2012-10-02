@@ -1,9 +1,5 @@
 Usnapus::Application.routes.draw do
 
-  get "admin/stats/:type/:period", to: "admin#stats"
-  
-  get "admin/geckoboard/:type/:period", to: "admin#stats_geckoboard"
-
   mount Resque::Server.new, :at => "/resque"
   
   devise_for :users, :controllers => { :registrations => 'registrations' }
@@ -23,13 +19,18 @@ Usnapus::Application.routes.draw do
     end
     resources :purchases, only: [:new, :create]
   end
+
+  resources :signups, only: [:create]
   
+
+  # Custom URLs
+
+  get "admin/stats/:type/:period", to: "admin#stats"
+  get "admin/geckoboard/:type/:period", to: "admin#stats_geckoboard"
   
   match "weddingshow", to: "landing_pages#show", :defaults=>{:path=>'weddingshow'}
   match "welcome/:path", to: "landing_pages#show"
   match "this_is_a_test/billing", to: "events#billing_test"
-
-  resources :signups, only: [:create]
   
   match "notifier/:action", :controller => "notifier"
   post "postmark/:token/inbound_emails", to: "inbound_emails#create"

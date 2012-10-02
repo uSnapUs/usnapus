@@ -3,6 +3,8 @@ class EventsController < ApplicationController
   
   before_filter :authenticate_user!, except: [:index, :billing_test]
   before_filter :ssl_required, only: :billing_test
+
+  before_filter :redirect_to_blog, except: [:index, :create, :new]
   
   def index
     

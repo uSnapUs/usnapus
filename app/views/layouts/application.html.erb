@@ -50,6 +50,7 @@
 
   <body class="<%= @body_class %><%= " home" if request.path.eql? "/" %>">
     
+
     <div class="topbar <%= @topbar_class %>">
       <div class="fill">
         <div class="container">
@@ -91,14 +92,22 @@
       </div>
     </div>
     
-    
     <% unless request.path.eql? "/" %>
       <section class="container">
         <div class="row" id="alert-area">
         </div>
       </section>
     <% end %>
-      
+
+    <section class="container">
+      <div class="row" id="alert-area">
+        <div class="span8 offset2 alert alert-error" style="display:block">
+          <strong>Sorry,</strong> uSnap.us is closing down. 
+          <%= link_to "Read More", "http://blog.usnap.us/post/32311407686/final" %>
+        </div>
+      </div>
+    </section>
+
     <%= yield %>
     
     <%= content_for(:pre_scripts) %>
