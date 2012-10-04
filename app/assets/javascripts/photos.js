@@ -17,7 +17,7 @@ $(document).ready(function() {
         original_src: data["photo"]["url"],
         xga_src: data["photo"]["xga"]["url"],
         thumbnail_src: data["photo"]["thumbnail"]["url"],
-        alt: data["device_name"]
+        alt: data["creator_name"]
       }
     };
   }
