@@ -2,10 +2,15 @@ require 'bootstrap_errors'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  
 
   def redirect_to_blog
-    redirect_to("http://blog.usnap.us/post/32311407686/final")
+    authenticate_or_request_with_http_basic "uSnap.us is closed" do |username, password|
+      if username == "usnap.us" && password == "mixedvege1"
+        true
+      else
+        redirect_to("http://blog.usnap.us/post/32311407686/final")
+      end
+    end
   end
 
   def not_found
