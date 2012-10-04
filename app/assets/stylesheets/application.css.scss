@@ -128,14 +128,20 @@ body{
     font-size: 18px;
     line-height: 18px;
   }
+  .dropdown-menu {
+    a.current_event {
+      font-weight: bold;
+    }
+
+    li > a.red:hover, .active > a.red, .active > a.red:hover{
+      background-color: $red;
+    }
+
+  }
 }
 
 .red, a.red, label.red{
   color: $red;
-}
-
-.dropdown-menu li > a.red:hover, .dropdown-menu .active > a.red, .dropdown-menu .active > a.red:hover{
-  background-color: $red;
 }
 
 .box_shadow{

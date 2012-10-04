@@ -65,8 +65,15 @@
                 <ul class="dropdown-menu">
                   <%= content_for(:dropdown_options) %>
                   <li>
-                    <% if (event = current_user.events.first) && (event != @event)  %>
-                      <%= link_to event.name, event_code_path(event)  %>
+                    <% if current_user.events.any?  %>
+                      <% current_user.events.each do |event| %>
+                        <% if event.eql? @event %>
+                          <strong>
+                        <% end %>
+                        <%= link_to event.name, 
+                          event_code_path(event), 
+                          class: ("current_event" if @event.eql?(event)) %>
+                      <% end %>
                     <% else %>
                       <%= link_to "Create Event", new_event_path  %>
                     <% end %>
