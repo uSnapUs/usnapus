@@ -30,6 +30,12 @@ $(document).ready(function() {
     
     var photo = photoToUsableJSON(data), html = Mustache.to_html($("#gallery_photo_template").html(), photo);
     
+    //Don't display photos if they're already visible
+    if($("#photo_"+photo["id"]+":visible").length){
+      console.log("Photo already displayed");
+      return;
+    }
+
     $("#photo_gallery").prepend(html);
     $(".photo:hidden").fadeIn();
     
@@ -45,6 +51,12 @@ $(document).ready(function() {
   window.updatePhoto = function(data){
     var photo = photoToUsableJSON(data), html = Mustache.to_html($("#gallery_photo_template").html(), photo);
     
+    //Don't display photos if they're already visible
+    if($("#photo_"+photo["id"]+":visible").length){
+      console.log("Photo already displayed");
+      return;
+    }
+
     $("#photo_gallery .photo[data-photo-id="+photo.id+"]").replaceWith(html);
     $(".photo:hidden").fadeIn();
     
