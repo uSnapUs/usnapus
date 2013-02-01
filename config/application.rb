@@ -11,6 +11,8 @@ end
 
 require 'carrierwave'
 
+ActionDispatch::ParamsParser::DEFAULT_PARSERS.delete(Mime::XML) 
+
 module Usnapus
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
