@@ -31,7 +31,7 @@ gem 'nokogiri'
 gem 'anybase'
 
 gem "thin"
-gem "newrelic_rpm"
+gem "newrelic_rpm", '=3.3.1'
 gem "airbrake"
 
 gem 'resque'
